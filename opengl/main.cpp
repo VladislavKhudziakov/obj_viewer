@@ -116,8 +116,25 @@ glm::vec3 cubePositions[] = {
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+float camFront;
 
+glm::vec3 camPos(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront(0.0f, 0.0f, -1.0f);
+glm::vec3 sceneUp(0.0f, 1.0f, 0.0f);
+
+bool keys[1024];
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void mouseCallback(GLFWwindow* window, double x, double y);
+
+void move(float delta);
+
+bool isFirst = true;
+float lastX;
+float lastY;
+
+float yaw = -90.0f;
+float pitch = 0.0f;
 
 int main()
 {
@@ -138,6 +155,8 @@ int main()
   }
   
   glfwMakeContextCurrent(window);
+  
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   
   glewExperimental = GL_TRUE;
   
@@ -160,16 +179,11 @@ int main()
   Engine::Texture t("./container.jpg");
   Engine::Texture t2("./awesomeface.png", 1);
   
-  
-  glm::vec3 camPos(0.0f, 0.0f, 3.0f);
-  glm::vec3 camTarget(0.0f, 0.0f, 0.0f);
-  glm::vec3 sceneUp(0.0f, 1.0f, 0.0f);
-  
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
   model = glm::rotate(model, 20.0f, glm::vec3(1.0, 0.0, 0.0));
   
-  Engine::Camera c(camPos, camTarget, sceneUp);
+  Engine::Camera c(camPos, camPos + camFront, sceneUp);
   
   glm::mat4 projection(1.0f);
   projection = glm::perspective(45.0f, GLfloat(width) / GLfloat(height), 0.1f, 100.0f);
@@ -177,6 +191,9 @@ int main()
   glm::mat4 mvp = projection * c.getView() * model;
   
   glfwSetKeyCallback(window, keyCallback);
+  glfwSetCursorPosCallback(window, mouseCallback);
+  
+  float lastTime = glfwGetTime();
   
   while (!glfwWindowShouldClose(window))
   {
@@ -192,11 +209,13 @@ int main()
     
     unsigned int u_mvp = glGetUniformLocation(p.get(), "u_MVP");
     
-    GLfloat radius = 10.0f;
-    GLfloat camX = sin(glfwGetTime()) * radius;
-    GLfloat camZ = cos(glfwGetTime()) * radius;
+    float now = glfwGetTime();
+    float delta = now - lastTime;
+    lastTime = now;
     
-    c.computeView(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+    move(delta);
+    
+    c.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
     
     int size = sizeof(cubePositions) / sizeof(glm::vec3);
     for (int i = 0; i < size; i++) {
@@ -223,5 +242,72 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 {
   if (key == GLFW_KEY_ESCAPE) {
     glfwTerminate();
+  } else {
+    
+    if (action == GLFW_PRESS) {
+      keys[key] = true;
+    }
+    
+    if (action == GLFW_RELEASE) {
+      keys[key] = false;
+    }
   }
+}
+
+
+void move(float delta)
+{
+  float camSpeed = 5.0f * delta;
+  
+  if (keys[GLFW_KEY_W]) {
+    camPos += cameraFront * camSpeed;
+  }
+  
+  if (keys[GLFW_KEY_A]) {
+    camPos -= glm::normalize(glm::cross(cameraFront, sceneUp)) * camSpeed;
+  }
+  
+  if (keys[GLFW_KEY_S]) {
+    camPos -= cameraFront * camSpeed;
+  }
+  
+  if (keys[GLFW_KEY_D]) {
+    camPos += glm::normalize(glm::cross(cameraFront, sceneUp)) * camSpeed;
+  }
+}
+
+
+void mouseCallback(GLFWwindow* window, double x, double y)
+{
+  if (isFirst) {
+    isFirst = false;
+    lastX = x;
+    lastY = y;
+  }
+  
+  float xOffset = lastX - x;
+  float yOffset = lastY - y;
+  
+  lastX = x;
+  lastY = y;
+  
+  float sensivity = 0.05;
+  
+  xOffset *= sensivity;
+  yOffset *= sensivity;
+  
+  yaw -= xOffset;
+  pitch += yOffset;
+  
+  if(pitch > 89.0f)
+    pitch =  89.0f;
+  if(pitch < -89.0f)
+    pitch = -89.0f;
+  
+  glm::vec3 front;
+  front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+  front.y = sin(glm::radians(pitch));
+  front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+  
+  cameraFront = glm::normalize(front);
 }
