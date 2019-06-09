@@ -12,6 +12,7 @@
 #include "engine/Program.hpp"
 #include "engine/VertexBufferObject.hpp"
 #include "engine/Texture.hpp"
+#include "engine/camera.hpp"
 
 float vertices[] = {
   -0.5f, -0.5f, -0.5f,
@@ -166,12 +167,12 @@ int main()
   model = glm::mat4(1.0f);
   model = glm::rotate(model, 20.0f, glm::vec3(1.0, 0.0, 0.0));
   
-   glm::mat4 view = glm::lookAt(camPos, camTarget, sceneUp);
+  Engine::Camera c(camPos, camTarget, sceneUp);
   
   glm::mat4 projection(1.0f);
   projection = glm::perspective(45.0f, GLfloat(width) / GLfloat(height), 0.1f, 100.0f);
   
-  glm::mat4 mvp = projection * view * model;
+  glm::mat4 mvp = projection * c.getView() * model;
   
   while (!glfwWindowShouldClose(window))
   {
@@ -191,7 +192,7 @@ int main()
     GLfloat camX = sin(glfwGetTime()) * radius;
     GLfloat camZ = cos(glfwGetTime()) * radius;
     
-    view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+    c.computeView(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
     
     int size = sizeof(cubePositions) / sizeof(glm::vec3);
     for (int i = 0; i < size; i++) {
@@ -199,7 +200,7 @@ int main()
       model = glm::translate(model, cubePositions[i]);
       GLfloat angle = 20.0f * i;
       model = glm::rotate(model, GLfloat(angle + glfwGetTime()), glm::vec3(1.0f, 0.3f, 0.5f));
-      mvp = projection * view * model;
+      mvp = projection * c.getView() * model;
       glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
       
       vbo.draw();
