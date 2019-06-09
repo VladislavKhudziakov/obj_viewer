@@ -158,12 +158,15 @@ int main()
   Engine::Texture t2("./awesomeface.png", 1);
   
   
+  glm::vec3 camPos(0.0f, 0.0f, 3.0f);
+  glm::vec3 camTarget(0.0f, 0.0f, 0.0f);
+  glm::vec3 sceneUp(0.0f, 1.0f, 0.0f);
+  
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
   model = glm::rotate(model, 20.0f, glm::vec3(1.0, 0.0, 0.0));
   
-  glm::mat4 view(1.0f);
-  view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+   glm::mat4 view = glm::lookAt(camPos, camTarget, sceneUp);
   
   glm::mat4 projection(1.0f);
   projection = glm::perspective(45.0f, GLfloat(width) / GLfloat(height), 0.1f, 100.0f);
@@ -183,6 +186,12 @@ int main()
     glUniform1i(glGetUniformLocation(p.get(), "u_tex2"), t2.getSlot());
     
     unsigned int u_mvp = glGetUniformLocation(p.get(), "u_MVP");
+    
+    GLfloat radius = 10.0f;
+    GLfloat camX = sin(glfwGetTime()) * radius;
+    GLfloat camZ = cos(glfwGetTime()) * radius;
+    
+    view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
     
     int size = sizeof(cubePositions) / sizeof(glm::vec3);
     for (int i = 0; i < size; i++) {
