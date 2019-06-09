@@ -13,6 +13,7 @@
 #include "engine/VertexBufferObject.hpp"
 #include "engine/Texture.hpp"
 #include "engine/camera.hpp"
+#include "engine/Scene.hpp"
 
 float vertices[] = {
   -0.5f, -0.5f, -0.5f,
@@ -138,39 +139,9 @@ float pitch = 0.0f;
 
 int main()
 {
-  glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  
-  GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
-  
-  if (window == nullptr)
-  {
-    std::cout << "Failed to create GLFW window" << std::endl;
-    glfwTerminate();
-    return -1;
-  }
-  
-  glfwMakeContextCurrent(window);
-  
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  
-  glewExperimental = GL_TRUE;
-  
-  if (glewInit() != GLEW_OK)
-  {
-    std::cout << "Failed to initialize GLEW" << std::endl;
-    return -1;
-  }
-  
-  int width, height;
-  glfwGetFramebufferSize(window, &width, &height);
-  
-  glViewport(0, 0, width, height);
-  
+  Engine::Scene scene(800, 600, "LearnOpenGL");
+  scene.init();
+
   Engine::Program p("./vShader.vert", "./fShader.frag");
   p.link();
   
@@ -186,16 +157,20 @@ int main()
   Engine::Camera c(camPos, camPos + camFront, sceneUp);
   
   glm::mat4 projection(1.0f);
+  
+  GLfloat width = scene.getWindowWidth();
+  GLfloat height = scene.getWindowHeight();
+  
   projection = glm::perspective(45.0f, GLfloat(width) / GLfloat(height), 0.1f, 100.0f);
   
   glm::mat4 mvp = projection * c.getView() * model;
   
-  glfwSetKeyCallback(window, keyCallback);
-  glfwSetCursorPosCallback(window, mouseCallback);
+  glfwSetKeyCallback(scene.getWindow(), keyCallback);
+  glfwSetCursorPosCallback(scene.getWindow(), mouseCallback);
   
   float lastTime = glfwGetTime();
   
-  while (!glfwWindowShouldClose(window))
+  while (!glfwWindowShouldClose(scene.getWindow()))
   {
     glfwPollEvents();
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -203,21 +178,23 @@ int main()
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
     
+    float now = glfwGetTime();
+    float delta = now - lastTime;
+    lastTime = now;
+
+    
     p.use();
     glUniform1i(glGetUniformLocation(p.get(), "u_tex"), t.getSlot());
     glUniform1i(glGetUniformLocation(p.get(), "u_tex2"), t2.getSlot());
     
     unsigned int u_mvp = glGetUniformLocation(p.get(), "u_MVP");
     
-    float now = glfwGetTime();
-    float delta = now - lastTime;
-    lastTime = now;
-    
     move(delta);
     
     c.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
     
     int size = sizeof(cubePositions) / sizeof(glm::vec3);
+    
     for (int i = 0; i < size; i++) {
       model = glm::mat4(1.0f);
       model = glm::translate(model, cubePositions[i]);
@@ -229,7 +206,7 @@ int main()
       vbo.draw();
     }
     
-    glfwSwapBuffers(window);
+    glfwSwapBuffers(scene.getWindow());
   }
   
   vbo.del();
