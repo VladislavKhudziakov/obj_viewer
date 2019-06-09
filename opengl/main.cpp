@@ -116,6 +116,8 @@ glm::vec3 cubePositions[] = {
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+
 
 int main()
 {
@@ -174,6 +176,8 @@ int main()
   
   glm::mat4 mvp = projection * c.getView() * model;
   
+  glfwSetKeyCallback(window, keyCallback);
+  
   while (!glfwWindowShouldClose(window))
   {
     glfwPollEvents();
@@ -212,4 +216,12 @@ int main()
   vbo.del();
   glfwTerminate();
   return 0;
+}
+
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+  if (key == GLFW_KEY_ESCAPE) {
+    glfwTerminate();
+  }
 }
