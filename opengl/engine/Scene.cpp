@@ -68,5 +68,34 @@ namespace Engine {
   {
     return windowHeight;
   }
+  
+  
+  void Scene::StartSceneLoop()
+  {
+    lastTime = glfwGetTime();
+    
+    while (!glfwWindowShouldClose(window))
+    {
+      glfwPollEvents();
+      glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+      glEnable(GL_DEPTH_TEST);
+      glClear(GL_COLOR_BUFFER_BIT);
+      glClear(GL_DEPTH_BUFFER_BIT);
+  
+      float now = glfwGetTime();
+      float delta = now - lastTime;
+      lastTime = now;
+      
+      onUpdate(delta);
+      
+      glfwSwapBuffers(window);
+    }
+  }
+  
+  
+  void Scene::setSceneLoopUpdateCallback(std::function<void(float)> callback)
+  {
+    onUpdate = callback;
+  }
 }
 

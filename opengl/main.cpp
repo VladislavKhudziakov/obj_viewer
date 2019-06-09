@@ -14,6 +14,7 @@
 #include "engine/Texture.hpp"
 #include "engine/camera.hpp"
 #include "engine/Scene.hpp"
+#include <functional>
 
 float vertices[] = {
   -0.5f, -0.5f, -0.5f,
@@ -168,21 +169,8 @@ int main()
   glfwSetKeyCallback(scene.getWindow(), keyCallback);
   glfwSetCursorPosCallback(scene.getWindow(), mouseCallback);
   
-  float lastTime = glfwGetTime();
   
-  while (!glfwWindowShouldClose(scene.getWindow()))
-  {
-    glfwPollEvents();
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glClear(GL_DEPTH_BUFFER_BIT);
-    
-    float now = glfwGetTime();
-    float delta = now - lastTime;
-    lastTime = now;
-
-    
+  scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
     glUniform1i(glGetUniformLocation(p.get(), "u_tex"), t.getSlot());
     glUniform1i(glGetUniformLocation(p.get(), "u_tex2"), t2.getSlot());
@@ -205,9 +193,10 @@ int main()
       
       vbo.draw();
     }
-    
-    glfwSwapBuffers(scene.getWindow());
-  }
+  });
+  
+  
+  scene.StartSceneLoop();
   
   vbo.del();
   glfwTerminate();
