@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		0D03123722A870C900D6077C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03123622A870C900D6077C /* main.cpp */; };
+		0D03123F22A870FA00D6077C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D03123E22A870FA00D6077C /* OpenGL.framework */; };
+		0D03124122A8711F00D6077C /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D03124022A8711F00D6077C /* libGLEW.2.1.0.dylib */; };
+		0D03124322A8713900D6077C /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D03124222A8713800D6077C /* libglfw.3.3.dylib */; };
+		0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D64BB22A9A49B0020A028 /* Shader.cpp */; };
+		0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D64BE22A9AC3B0020A028 /* Program.cpp */; };
+		0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */; };
+		0D769C4F22AA9215006F9C42 /* bufferData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4D22AA9215006F9C42 /* bufferData.cpp */; };
+		0D769C5722AC1FEA006F9C42 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */; };
+		0D769C5A22AC235C006F9C42 /* container.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D769C5922AC2356006F9C42 /* container.jpg */; };
+		0D769C5C22AC2778006F9C42 /* awesomeface.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D769C5B22AC275F006F9C42 /* awesomeface.png */; };
+		0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C5D22AD11FB006F9C42 /* Texture.cpp */; };
+		0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3A22AA56FC009CDC5F /* fShader.frag */; };
+		0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3B22AA56FC009CDC5F /* vShader.vert */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,11 +33,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		0D868F3822AA5688009CDC5F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				0D769C5C22AC2778006F9C42 /* awesomeface.png in CopyFiles */,
+				0D769C5A22AC235C006F9C42 /* container.jpg in CopyFiles */,
+				0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */,
+				0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0D03123322A870C900D6077C /* opengl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = opengl; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D03123622A870C900D6077C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		0D03123E22A870FA00D6077C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		0D03124022A8711F00D6077C /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
+		0D03124222A8713800D6077C /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		0D0D64BB22A9A49B0020A028 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		0D0D64BC22A9A49B0020A028 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		0D0D64BE22A9AC3B0020A028 /* Program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
+		0D0D64BF22A9AC3B0020A028 /* Program.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Program.hpp; sourceTree = "<group>"; };
+		0D0D64C122A9B5130020A028 /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = SOURCE_ROOT; };
+		0D0D64C222A9B5210020A028 /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = SOURCE_ROOT; };
+		0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBufferObject.cpp; sourceTree = "<group>"; };
+		0D769C4B22AA7DEF006F9C42 /* VertexBufferObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferObject.hpp; sourceTree = "<group>"; };
+		0D769C4D22AA9215006F9C42 /* bufferData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bufferData.cpp; sourceTree = "<group>"; };
+		0D769C4E22AA9215006F9C42 /* bufferData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bufferData.hpp; sourceTree = "<group>"; };
+		0D769C5222AC1D95006F9C42 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../../../../../../usr/local/lib/libSOIL.dylib; sourceTree = "<group>"; };
+		0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../../../../../../usr/local/Cellar/libSOIL/libSOIL.dylib; sourceTree = "<group>"; };
+		0D769C5922AC2356006F9C42 /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
+		0D769C5B22AC275F006F9C42 /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awesomeface.png; sourceTree = "<group>"; };
+		0D769C5D22AD11FB006F9C42 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		0D769C5E22AD11FB006F9C42 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = "<group>"; };
+		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +79,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D769C5722AC1FEA006F9C42 /* libSOIL.dylib in Frameworks */,
+				0D03124322A8713900D6077C /* libglfw.3.3.dylib in Frameworks */,
+				0D03124122A8711F00D6077C /* libGLEW.2.1.0.dylib in Frameworks */,
+				0D03123F22A870FA00D6077C /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +92,11 @@
 		0D03122A22A870C900D6077C = {
 			isa = PBXGroup;
 			children = (
+				0D868F3A22AA56FC009CDC5F /* fShader.frag */,
+				0D868F3B22AA56FC009CDC5F /* vShader.vert */,
 				0D03123522A870C900D6077C /* opengl */,
 				0D03123422A870C900D6077C /* Products */,
+				0D03123D22A870FA00D6077C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +111,59 @@
 		0D03123522A870C900D6077C /* opengl */ = {
 			isa = PBXGroup;
 			children = (
+				0D769C5822AC22E2006F9C42 /* resources */,
+				0D868F3922AA56CB009CDC5F /* shaders */,
+				0D0D64BA22A9A4860020A028 /* engine */,
 				0D03123622A870C900D6077C /* main.cpp */,
 			);
 			path = opengl;
+			sourceTree = "<group>";
+		};
+		0D03123D22A870FA00D6077C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D769C5222AC1D95006F9C42 /* libSOIL.dylib */,
+				0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */,
+				0D03124222A8713800D6077C /* libglfw.3.3.dylib */,
+				0D03124022A8711F00D6077C /* libGLEW.2.1.0.dylib */,
+				0D03123E22A870FA00D6077C /* OpenGL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0D0D64BA22A9A4860020A028 /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				0D0D64BB22A9A49B0020A028 /* Shader.cpp */,
+				0D0D64BC22A9A49B0020A028 /* Shader.hpp */,
+				0D0D64BE22A9AC3B0020A028 /* Program.cpp */,
+				0D0D64BF22A9AC3B0020A028 /* Program.hpp */,
+				0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */,
+				0D769C4B22AA7DEF006F9C42 /* VertexBufferObject.hpp */,
+				0D769C4D22AA9215006F9C42 /* bufferData.cpp */,
+				0D769C4E22AA9215006F9C42 /* bufferData.hpp */,
+				0D769C5D22AD11FB006F9C42 /* Texture.cpp */,
+				0D769C5E22AD11FB006F9C42 /* Texture.hpp */,
+			);
+			path = engine;
+			sourceTree = "<group>";
+		};
+		0D769C5822AC22E2006F9C42 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				0D769C5922AC2356006F9C42 /* container.jpg */,
+				0D769C5B22AC275F006F9C42 /* awesomeface.png */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		0D868F3922AA56CB009CDC5F /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				0D0D64C222A9B5210020A028 /* vShader.vert */,
+				0D0D64C122A9B5130020A028 /* fShader.frag */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -72,6 +176,7 @@
 				0D03122F22A870C900D6077C /* Sources */,
 				0D03123022A870C900D6077C /* Frameworks */,
 				0D03123122A870C900D6077C /* CopyFiles */,
+				0D868F3822AA5688009CDC5F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -118,6 +223,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */,
+				0D769C4F22AA9215006F9C42 /* bufferData.cpp in Sources */,
+				0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */,
+				0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */,
+				0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */,
 				0D03123722A870C900D6077C /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,6 +351,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7M958ZX4GY;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/2.1.0/lib,
+					/usr/local/Cellar/glfw/3.3/lib,
+					/usr/local/Cellar/libSOIL,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -250,6 +367,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7M958ZX4GY;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/2.1.0/lib,
+					/usr/local/Cellar/glfw/3.3/lib,
+					/usr/local/Cellar/libSOIL,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
