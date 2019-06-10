@@ -225,10 +225,6 @@ int main()
   scene.setKeyCallback(keyCallback);
   scene.setCursorPosCallback(mouseCallback);
   
-  
-//  glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-//  glm::vec3 cubeColor(1.0f, 0.5f, 0.31f);
-  
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
     glUniform1i(glGetUniformLocation(p.get(), "u_tex"), t.getSlot());

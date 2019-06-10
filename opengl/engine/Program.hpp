@@ -26,6 +26,10 @@ namespace Engine {
     void use();
     bool isLinked();
     int get();
+    void set1i();
+    void set1f();
+    void setVec3();
+    void setMat4();
   };
 }
 

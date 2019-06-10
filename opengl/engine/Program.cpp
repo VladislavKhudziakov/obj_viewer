@@ -78,4 +78,28 @@ namespace Engine {
   {
     return program;
   }
+  
+  
+  void Program::set1i()
+  {
+    
+  }
+  
+  
+  void Program::set1f()
+  {
+    
+  }
+  
+  
+  void Program::setVec3()
+  {
+    
+  }
+  
+  
+  void Program::setMat4()
+  {
+    
+  }
 }
