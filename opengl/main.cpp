@@ -61,6 +61,51 @@ float vertices[] = {
 };
 
 
+float normals[] = {
+  0.0f,  0.0f, -1.0f,
+  0.0f,  0.0f, -1.0f,
+  0.0f,  0.0f, -1.0f,
+  0.0f,  0.0f, -1.0f,
+  0.0f,  0.0f, -1.0f,
+  0.0f,  0.0f, -1.0f,
+  
+  0.0f,  0.0f,  1.0f,
+  0.0f,  0.0f,  1.0f,
+  0.0f,  0.0f,  1.0f,
+  0.0f,  0.0f,  1.0f,
+  0.0f,  0.0f,  1.0f,
+  0.0f,  0.0f,  1.0f,
+  
+  -1.0f,  0.0f,  0.0f,
+  -1.0f,  0.0f,  0.0f,
+  -1.0f,  0.0f,  0.0f,
+  -1.0f,  0.0f,  0.0f,
+  -1.0f,  0.0f,  0.0f,
+  -1.0f,  0.0f,  0.0f,
+  
+  1.0f,  0.0f,  0.0f,
+  1.0f,  0.0f,  0.0f,
+  1.0f,  0.0f,  0.0f,
+  1.0f,  0.0f,  0.0f,
+  1.0f,  0.0f,  0.0f,
+  1.0f,  0.0f,  0.0f,
+  
+  0.0f, -1.0f,  0.0f,
+  0.0f, -1.0f,  0.0f,
+  0.0f, -1.0f,  0.0f,
+  0.0f, -1.0f,  0.0f,
+  0.0f, -1.0f,  0.0f,
+  0.0f, -1.0f,  0.0f,
+  
+  0.0f,  1.0f,  0.0f,
+  0.0f,  1.0f,  0.0f,
+  0.0f,  1.0f,  0.0f,
+  0.0f,  1.0f,  0.0f,
+  0.0f,  1.0f,  0.0f,
+  0.0f,  1.0f,  0.0f
+};
+
+
 float uv[] = {
   0.0f, 0.0f,
   1.0f, 0.0f,
@@ -124,6 +169,11 @@ glm::vec3 camPos(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront(0.0f, 0.0f, -1.0f);
 glm::vec3 sceneUp(0.0f, 1.0f, 0.0f);
 
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightColor(1.0f);
+float ambientStr = 0.1f;
+float specularStr = 0.5f;
+
 bool keys[1024];
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -138,6 +188,8 @@ float lastY;
 float yaw = -90.0f;
 float pitch = 0.0f;
 
+
+
 int main()
 {
   Engine::Scene scene(800, 600, "LearnOpenGL");
@@ -146,14 +198,18 @@ int main()
   Engine::Program p("./vShader.vert", "./fShader.frag");
   p.link();
   
-  Engine::VBO vbo(vertices, sizeof(vertices), uv, sizeof(uv));
+  Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
+  p2.link();
+  
+  Engine::VBO vbo(vertices, sizeof(vertices), uv, sizeof(uv), normals, sizeof(normals));
+  
+  Engine::VBO vbo2(vertices, sizeof(vertices));
   
   Engine::Texture t("./container.jpg");
   Engine::Texture t2("./awesomeface.png", 1);
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
-  model = glm::rotate(model, 20.0f, glm::vec3(1.0, 0.0, 0.0));
   
   Engine::Camera camera(camPos, camPos + camFront, sceneUp);
   
@@ -170,29 +226,51 @@ int main()
   scene.setCursorPosCallback(mouseCallback);
   
   
+//  glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+//  glm::vec3 cubeColor(1.0f, 0.5f, 0.31f);
+  
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
     glUniform1i(glGetUniformLocation(p.get(), "u_tex"), t.getSlot());
     glUniform1i(glGetUniformLocation(p.get(), "u_tex2"), t2.getSlot());
     
     unsigned int u_mvp = glGetUniformLocation(p.get(), "u_MVP");
-    
+    unsigned int u_ambientStr = glGetUniformLocation(p.get(), "u_ambientStr");
+    unsigned int u_lightColor = glGetUniformLocation(p.get(), "u_lightColor");
+    unsigned int u_lightPos = glGetUniformLocation(p.get(), "u_lightPos");
+    unsigned int u_transposed_modes = glGetUniformLocation(p.get(), "u_transposed_modes");
+    unsigned int u_specularStr = glGetUniformLocation(p.get(), "u_specularStr");
+    unsigned int u_viewPos = glGetUniformLocation(p.get(), "u_viewPos");
+    unsigned int u_model = glGetUniformLocation(p.get(), "u_model");
     move(delta);
     
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
+    model = glm::mat4(1.0f);
+    model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(1.0, 0.0, 0.0));
+    float lightPosX = sin(glm::radians(glfwGetTime() * 50.0f)) * 2.5;
+    float lightPosZ = cos(glm::radians(glfwGetTime() * 50.0f)) * 2.5;
+    lightPos = glm::vec3(lightPosX, lightPos.y, lightPosZ);
+    mvp = projection * camera.getView() * model;
+    glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
+    glUniform1f(u_ambientStr, ambientStr);
+    glUniform1f(u_specularStr, specularStr);
+    glUniform3fv(u_lightColor, 1, glm::value_ptr(lightColor));
+    glUniform3fv(u_lightPos, 1, glm::value_ptr(lightPos));
+    glUniform3fv(u_viewPos, 1, glm::value_ptr(camPos));
+    glUniformMatrix4fv(u_transposed_modes , 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(model))));
+    glUniformMatrix4fv(u_model , 1, GL_FALSE, glm::value_ptr(model));
+    vbo.draw();
     
-    int size = sizeof(cubePositions) / sizeof(glm::vec3);
+    p2.use();
+    u_mvp = glGetUniformLocation(p2.get(), "u_MVP");
     
-    for (int i = 0; i < size; i++) {
-      model = glm::mat4(1.0f);
-      model = glm::translate(model, cubePositions[i]);
-      GLfloat angle = 20.0f * i;
-      model = glm::rotate(model, GLfloat(angle + glfwGetTime()), glm::vec3(1.0f, 0.3f, 0.5f));
-      mvp = projection * camera.getView() * model;
-      glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
-      
-      vbo.draw();
-    }
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, lightPos);
+    model = glm::scale(model, glm::vec3(0.2f));
+    mvp = projection * camera.getView() * model;
+    
+    glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
+    vbo2.draw();
   });
   
   

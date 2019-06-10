@@ -10,7 +10,7 @@
 
 namespace Engine {
   
-  VBO::VBO(float vertices[], int vertSize, float uv[], int uvSize)
+  VBO::VBO(float vertices[], int vertSize, float uv[], int uvSize, float normals[], int normalsSize)
   {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -21,11 +21,21 @@ namespace Engine {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     
-    glGenBuffers(1, &uvBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-    glBufferData(GL_ARRAY_BUFFER, uvSize, uv, GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
+    if (uv) {
+      glGenBuffers(1, &uvBuffer);
+      glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
+      glBufferData(GL_ARRAY_BUFFER, uvSize, uv, GL_STATIC_DRAW);
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+      glEnableVertexAttribArray(1);
+    }
+    
+    if (normals) {
+      glGenBuffers(1, &normalsBuffer);
+      glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
+      glBufferData(GL_ARRAY_BUFFER, normalsSize, normals, GL_STATIC_DRAW);
+      glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+      glEnableVertexAttribArray(2);
+    }
     
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

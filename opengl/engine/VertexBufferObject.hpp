@@ -24,10 +24,12 @@ namespace Engine {
     unsigned int vao;
     unsigned int vertBuffer;
     unsigned int uvBuffer;
+    unsigned int normalsBuffer;
+    
     int vertBufferSize;
     
   public:
-    VBO(float vertices[], int vertSize, float uv[], int uvSize);
+    VBO(float vertices[], int vertSize, float uv[] = nullptr, int uvSize = 0, float normals[] = nullptr, int normalsSize = 0);
     
     void use();
     void unUse();
