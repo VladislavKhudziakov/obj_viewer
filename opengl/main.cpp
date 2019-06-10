@@ -155,19 +155,19 @@ int main()
   model = glm::mat4(1.0f);
   model = glm::rotate(model, 20.0f, glm::vec3(1.0, 0.0, 0.0));
   
-  Engine::Camera c(camPos, camPos + camFront, sceneUp);
+  Engine::Camera camera(camPos, camPos + camFront, sceneUp);
   
   glm::mat4 projection(1.0f);
   
   GLfloat width = scene.getWindowWidth();
   GLfloat height = scene.getWindowHeight();
   
-  projection = glm::perspective(45.0f, GLfloat(width) / GLfloat(height), 0.1f, 100.0f);
+  projection = glm::perspective(45.0f, width / height, 0.1f, 100.0f);
   
-  glm::mat4 mvp = projection * c.getView() * model;
+  glm::mat4 mvp = projection * camera.getView() * model;
   
-  glfwSetKeyCallback(scene.getWindow(), keyCallback);
-  glfwSetCursorPosCallback(scene.getWindow(), mouseCallback);
+  scene.setKeyCallback(keyCallback);
+  scene.setCursorPosCallback(mouseCallback);
   
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
@@ -179,7 +179,7 @@ int main()
     
     move(delta);
     
-    c.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
+    camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
     
     int size = sizeof(cubePositions) / sizeof(glm::vec3);
     
@@ -188,7 +188,7 @@ int main()
       model = glm::translate(model, cubePositions[i]);
       GLfloat angle = 20.0f * i;
       model = glm::rotate(model, GLfloat(angle + glfwGetTime()), glm::vec3(1.0f, 0.3f, 0.5f));
-      mvp = projection * c.getView() * model;
+      mvp = projection * camera.getView() * model;
       glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
       
       vbo.draw();

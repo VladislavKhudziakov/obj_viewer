@@ -74,6 +74,9 @@ namespace Engine {
   {
     lastTime = glfwGetTime();
     
+    if (keyCallback) glfwSetKeyCallback(window, keyCallback);
+    if (cursorPosCallback) glfwSetCursorPosCallback(window, cursorPosCallback);
+    
     while (!glfwWindowShouldClose(window))
     {
       glfwPollEvents();
@@ -96,6 +99,18 @@ namespace Engine {
   void Scene::setSceneLoopUpdateCallback(std::function<void(float)> callback)
   {
     onUpdate = callback;
+  }
+  
+  
+  void Scene::setKeyCallback(void(*callback)(GLFWwindow*, int, int, int, int))
+  {
+    keyCallback = callback;
+  }
+  
+  
+  void Scene::setCursorPosCallback(void(*callback)(GLFWwindow*, double, double))
+  {
+    cursorPosCallback = callback;
   }
 }
 

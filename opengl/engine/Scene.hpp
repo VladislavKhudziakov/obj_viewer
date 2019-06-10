@@ -27,6 +27,9 @@ namespace Engine
     float lastTime;
     std::function<void(float)> onUpdate;
     
+    void(*keyCallback)(GLFWwindow*, int, int, int, int);
+    void(*cursorPosCallback)(GLFWwindow*, double, double);
+    
   public:
     Scene(int, int, const std::string&);
     int init();
@@ -38,6 +41,8 @@ namespace Engine
     
     void StartSceneLoop();
     void setSceneLoopUpdateCallback(std::function<void(float)>);
+    void setKeyCallback(void(*callback)(GLFWwindow*, int, int, int, int));
+    void setCursorPosCallback(void(*callback)(GLFWwindow*, double, double));
   };
 }
 
