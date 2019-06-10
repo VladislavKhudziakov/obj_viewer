@@ -227,45 +227,40 @@ int main()
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
-    glUniform1i(glGetUniformLocation(p.get(), "u_tex"), t.getSlot());
-    glUniform1i(glGetUniformLocation(p.get(), "u_tex2"), t2.getSlot());
+    p.set1i("u_tex", t.getSlot());
+    p.set1i("u_tex2", t2.getSlot());
     
-    unsigned int u_mvp = glGetUniformLocation(p.get(), "u_MVP");
-    unsigned int u_ambientStr = glGetUniformLocation(p.get(), "u_ambientStr");
-    unsigned int u_lightColor = glGetUniformLocation(p.get(), "u_lightColor");
-    unsigned int u_lightPos = glGetUniformLocation(p.get(), "u_lightPos");
-    unsigned int u_transposed_modes = glGetUniformLocation(p.get(), "u_transposed_modes");
-    unsigned int u_specularStr = glGetUniformLocation(p.get(), "u_specularStr");
-    unsigned int u_viewPos = glGetUniformLocation(p.get(), "u_viewPos");
-    unsigned int u_model = glGetUniformLocation(p.get(), "u_model");
     move(delta);
     
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
+    
     model = glm::mat4(1.0f);
     model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(1.0, 0.0, 0.0));
+    
     float lightPosX = sin(glm::radians(glfwGetTime() * 50.0f)) * 2.5;
     float lightPosZ = cos(glm::radians(glfwGetTime() * 50.0f)) * 2.5;
     lightPos = glm::vec3(lightPosX, lightPos.y, lightPosZ);
     mvp = projection * camera.getView() * model;
-    glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
-    glUniform1f(u_ambientStr, ambientStr);
-    glUniform1f(u_specularStr, specularStr);
-    glUniform3fv(u_lightColor, 1, glm::value_ptr(lightColor));
-    glUniform3fv(u_lightPos, 1, glm::value_ptr(lightPos));
-    glUniform3fv(u_viewPos, 1, glm::value_ptr(camPos));
-    glUniformMatrix4fv(u_transposed_modes , 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(model))));
-    glUniformMatrix4fv(u_model , 1, GL_FALSE, glm::value_ptr(model));
+    
+    p.setMat4("u_MVP", mvp);
+    p.set1f("u_ambientStr", ambientStr);
+    p.set1f("u_specularStr", specularStr);
+    p.setVec3("u_lightColor", lightColor);
+    p.setVec3("u_lightPos", lightPos);
+    p.setVec3("u_viewPos", camPos);
+    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
+    p.setMat4("u_model", model);
+    
     vbo.draw();
     
     p2.use();
-    u_mvp = glGetUniformLocation(p2.get(), "u_MVP");
     
     model = glm::mat4(1.0f);
     model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.2f));
     mvp = projection * camera.getView() * model;
     
-    glUniformMatrix4fv(u_mvp , 1, GL_FALSE, glm::value_ptr(mvp));
+    p2.setMat4("u_MVP", mvp);
     vbo2.draw();
   });
   

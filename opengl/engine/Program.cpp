@@ -80,26 +80,30 @@ namespace Engine {
   }
   
   
-  void Program::set1i()
+  void Program::set1i(const std::string& name, int val)
   {
-    
+    unsigned int uniform = glGetUniformLocation(program, name.c_str());
+    glUniform1i(uniform, val);
   }
   
   
-  void Program::set1f()
+  void Program::set1f(const std::string& name, float val)
   {
-    
+    unsigned int uniform = glGetUniformLocation(program, name.c_str());
+    glUniform1f(uniform, val);
   }
   
   
-  void Program::setVec3()
+  void Program::setVec3(const std::string& name, const glm::vec3& val)
   {
-    
+    unsigned int uniform = glGetUniformLocation(program, name.c_str());
+    glUniform3fv(uniform, 1, glm::value_ptr(val));
   }
   
   
-  void Program::setMat4()
+  void Program::setMat4(const std::string& name, const glm::mat4& val)
   {
-    
+    unsigned int uniform = glGetUniformLocation(program, name.c_str());
+    glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(val));
   }
 }

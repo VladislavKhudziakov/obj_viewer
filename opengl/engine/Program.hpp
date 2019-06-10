@@ -11,6 +11,16 @@
 
 #include "Shader.hpp"
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <SOIL/SOIL.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <string>
+
 namespace Engine {
   class Program
   {
@@ -26,10 +36,10 @@ namespace Engine {
     void use();
     bool isLinked();
     int get();
-    void set1i();
-    void set1f();
-    void setVec3();
-    void setMat4();
+    void set1i(const std::string&, int);
+    void set1f(const std::string&, float);
+    void setVec3(const std::string&, const glm::vec3&);
+    void setMat4(const std::string&, const glm::mat4&);
   };
 }
 
