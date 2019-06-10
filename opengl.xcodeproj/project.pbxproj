@@ -23,6 +23,7 @@
 		0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C5D22AD11FB006F9C42 /* Texture.cpp */; };
 		0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3A22AA56FC009CDC5F /* fShader.frag */; };
 		0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3B22AA56FC009CDC5F /* vShader.vert */; };
+		0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D90CEDA22AE426500E5789B /* fShaderLight.frag */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */,
 				0D769C5C22AC2778006F9C42 /* awesomeface.png in CopyFiles */,
 				0D769C5A22AC235C006F9C42 /* container.jpg in CopyFiles */,
 				0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */,
@@ -78,6 +80,7 @@
 		0D769C5E22AD11FB006F9C42 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = "<group>"; };
 		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = "<group>"; };
+		0D90CEDA22AE426500E5789B /* fShaderLight.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShaderLight.frag; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				0D0D64C222A9B5210020A028 /* vShader.vert */,
+				0D90CEDA22AE426500E5789B /* fShaderLight.frag */,
 				0D0D64C122A9B5130020A028 /* fShader.frag */,
 			);
 			path = shaders;
