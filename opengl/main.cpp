@@ -150,18 +150,6 @@ float uv[] = {
   0.0f, 1.0f
 };
 
-glm::vec3 cubePositions[] = {
-  glm::vec3( 0.0f,  0.0f,  0.0f),
-  glm::vec3( 2.0f,  5.0f, -15.0f),
-  glm::vec3(-1.5f, -2.2f, -2.5f),
-  glm::vec3(-3.8f, -2.0f, -12.3f),
-  glm::vec3( 2.4f, -0.4f, -3.5f),
-  glm::vec3(-1.7f,  3.0f, -7.5f),
-  glm::vec3( 1.3f, -2.0f, -2.5f),
-  glm::vec3( 1.5f,  2.0f, -2.5f),
-  glm::vec3( 1.5f,  0.2f, -1.5f),
-  glm::vec3(-1.3f,  1.0f, -1.5f)
-};
 
 float camFront;
 
@@ -171,8 +159,6 @@ glm::vec3 sceneUp(0.0f, 1.0f, 0.0f);
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 glm::vec3 lightColor(1.0f);
-float ambientStr = 0.1f;
-float specularStr = 0.5f;
 
 bool keys[1024];
 
@@ -227,8 +213,8 @@ int main()
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
-    p.set1i("u_tex", t.getSlot());
-    p.set1i("u_tex2", t2.getSlot());
+    p.setInt("u_tex", t.getSlot());
+    p.setInt("u_tex2", t2.getSlot());
     
     move(delta);
     
@@ -243,10 +229,17 @@ int main()
     mvp = projection * camera.getView() * model;
     
     p.setMat4("u_MVP", mvp);
-    p.set1f("u_ambientStr", ambientStr);
-    p.set1f("u_specularStr", specularStr);
-    p.setVec3("u_lightColor", lightColor);
-    p.setVec3("u_lightPos", lightPos);
+    
+    p.setVec3("material.ambient",  glm::vec3(1.0f, 0.5f, 0.31f));
+    p.setVec3("material.diffuse",  glm::vec3(1.0f, 0.5f, 0.31f));
+    p.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+    p.setFloat("material.shininess", 32.0f);
+    
+    p.setVec3("light.ambient",  glm::vec3(0.2f, 0.2f, 0.2f));
+    p.setVec3("light.diffuse",  glm::vec3(0.5f, 0.5f, 0.5f));
+    p.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+    p.setVec3("light.position", lightPos);
+    
     p.setVec3("u_viewPos", camPos);
     p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
     p.setMat4("u_model", model);

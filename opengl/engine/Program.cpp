@@ -80,14 +80,14 @@ namespace Engine {
   }
   
   
-  void Program::set1i(const std::string& name, int val)
+  void Program::setInt(const std::string& name, int val)
   {
     unsigned int uniform = glGetUniformLocation(program, name.c_str());
     glUniform1i(uniform, val);
   }
   
   
-  void Program::set1f(const std::string& name, float val)
+  void Program::setFloat(const std::string& name, float val)
   {
     unsigned int uniform = glGetUniformLocation(program, name.c_str());
     glUniform1f(uniform, val);

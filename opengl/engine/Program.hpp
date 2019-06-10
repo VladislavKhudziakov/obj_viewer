@@ -36,8 +36,8 @@ namespace Engine {
     void use();
     bool isLinked();
     int get();
-    void set1i(const std::string&, int);
-    void set1f(const std::string&, float);
+    void setInt(const std::string&, int);
+    void setFloat(const std::string&, float);
     void setVec3(const std::string&, const glm::vec3&);
     void setMat4(const std::string&, const glm::mat4&);
   };
