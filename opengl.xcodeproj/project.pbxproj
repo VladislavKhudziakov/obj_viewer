@@ -24,6 +24,9 @@
 		0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3A22AA56FC009CDC5F /* fShader.frag */; };
 		0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3B22AA56FC009CDC5F /* vShader.vert */; };
 		0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D90CEDA22AE426500E5789B /* fShaderLight.frag */; };
+		0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20622AEF01600BDFF16 /* container2.png */; };
+		0DF5B20922AEF64F00BDFF16 /* container2_specular.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20822AEF26B00BDFF16 /* container2_specular.png */; };
+		0DF5B20B22AEF7F400BDFF16 /* matrix.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +45,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				0DF5B20B22AEF7F400BDFF16 /* matrix.jpg in CopyFiles */,
+				0DF5B20922AEF64F00BDFF16 /* container2_specular.png in CopyFiles */,
+				0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */,
 				0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */,
 				0D769C5C22AC2778006F9C42 /* awesomeface.png in CopyFiles */,
 				0D769C5A22AC235C006F9C42 /* container.jpg in CopyFiles */,
@@ -81,6 +87,9 @@
 		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = "<group>"; };
 		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = "<group>"; };
 		0D90CEDA22AE426500E5789B /* fShaderLight.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShaderLight.frag; sourceTree = "<group>"; };
+		0DF5B20622AEF01600BDFF16 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
+		0DF5B20822AEF26B00BDFF16 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
+		0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = matrix.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +174,9 @@
 			isa = PBXGroup;
 			children = (
 				0D769C5922AC2356006F9C42 /* container.jpg */,
+				0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */,
+				0DF5B20622AEF01600BDFF16 /* container2.png */,
+				0DF5B20822AEF26B00BDFF16 /* container2_specular.png */,
 				0D769C5B22AC275F006F9C42 /* awesomeface.png */,
 			);
 			path = resources;
