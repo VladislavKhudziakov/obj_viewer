@@ -14,6 +14,7 @@
 		0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D64BB22A9A49B0020A028 /* Shader.cpp */; };
 		0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D64BE22A9AC3B0020A028 /* Program.cpp */; };
 		0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4ED4B822AD4CB10067276E /* camera.cpp */; };
+		0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4ED4BB22AD61240067276E /* Scene.cpp */; };
 		0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */; };
 		0D769C4F22AA9215006F9C42 /* bufferData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4D22AA9215006F9C42 /* bufferData.cpp */; };
 		0D769C5722AC1FEA006F9C42 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */; };
@@ -63,6 +64,8 @@
 		0D0D64C222A9B5210020A028 /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = SOURCE_ROOT; };
 		0D4ED4B822AD4CB10067276E /* camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		0D4ED4B922AD4CB10067276E /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
+		0D4ED4BB22AD61240067276E /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		0D4ED4BC22AD61240067276E /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
 		0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBufferObject.cpp; sourceTree = "<group>"; };
 		0D769C4B22AA7DEF006F9C42 /* VertexBufferObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferObject.hpp; sourceTree = "<group>"; };
 		0D769C4D22AA9215006F9C42 /* bufferData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bufferData.cpp; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				0D769C5E22AD11FB006F9C42 /* Texture.hpp */,
 				0D4ED4B822AD4CB10067276E /* camera.cpp */,
 				0D4ED4B922AD4CB10067276E /* camera.hpp */,
+				0D4ED4BC22AD61240067276E /* Scene.hpp */,
+				0D4ED4BB22AD61240067276E /* Scene.cpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */,
 				0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */,
 				0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */,
 				0D769C4F22AA9215006F9C42 /* bufferData.cpp in Sources */,
