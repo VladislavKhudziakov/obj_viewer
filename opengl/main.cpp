@@ -7,14 +7,20 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include <iostream>
+#include <string>
+#include <functional>
 
 #include "engine/Program.hpp"
 #include "engine/VertexBufferObject.hpp"
 #include "engine/Texture.hpp"
 #include "engine/camera.hpp"
 #include "engine/Scene.hpp"
-#include <functional>
+
 
 float vertices[] = {
   -0.5f, -0.5f, -0.5f,
@@ -150,6 +156,26 @@ float uv[] = {
   0.0f, 1.0f
 };
 
+glm::vec3 pointLightPositions[] = {
+  glm::vec3( 0.7f,  0.2f,  2.0f),
+  glm::vec3( 2.3f, -3.3f, -4.0f),
+  glm::vec3(-4.0f,  2.0f, -12.0f),
+  glm::vec3( 0.0f,  0.0f, -3.0f)
+};
+
+glm::vec3 cubePositions[] = {
+  glm::vec3( 0.0f,  0.0f,  0.0f),
+  glm::vec3( 2.0f,  5.0f, -15.0f),
+  glm::vec3(-1.5f, -2.2f, -2.5f),
+  glm::vec3(-3.8f, -2.0f, -12.3f),
+  glm::vec3( 2.4f, -0.4f, -3.5f),
+  glm::vec3(-1.7f,  3.0f, -7.5f),
+  glm::vec3( 1.3f, -2.0f, -2.5f),
+  glm::vec3( 1.5f,  2.0f, -2.5f),
+  glm::vec3( 1.5f,  0.2f, -1.5f),
+  glm::vec3(-1.3f,  1.0f, -1.5f)
+};
+
 
 float camFront;
 
@@ -214,6 +240,11 @@ int main()
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
+    
+//    float sinX = sin(glm::radians(glfwGetTime() * 50.0f)) * 1.5;
+//    float cosX = cos(glm::radians(glfwGetTime() * 50.0f)) * 1.5;
+//    lightPos = glm::vec3(sinX, lightPos.y, cosX);
+    
     p.setInt("material.diffuse", t.getSlot());
     p.setInt("material.specular", t2.getSlot());
     p.setInt("u_matrix", t3.getSlot());
@@ -222,41 +253,80 @@ int main()
     
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
     
-    model = glm::mat4(1.0f);
-//    model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(1.0, 0.0, 0.0));
-    
-    float lightPosX = sin(glm::radians(glfwGetTime() * 50.0f)) * 2.5;
-    float lightPosZ = cos(glm::radians(glfwGetTime() * 50.0f)) * 2.5;
-    lightPos = glm::vec3(lightPosX, lightPos.y, lightPosZ);
-    mvp = projection * camera.getView() * model;
-    
-    p.setMat4("u_MVP", mvp);
-    
     p.setVec3("material.ambient",  glm::vec3(1.0f, 0.5f, 0.31f));
     p.setVec3("material.diffuse",  glm::vec3(1.0f, 0.5f, 0.31f));
     p.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-    p.setFloat("material.shininess", 16.0f);
+    p.setFloat("material.shininess", 32.0f);
     
-    p.setVec3("light.ambient",  glm::vec3(0.2f, 0.2f, 0.2f));
-    p.setVec3("light.diffuse",  glm::vec3(0.5f, 0.5f, 0.5f));
-    p.setVec3("light.specular", glm::vec3(2.0f, 2.0f, 2.0f));
-    p.setVec3("light.position", lightPos);
+    p.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+    p.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+    p.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+    p.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+    
+//    std::string pointLightTemplate = "pointLights[" + std::to_string(0) + "]";
+//
+//    p.setVec3(pointLightTemplate + ".position", lightPos);
+//    p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+//    p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+//    p.setVec3(pointLightTemplate + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
+//    p.setFloat(pointLightTemplate + ".constant", 1.0f);
+//    p.setFloat(pointLightTemplate + ".linear", 0.09);
+//    p.setFloat(pointLightTemplate + ".quadratic", 0.032);
+    
+    for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
+      std::string pointLightTemplate = "pointLights[" + std::to_string(i) + "]";
+
+      p.setVec3(pointLightTemplate + ".position", pointLightPositions[i]);
+      p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+      p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+      p.setVec3(pointLightTemplate + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
+      p.setFloat(pointLightTemplate + ".constant", 1.0f);
+      p.setFloat(pointLightTemplate + ".linear", 0.09);
+      p.setFloat(pointLightTemplate + ".quadratic", 0.032);
+    }
+
     
     p.setVec3("u_viewPos", camPos);
-    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
-    p.setMat4("u_model", model);
     
-    vbo.draw();
+    for (int i = 0; i < sizeof(cubePositions) / sizeof(glm::vec3); i++) {
+      model = glm::mat4(1.0f);
+      model = glm::translate(model, cubePositions[i]);
+      model = glm::rotate(model, GLfloat(glfwGetTime()), cubePositions[i]);
+      mvp = projection * camera.getView() * model;
+
+      p.setMat4("u_MVP", mvp);
+      p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
+      p.setMat4("u_model", model);
+
+      vbo.draw();
+    }
+    
+//    model = glm::mat4(1.0f);
+//    mvp = projection * camera.getView() * model;
+//
+//    p.setMat4("u_MVP", mvp);
+//    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
+//    p.setMat4("u_model", model);
+//    vbo.draw();
     
     p2.use();
     
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.2f));
-    mvp = projection * camera.getView() * model;
+//    model = glm::mat4(1.0f);
+//    model = glm::translate(model, lightPos);
+//    model = glm::scale(model, glm::vec3(0.2f));
+//    mvp = projection * camera.getView() * model;
+//    p2.setMat4("u_MVP", mvp);
+//    vbo2.draw();
     
-    p2.setMat4("u_MVP", mvp);
-    vbo2.draw();
+    for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
+      model = glm::mat4(1.0f);
+      model = glm::translate(model, pointLightPositions[i]);
+      model = glm::scale(model, glm::vec3(0.2f));
+      mvp = projection * camera.getView() * model;
+      p2.setMat4("u_MVP", mvp);
+      vbo2.draw();
+    }
+    
   });
   
   
