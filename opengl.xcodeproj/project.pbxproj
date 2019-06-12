@@ -27,6 +27,7 @@
 		0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20622AEF01600BDFF16 /* container2.png */; };
 		0DF5B20922AEF64F00BDFF16 /* container2_specular.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20822AEF26B00BDFF16 /* container2_specular.png */; };
 		0DF5B20B22AEF7F400BDFF16 /* matrix.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */; };
+		0DF5B20D22B042DA00BDFF16 /* libassimp.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF5B20C22B042DA00BDFF16 /* libassimp.4.1.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +91,7 @@
 		0DF5B20622AEF01600BDFF16 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
 		0DF5B20822AEF26B00BDFF16 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
 		0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = matrix.jpg; sourceTree = "<group>"; };
+		0DF5B20C22B042DA00BDFF16 /* libassimp.4.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.4.1.0.dylib; path = ../../../../../../usr/local/Cellar/assimp/4.1.0/lib/libassimp.4.1.0.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DF5B20D22B042DA00BDFF16 /* libassimp.4.1.0.dylib in Frameworks */,
 				0D769C5722AC1FEA006F9C42 /* libSOIL.dylib in Frameworks */,
 				0D03124322A8713900D6077C /* libglfw.3.3.dylib in Frameworks */,
 				0D03124122A8711F00D6077C /* libGLEW.2.1.0.dylib in Frameworks */,
@@ -140,6 +143,7 @@
 		0D03123D22A870FA00D6077C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DF5B20C22B042DA00BDFF16 /* libassimp.4.1.0.dylib */,
 				0D769C5222AC1D95006F9C42 /* libSOIL.dylib */,
 				0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */,
 				0D03124222A8713800D6077C /* libglfw.3.3.dylib */,
@@ -385,6 +389,7 @@
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/Cellar/glfw/3.3/lib,
 					/usr/local/Cellar/libSOIL,
+					/usr/local/Cellar/assimp/4.1.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -401,6 +406,7 @@
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/Cellar/glfw/3.3/lib,
 					/usr/local/Cellar/libSOIL,
+					/usr/local/Cellar/assimp/4.1.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
