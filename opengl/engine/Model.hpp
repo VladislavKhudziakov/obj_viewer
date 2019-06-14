@@ -13,25 +13,24 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <vector>
+#include <string>
+#include <iostream>
+
 #include "Mesh.hpp"
 
 namespace Engine {
   class Model
   {
-  public:
-    Model(const std::string& path)
-    {
-      loadModel(path);
-    }
-    void Draw(Program shader);
-    
   private:
     std::vector<Mesh> meshes;
-    std::string directory;
-    void loadModel(const std::string& path);
-    void processNode(aiNode *node, const aiScene *scene);
-    Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-    std::vector<tex> loadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string& typeName);
+    
+  public:
+    Model(const std::string&);
+    int loadFromFile(const std::string&);
+    void processNodes(const aiNode* node, const aiScene* scene);
+    
+    void draw();
   };
 }
 

@@ -22,6 +22,7 @@
 #include "engine/camera.hpp"
 #include "engine/Scene.hpp"
 #include "engine/Mesh.hpp"
+#include "engine/Model.hpp"
 
 glm::vec3 pointLightPositions[] = {
   glm::vec3( 0.7f,  0.2f,  2.0f),
@@ -31,16 +32,7 @@ glm::vec3 pointLightPositions[] = {
 };
 
 glm::vec3 cubePositions[] = {
-  glm::vec3( 0.0f,  0.0f,  0.0f),
-  glm::vec3( 2.0f,  5.0f, -15.0f),
-  glm::vec3(-1.5f, -2.2f, -2.5f),
-  glm::vec3(-3.8f, -2.0f, -12.3f),
-  glm::vec3( 2.4f, -0.4f, -3.5f),
-  glm::vec3(-1.7f,  3.0f, -7.5f),
-  glm::vec3( 1.3f, -2.0f, -2.5f),
-  glm::vec3( 1.5f,  2.0f, -2.5f),
-  glm::vec3( 1.5f,  0.2f, -1.5f),
-  glm::vec3(-1.3f,  1.0f, -1.5f)
+  glm::vec3(0.0f, -2.0f, -5.3f),
 };
 
 std::vector<float> vertices;
@@ -78,20 +70,9 @@ int main()
 {
   Engine::Scene scene(800, 600, "LearnOpenGL");
   scene.init();
-
-  Assimp::Importer import;
   
-  const aiScene* model3D = import.ReadFile("./cube.obj", aiProcess_Triangulate | aiProcess_FlipUVs);
-  
-  if(!model3D || model3D->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !model3D->mRootNode)
-  {
-    std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
-    return -1;
-  }
-  
-  aiMesh* mesh = model3D->mMeshes[0];
-  
-  Engine::Mesh cubeMesh(mesh);
+  Engine::Model suit_model("./nanosuit/nanosuit.obj");
+  Engine::Model cube_model("./cube.obj");
   
   Engine::Program p("./vShader.vert", "./fShader.frag");
   p.link();
@@ -161,14 +142,15 @@ int main()
     for (int i = 0; i < sizeof(cubePositions) / sizeof(glm::vec3); i++) {
       model = glm::mat4(1.0f);
       model = glm::translate(model, cubePositions[i]);
-      model = glm::rotate(model, GLfloat(glfwGetTime()), cubePositions[i]);
+      model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(0.0, 1.0, 0.0));
+      model = glm::scale(model, glm::vec3(0.2f));
       mvp = projection * camera.getView() * model;
 
       p.setMat4("u_MVP", mvp);
       p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
       p.setMat4("u_model", model);
 
-      cubeMesh.draw();
+      suit_model.draw();
     }
     
     p2.use();
@@ -179,7 +161,7 @@ int main()
       model = glm::scale(model, glm::vec3(0.2f));
       mvp = projection * camera.getView() * model;
       p2.setMat4("u_MVP", mvp);
-      cubeMesh.draw();
+      cube_model.draw();
     }
   });
   

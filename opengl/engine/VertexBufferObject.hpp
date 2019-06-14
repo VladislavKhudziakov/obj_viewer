@@ -15,8 +15,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "bufferData.hpp"
-
 namespace Engine {
   class VBO
   {
