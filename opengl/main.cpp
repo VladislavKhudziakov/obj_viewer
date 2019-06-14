@@ -14,147 +14,14 @@
 #include <iostream>
 #include <string>
 #include <functional>
+#include <iterator>
 
 #include "engine/Program.hpp"
 #include "engine/VertexBufferObject.hpp"
 #include "engine/Texture.hpp"
 #include "engine/camera.hpp"
 #include "engine/Scene.hpp"
-
-
-float vertices[] = {
-  -0.5f, -0.5f, -0.5f,
-   0.5f, -0.5f, -0.5f,
-   0.5f,  0.5f, -0.5f,
-   0.5f,  0.5f, -0.5f,
-  -0.5f,  0.5f, -0.5f,
-  -0.5f, -0.5f, -0.5f,
-  
-  -0.5f, -0.5f,  0.5f,
-   0.5f, -0.5f,  0.5f,
-   0.5f,  0.5f,  0.5f,
-   0.5f,  0.5f,  0.5f,
-  -0.5f,  0.5f,  0.5f,
-  -0.5f, -0.5f,  0.5f,
-  
-  -0.5f,  0.5f,  0.5f,
-  -0.5f,  0.5f, -0.5f,
-  -0.5f, -0.5f, -0.5f,
-  -0.5f, -0.5f, -0.5f,
-  -0.5f, -0.5f,  0.5f,
-  -0.5f,  0.5f,  0.5f,
-  
-  0.5f,  0.5f,  0.5f,
-  0.5f,  0.5f, -0.5f,
-  0.5f, -0.5f, -0.5f,
-  0.5f, -0.5f, -0.5f,
-  0.5f, -0.5f,  0.5f,
-  0.5f,  0.5f,  0.5f,
-  
-  -0.5f, -0.5f, -0.5f,
-   0.5f, -0.5f, -0.5f,
-   0.5f, -0.5f,  0.5f,
-   0.5f, -0.5f,  0.5f,
-  -0.5f, -0.5f,  0.5f,
-  -0.5f, -0.5f, -0.5f,
-  
-  -0.5f,  0.5f, -0.5f,
-   0.5f,  0.5f, -0.5f,
-   0.5f,  0.5f,  0.5f,
-   0.5f,  0.5f,  0.5f,
-  -0.5f,  0.5f,  0.5f,
-  -0.5f,  0.5f, -0.5f,
-};
-
-
-float normals[] = {
-  0.0f,  0.0f, -1.0f,
-  0.0f,  0.0f, -1.0f,
-  0.0f,  0.0f, -1.0f,
-  0.0f,  0.0f, -1.0f,
-  0.0f,  0.0f, -1.0f,
-  0.0f,  0.0f, -1.0f,
-  
-  0.0f,  0.0f,  1.0f,
-  0.0f,  0.0f,  1.0f,
-  0.0f,  0.0f,  1.0f,
-  0.0f,  0.0f,  1.0f,
-  0.0f,  0.0f,  1.0f,
-  0.0f,  0.0f,  1.0f,
-  
-  -1.0f,  0.0f,  0.0f,
-  -1.0f,  0.0f,  0.0f,
-  -1.0f,  0.0f,  0.0f,
-  -1.0f,  0.0f,  0.0f,
-  -1.0f,  0.0f,  0.0f,
-  -1.0f,  0.0f,  0.0f,
-  
-  1.0f,  0.0f,  0.0f,
-  1.0f,  0.0f,  0.0f,
-  1.0f,  0.0f,  0.0f,
-  1.0f,  0.0f,  0.0f,
-  1.0f,  0.0f,  0.0f,
-  1.0f,  0.0f,  0.0f,
-  
-  0.0f, -1.0f,  0.0f,
-  0.0f, -1.0f,  0.0f,
-  0.0f, -1.0f,  0.0f,
-  0.0f, -1.0f,  0.0f,
-  0.0f, -1.0f,  0.0f,
-  0.0f, -1.0f,  0.0f,
-  
-  0.0f,  1.0f,  0.0f,
-  0.0f,  1.0f,  0.0f,
-  0.0f,  1.0f,  0.0f,
-  0.0f,  1.0f,  0.0f,
-  0.0f,  1.0f,  0.0f,
-  0.0f,  1.0f,  0.0f
-};
-
-
-float uv[] = {
-  0.0f, 0.0f,
-  1.0f, 0.0f,
-  1.0f, 1.0f,
-  1.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 0.0f,
-  
-  0.0f, 0.0f,
-  1.0f, 0.0f,
-  1.0f, 1.0f,
-  1.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 0.0f,
-  
-  1.0f, 0.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 0.0f,
-  1.0f, 0.0f,
-  
-  1.0f, 0.0f,
-  1.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 0.0f,
-  1.0f, 0.0f,
-  
-  0.0f, 1.0f,
-  1.0f, 1.0f,
-  1.0f, 0.0f,
-  1.0f, 0.0f,
-  0.0f, 0.0f,
-  0.0f, 1.0f,
-  
-  0.0f, 1.0f,
-  1.0f, 1.0f,
-  1.0f, 0.0f,
-  1.0f, 0.0f,
-  0.0f, 0.0f,
-  0.0f, 1.0f
-};
+#include "engine/Mesh.hpp"
 
 glm::vec3 pointLightPositions[] = {
   glm::vec3( 0.7f,  0.2f,  2.0f),
@@ -176,6 +43,10 @@ glm::vec3 cubePositions[] = {
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+std::vector<float> vertices;
+std::vector<float> uv;
+std::vector<float> normals;
+std::vector<unsigned int> indices;
 
 float camFront;
 
@@ -201,23 +72,35 @@ float yaw = -90.0f;
 float pitch = 0.0f;
 
 
+void processNode(const aiScene* scene);
 
 int main()
 {
   Engine::Scene scene(800, 600, "LearnOpenGL");
   scene.init();
 
+  Assimp::Importer import;
+  
+  const aiScene* model3D = import.ReadFile("./cube.obj", aiProcess_Triangulate | aiProcess_FlipUVs);
+  
+  if(!model3D || model3D->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !model3D->mRootNode)
+  {
+    std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
+    return -1;
+  }
+  
+  aiMesh* mesh = model3D->mMeshes[0];
+  
+  Engine::Mesh cubeMesh(mesh);
+  
   Engine::Program p("./vShader.vert", "./fShader.frag");
   p.link();
   
   Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
   p2.link();
   
-  Engine::VBO vbo(vertices, sizeof(vertices), uv, sizeof(uv), normals, sizeof(normals));
-  
-  Engine::VBO vbo2(vertices, sizeof(vertices));
-  
   Engine::Texture t("./container2.png");
+  
   Engine::Texture t2("./container2_specular.png", 1);
   Engine::Texture t3("./matrix.jpg", 2);
   
@@ -241,10 +124,6 @@ int main()
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
     
-//    float sinX = sin(glm::radians(glfwGetTime() * 50.0f)) * 1.5;
-//    float cosX = cos(glm::radians(glfwGetTime() * 50.0f)) * 1.5;
-//    lightPos = glm::vec3(sinX, lightPos.y, cosX);
-    
     p.setInt("material.diffuse", t.getSlot());
     p.setInt("material.specular", t2.getSlot());
     p.setInt("u_matrix", t3.getSlot());
@@ -258,24 +137,15 @@ int main()
     p.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
     p.setFloat("material.shininess", 32.0f);
     
-    p.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+    p.setVec3("dirLight.direction", glm::vec3(0.2f, 1.0f, 0.3f));
     p.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
     p.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
     p.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
     
-//    std::string pointLightTemplate = "pointLights[" + std::to_string(0) + "]";
-//
-//    p.setVec3(pointLightTemplate + ".position", lightPos);
-//    p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-//    p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
-//    p.setVec3(pointLightTemplate + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
-//    p.setFloat(pointLightTemplate + ".constant", 1.0f);
-//    p.setFloat(pointLightTemplate + ".linear", 0.09);
-//    p.setFloat(pointLightTemplate + ".quadratic", 0.032);
     
     for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
       std::string pointLightTemplate = "pointLights[" + std::to_string(i) + "]";
-
+      
       p.setVec3(pointLightTemplate + ".position", pointLightPositions[i]);
       p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
       p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
@@ -298,25 +168,10 @@ int main()
       p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
       p.setMat4("u_model", model);
 
-      vbo.draw();
+      cubeMesh.draw();
     }
     
-//    model = glm::mat4(1.0f);
-//    mvp = projection * camera.getView() * model;
-//
-//    p.setMat4("u_MVP", mvp);
-//    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
-//    p.setMat4("u_model", model);
-//    vbo.draw();
-    
     p2.use();
-    
-//    model = glm::mat4(1.0f);
-//    model = glm::translate(model, lightPos);
-//    model = glm::scale(model, glm::vec3(0.2f));
-//    mvp = projection * camera.getView() * model;
-//    p2.setMat4("u_MVP", mvp);
-//    vbo2.draw();
     
     for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
       model = glm::mat4(1.0f);
@@ -324,15 +179,13 @@ int main()
       model = glm::scale(model, glm::vec3(0.2f));
       mvp = projection * camera.getView() * model;
       p2.setMat4("u_MVP", mvp);
-      vbo2.draw();
+      cubeMesh.draw();
     }
-    
   });
   
   
   scene.StartSceneLoop();
   
-  vbo.del();
   glfwTerminate();
   return 0;
 }

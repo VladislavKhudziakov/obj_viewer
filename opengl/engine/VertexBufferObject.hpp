@@ -22,17 +22,28 @@ namespace Engine {
   {
   private:
     unsigned int vao;
+    unsigned int ebo;
     unsigned int vertBuffer;
+    unsigned int elBufferSize;
     unsigned int uvBuffer;
     unsigned int normalsBuffer;
     
     int vertBufferSize;
     
   public:
-    VBO(float vertices[], int vertSize, float uv[] = nullptr, int uvSize = 0, float normals[] = nullptr, int normalsSize = 0);
+    VBO() { };
     
-    void use();
-    void unUse();
+    VBO(const std::vector<float>& vertices,
+        const std::vector<float>& normals,
+        const std::vector<float>& uv);
+    
+    VBO(const std::vector<float>& vertices,
+        const std::vector<unsigned int>& indices,
+        const std::vector<float>& normals,
+        const std::vector<float>& uv);
+    
+    void set();
+    void unSet();
     void del();
     void draw();
     int getVAO() const noexcept;

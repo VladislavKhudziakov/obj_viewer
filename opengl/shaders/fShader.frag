@@ -92,6 +92,7 @@ vec3 calculateDirLight(DirLight light, vec3 normal, vec3 viewDir)
   //diffuse
   float diff = max(dot(lightDirection, normal), 0.0);
   vec3 diffuse = light.diffuse * diffuseColor * diff;
+
   
   //specular
   vec3 specularMap = texture(material.specular, var_uv).rgb;
