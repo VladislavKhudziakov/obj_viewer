@@ -30,6 +30,7 @@ namespace Engine {
     bool linkedStatus;
     
   public:
+    Program() { };
     Program(const Shader& vShader, const Shader& fShader);
     Program(const std::string& vShaderPath, const std::string& fShaderPath);
     void link();

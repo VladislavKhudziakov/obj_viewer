@@ -9,11 +9,18 @@
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
+//#include <SOIL/SOIL.h>
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <vector>
+#include <iostream>
+
 #include "VertexBufferObject.hpp"
+#include "Texture.hpp"
+
 
 namespace Engine
 {
@@ -22,10 +29,16 @@ namespace Engine
     
   private:
     VBO verticesData;
+    std::vector<Texture> textures_diff;
+    std::vector<Texture> textures_spec;
+    
+    void loadMaterialTextures(const aiMaterial*, aiTextureType);
     
   public:
-    Mesh(aiMesh* mesh);
+    Mesh(const aiMesh* mesh, const aiScene* scene);
     void draw();
+    
+    const std::vector<Texture>& getTexturesList(const std::string&) const;
   };
 }
 

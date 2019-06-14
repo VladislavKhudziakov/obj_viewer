@@ -17,11 +17,9 @@
 #include <iterator>
 
 #include "engine/Program.hpp"
-#include "engine/VertexBufferObject.hpp"
 #include "engine/Texture.hpp"
 #include "engine/camera.hpp"
 #include "engine/Scene.hpp"
-#include "engine/Mesh.hpp"
 #include "engine/Model.hpp"
 
 glm::vec3 pointLightPositions[] = {
@@ -71,19 +69,19 @@ int main()
   Engine::Scene scene(800, 600, "LearnOpenGL");
   scene.init();
   
-  Engine::Model suit_model("./nanosuit/nanosuit.obj");
-  Engine::Model cube_model("./cube.obj");
-  
   Engine::Program p("./vShader.vert", "./fShader.frag");
   p.link();
   
   Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
   p2.link();
   
-  Engine::Texture t("./container2.png");
+  Engine::Model suit_model("./nanosuit/nanosuit.obj");
+  Engine::Model cube_model("./cube.obj");
   
-  Engine::Texture t2("./container2_specular.png", 1);
-  Engine::Texture t3("./matrix.jpg", 2);
+//  Engine::Texture t("./container2.png");
+//
+//  Engine::Texture t2("./container2_specular.png", 1);
+//  Engine::Texture t3("./matrix.jpg", 2);
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -105,10 +103,10 @@ int main()
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
     
-    p.setInt("material.diffuse", t.getSlot());
-    p.setInt("material.specular", t2.getSlot());
-    p.setInt("u_matrix", t3.getSlot());
-    
+//    p.setInt("material.diffuse", t.getSlot());
+//    p.setInt("material.specular", t2.getSlot());
+//    p.setInt("u_matrix", t3.getSlot());
+//
     move(delta);
     
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
@@ -139,19 +137,30 @@ int main()
     
     p.setVec3("u_viewPos", camPos);
     
-    for (int i = 0; i < sizeof(cubePositions) / sizeof(glm::vec3); i++) {
-      model = glm::mat4(1.0f);
-      model = glm::translate(model, cubePositions[i]);
-      model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(0.0, 1.0, 0.0));
-      model = glm::scale(model, glm::vec3(0.2f));
-      mvp = projection * camera.getView() * model;
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, cubePositions[0]);
+    model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(0.0, 1.0, 0.0));
+    model = glm::scale(model, glm::vec3(0.2f));
+    mvp = projection * camera.getView() * model;
 
-      p.setMat4("u_MVP", mvp);
-      p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
-      p.setMat4("u_model", model);
+    p.setMat4("u_MVP", mvp);
+    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
+    p.setMat4("u_model", model);
+    
+    for (auto mesh : suit_model.getMeshes()) {
+      
+      if (&mesh.getTexturesList("diffuse")[0] != nullptr) {
+        p.setInt("material.diffuse", mesh.getTexturesList("diffuse")[0].getSlot());
+      }
+      
+      if (&mesh.getTexturesList("specular")[0] != nullptr) {
+        p.setInt("material.specular", mesh.getTexturesList("specular")[0].getSlot());
+      }
 
-      suit_model.draw();
+      
+      mesh.draw();
     }
+//    suit_model.draw();
     
     p2.use();
     

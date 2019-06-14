@@ -10,7 +10,7 @@
 
 namespace Engine
 {  
-  Mesh::Mesh(aiMesh* mesh)
+  Mesh::Mesh(const aiMesh* mesh, const aiScene* scene)
   {
     std::vector<float> positions;
     std::vector<unsigned int> indices;
@@ -43,6 +43,13 @@ namespace Engine
       }
     }
     
+    if(mesh->mMaterialIndex >= 0) {
+      const aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+      
+      loadMaterialTextures(material, aiTextureType_DIFFUSE);
+      loadMaterialTextures(material, aiTextureType_SPECULAR);
+    }
+    
     verticesData = VBO(positions, indices, normals, uv);
   }
   
@@ -50,5 +57,35 @@ namespace Engine
   void Mesh::draw()
   {
     verticesData.draw();
+  }
+  
+  
+  void Mesh::loadMaterialTextures(
+    const aiMaterial* material, aiTextureType type)
+  {
+    int texCount = material->GetTextureCount(type);
+    for (int i = 0; i < texCount; i++) {
+      aiString path;
+      material->GetTexture(type, i, &path);
+      
+      std::string full_path(path.C_Str());
+      full_path = std::string("./nanosuit/") + full_path;
+      
+      
+      if(type == aiTextureType_DIFFUSE) {
+        textures_diff.push_back(Texture(full_path));
+      } else if (type == aiTextureType_SPECULAR) {
+        textures_spec.push_back(Texture(full_path, 1));
+      }
+    }
+  }
+  
+  const std::vector<Texture>& Mesh::getTexturesList(const std::string& type) const
+  {
+    if (type == "diffuse") {
+      return textures_diff;
+    } else {
+      return textures_spec;
+    }
   }
 }

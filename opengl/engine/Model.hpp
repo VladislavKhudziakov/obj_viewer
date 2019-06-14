@@ -18,6 +18,7 @@
 #include <iostream>
 
 #include "Mesh.hpp"
+#include "Program.hpp"
 
 namespace Engine {
   class Model
@@ -29,8 +30,8 @@ namespace Engine {
     Model(const std::string&);
     int loadFromFile(const std::string&);
     void processNodes(const aiNode* node, const aiScene* scene);
-    
     void draw();
+    const std::vector<Mesh>& getMeshes();
   };
 }
 

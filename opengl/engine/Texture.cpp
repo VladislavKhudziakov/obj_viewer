@@ -31,7 +31,7 @@ namespace Engine
   
   Texture::~Texture()
   {
-    SOIL_free_image_data(img);
+//    SOIL_free_image_data(img);
   }
   
   

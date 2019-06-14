@@ -16,6 +16,7 @@ namespace Engine
     loadFromFile(fileName);
   }
   
+  
   int Model::loadFromFile(const std::string& fileName)
   {
     Assimp::Importer importer;
@@ -40,8 +41,8 @@ namespace Engine
   void Model::processNodes(const aiNode* node, const aiScene* scene)
   {
     for (int i = 0; i < node->mNumMeshes; i++) {
-      aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-      meshes.push_back(Mesh(mesh));
+      const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+      meshes.push_back(Mesh(mesh, scene));
     }
 
     for (int i = 0; i < node->mNumChildren; i++) {
@@ -49,10 +50,17 @@ namespace Engine
     }
   }
   
+  
   void Model::draw()
   {
     for (auto mesh : meshes) {
       mesh.draw();
     }
+  }
+  
+  
+  const std::vector<Mesh>& Model::getMeshes()
+  {
+    return meshes;
   }
 }
