@@ -32,8 +32,6 @@ namespace Engine
     Texture texture_diff;
     Texture texture_spec;
     
-    void loadMaterialTextures(const aiMaterial*, aiTextureType);
-    
   public:
     Mesh(const aiMesh* mesh, const aiScene* scene);
     void draw();
