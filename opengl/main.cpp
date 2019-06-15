@@ -75,13 +75,8 @@ int main()
   Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
   p2.link();
   
-  Engine::Model suit_model("./nanosuit/nanosuit.obj");
-  Engine::Model cube_model("./cube.obj");
-  
-//  Engine::Texture t("./container2.png");
-//
-//  Engine::Texture t2("./container2_specular.png", 1);
-//  Engine::Texture t3("./matrix.jpg", 2);
+  Engine::Model suit_model("./nanosuit/", "nanosuit.obj");
+  Engine::Model cube_model("./", "cube.obj");
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -103,10 +98,6 @@ int main()
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     p.use();
     
-//    p.setInt("material.diffuse", t.getSlot());
-//    p.setInt("material.specular", t2.getSlot());
-//    p.setInt("u_matrix", t3.getSlot());
-//
     move(delta);
     
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
@@ -149,18 +140,14 @@ int main()
     
     for (auto mesh : suit_model.getMeshes()) {
       
-      if (&mesh.getTexturesList("diffuse")[0] != nullptr) {
-        p.setInt("material.diffuse", mesh.getTexturesList("diffuse")[0].getSlot());
-      }
+      p.setInt("material.diffuse", mesh.getDiffTexture().getSlot());
       
-      if (&mesh.getTexturesList("specular")[0] != nullptr) {
-        p.setInt("material.specular", mesh.getTexturesList("specular")[0].getSlot());
+      if (mesh.getSpecTexture().getSlot() < 32) {
+        p.setInt("material.specular", mesh.getSpecTexture().getSlot());
       }
-
       
       mesh.draw();
     }
-//    suit_model.draw();
     
     p2.use();
     

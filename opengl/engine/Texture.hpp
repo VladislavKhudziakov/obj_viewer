@@ -14,6 +14,7 @@
 #include <SOIL/SOIL.h>
 
 #include <string>
+#include <iostream>
 
 namespace Engine
 {
@@ -22,13 +23,13 @@ namespace Engine
   private:
     unsigned int texture;
     unsigned int textureSlot;
-    unsigned char* img;
     int width;
     int height;
     
   public:
-    Texture(const std::string&, unsigned int texSlot = 0);
-    ~Texture();
+    Texture() { };
+    Texture(const std::string&);
+    ~Texture() { };
     unsigned int getSlot() const noexcept;
   };
 }

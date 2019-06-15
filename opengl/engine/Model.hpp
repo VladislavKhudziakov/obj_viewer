@@ -16,6 +16,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 #include "Mesh.hpp"
 #include "Program.hpp"
@@ -25,12 +26,16 @@ namespace Engine {
   {
   private:
     std::vector<Mesh> meshes;
+    std::string directoryName;
+    std::string fileName;
+    std::vector<std::string> loaded_textures;
     
   public:
-    Model(const std::string&);
+    Model(const std::string&, const std::string&);
     int loadFromFile(const std::string&);
     void processNodes(const aiNode* node, const aiScene* scene);
     void draw();
+    std::vector<std::string> loadMaterialTextures(const aiMesh* mesh, const aiScene* scene, aiTextureType type);
     const std::vector<Mesh>& getMeshes();
   };
 }

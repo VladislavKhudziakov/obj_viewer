@@ -29,8 +29,8 @@ namespace Engine
     
   private:
     VBO verticesData;
-    std::vector<Texture> textures_diff;
-    std::vector<Texture> textures_spec;
+    Texture texture_diff;
+    Texture texture_spec;
     
     void loadMaterialTextures(const aiMaterial*, aiTextureType);
     
@@ -38,7 +38,10 @@ namespace Engine
     Mesh(const aiMesh* mesh, const aiScene* scene);
     void draw();
     
-    const std::vector<Texture>& getTexturesList(const std::string&) const;
+    const Texture& getDiffTexture() const;
+    void setDiffTexture(const Texture&);
+    const Texture& getSpecTexture() const;
+    void setSpecTexture(const Texture&);
   };
 }
 

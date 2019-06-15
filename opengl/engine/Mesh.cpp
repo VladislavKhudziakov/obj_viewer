@@ -43,12 +43,11 @@ namespace Engine
       }
     }
     
-    if(mesh->mMaterialIndex >= 0) {
-      const aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-      
-      loadMaterialTextures(material, aiTextureType_DIFFUSE);
-      loadMaterialTextures(material, aiTextureType_SPECULAR);
-    }
+//    if(mesh->mMaterialIndex >= 0) {
+//      const aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+//      loadMaterialTextures(material, aiTextureType_DIFFUSE);
+//      loadMaterialTextures(material, aiTextureType_SPECULAR);
+//    }
     
     verticesData = VBO(positions, indices, normals, uv);
   }
@@ -64,6 +63,7 @@ namespace Engine
     const aiMaterial* material, aiTextureType type)
   {
     int texCount = material->GetTextureCount(type);
+    
     for (int i = 0; i < texCount; i++) {
       aiString path;
       material->GetTexture(type, i, &path);
@@ -73,19 +73,34 @@ namespace Engine
       
       
       if(type == aiTextureType_DIFFUSE) {
-        textures_diff.push_back(Texture(full_path));
+        texture_diff = Texture(full_path);
       } else if (type == aiTextureType_SPECULAR) {
-        textures_spec.push_back(Texture(full_path, 1));
+        texture_spec = Texture(full_path);
       }
     }
   }
   
-  const std::vector<Texture>& Mesh::getTexturesList(const std::string& type) const
+  
+  const Texture& Mesh::getDiffTexture() const
   {
-    if (type == "diffuse") {
-      return textures_diff;
-    } else {
-      return textures_spec;
-    }
+    return texture_diff;
+  }
+  
+  
+  void Mesh::setDiffTexture(const Texture& new_diff_tex)
+  {
+    texture_diff = new_diff_tex;
+  }
+  
+  
+  const Texture& Mesh::getSpecTexture() const
+  {
+    return texture_spec;
+  }
+  
+  
+  void Mesh::setSpecTexture(const Texture& new_spec_tex)
+  {
+    texture_spec = new_spec_tex;
   }
 }
