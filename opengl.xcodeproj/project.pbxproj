@@ -16,14 +16,19 @@
 		0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4ED4B822AD4CB10067276E /* camera.cpp */; };
 		0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4ED4BB22AD61240067276E /* Scene.cpp */; };
 		0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */; };
-		0D769C4F22AA9215006F9C42 /* bufferData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4D22AA9215006F9C42 /* bufferData.cpp */; };
 		0D769C5722AC1FEA006F9C42 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */; };
 		0D769C5A22AC235C006F9C42 /* container.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D769C5922AC2356006F9C42 /* container.jpg */; };
 		0D769C5C22AC2778006F9C42 /* awesomeface.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D769C5B22AC275F006F9C42 /* awesomeface.png */; };
 		0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C5D22AD11FB006F9C42 /* Texture.cpp */; };
+		0D797B6C22B103E7006F766A /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D797B6A22B103E7006F766A /* Mesh.cpp */; };
+		0D797B6F22B10718006F766A /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D797B6D22B10718006F766A /* Model.cpp */; };
+		0D797B7122B1090B006F766A /* nanosuit in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D797B7022B108FB006F766A /* nanosuit */; };
 		0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3A22AA56FC009CDC5F /* fShader.frag */; };
 		0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3B22AA56FC009CDC5F /* vShader.vert */; };
 		0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D90CEDA22AE426500E5789B /* fShaderLight.frag */; };
+		0DED18A522B4196C00A0133C /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DED18A422B4193D00A0133C /* cube.obj */; };
+		0DED18A722B4207700A0133C /* Crate1.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DED18A622B4206D00A0133C /* Crate1.obj */; };
+		0DED18A922B4247C00A0133C /* cube2.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DED18A822B4246400A0133C /* cube2.obj */; };
 		0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20622AEF01600BDFF16 /* container2.png */; };
 		0DF5B20922AEF64F00BDFF16 /* container2_specular.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20822AEF26B00BDFF16 /* container2_specular.png */; };
 		0DF5B20B22AEF7F400BDFF16 /* matrix.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */; };
@@ -46,6 +51,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				0DED18A922B4247C00A0133C /* cube2.obj in CopyFiles */,
+				0DED18A722B4207700A0133C /* Crate1.obj in CopyFiles */,
+				0DED18A522B4196C00A0133C /* cube.obj in CopyFiles */,
+				0D797B7122B1090B006F766A /* nanosuit in CopyFiles */,
 				0DF5B20B22AEF7F400BDFF16 /* matrix.jpg in CopyFiles */,
 				0DF5B20922AEF64F00BDFF16 /* container2_specular.png in CopyFiles */,
 				0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */,
@@ -77,17 +86,23 @@
 		0D4ED4BC22AD61240067276E /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
 		0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBufferObject.cpp; sourceTree = "<group>"; };
 		0D769C4B22AA7DEF006F9C42 /* VertexBufferObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferObject.hpp; sourceTree = "<group>"; };
-		0D769C4D22AA9215006F9C42 /* bufferData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bufferData.cpp; sourceTree = "<group>"; };
-		0D769C4E22AA9215006F9C42 /* bufferData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bufferData.hpp; sourceTree = "<group>"; };
 		0D769C5222AC1D95006F9C42 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../../../../../../usr/local/lib/libSOIL.dylib; sourceTree = "<group>"; };
 		0D769C5622AC1FEA006F9C42 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../../../../../../usr/local/Cellar/libSOIL/libSOIL.dylib; sourceTree = "<group>"; };
 		0D769C5922AC2356006F9C42 /* container.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container.jpg; sourceTree = "<group>"; };
 		0D769C5B22AC275F006F9C42 /* awesomeface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = awesomeface.png; sourceTree = "<group>"; };
 		0D769C5D22AD11FB006F9C42 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		0D769C5E22AD11FB006F9C42 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		0D797B6A22B103E7006F766A /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		0D797B6B22B103E7006F766A /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		0D797B6D22B10718006F766A /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
+		0D797B6E22B10718006F766A /* Model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
+		0D797B7022B108FB006F766A /* nanosuit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nanosuit; sourceTree = "<group>"; };
 		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = "<group>"; };
 		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = "<group>"; };
 		0D90CEDA22AE426500E5789B /* fShaderLight.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShaderLight.frag; sourceTree = "<group>"; };
+		0DED18A422B4193D00A0133C /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		0DED18A622B4206D00A0133C /* Crate1.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Crate1.obj; sourceTree = "<group>"; };
+		0DED18A822B4246400A0133C /* cube2.obj */ = {isa = PBXFileReference; lastKnownFileType = text; name = cube2.obj; path = ../../../../../Downloads/Crate/cube2.obj; sourceTree = "<group>"; };
 		0DF5B20622AEF01600BDFF16 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
 		0DF5B20822AEF26B00BDFF16 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
 		0DF5B20A22AEF7E600BDFF16 /* matrix.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = matrix.jpg; sourceTree = "<group>"; };
@@ -132,6 +147,10 @@
 		0D03123522A870C900D6077C /* opengl */ = {
 			isa = PBXGroup;
 			children = (
+				0DED18A822B4246400A0133C /* cube2.obj */,
+				0DED18A422B4193D00A0133C /* cube.obj */,
+				0DED18A622B4206D00A0133C /* Crate1.obj */,
+				0D797B7022B108FB006F766A /* nanosuit */,
 				0D769C5822AC22E2006F9C42 /* resources */,
 				0D868F3922AA56CB009CDC5F /* shaders */,
 				0D0D64BA22A9A4860020A028 /* engine */,
@@ -162,14 +181,16 @@
 				0D0D64BF22A9AC3B0020A028 /* Program.hpp */,
 				0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */,
 				0D769C4B22AA7DEF006F9C42 /* VertexBufferObject.hpp */,
-				0D769C4D22AA9215006F9C42 /* bufferData.cpp */,
-				0D769C4E22AA9215006F9C42 /* bufferData.hpp */,
 				0D769C5D22AD11FB006F9C42 /* Texture.cpp */,
 				0D769C5E22AD11FB006F9C42 /* Texture.hpp */,
 				0D4ED4B822AD4CB10067276E /* camera.cpp */,
 				0D4ED4B922AD4CB10067276E /* camera.hpp */,
 				0D4ED4BC22AD61240067276E /* Scene.hpp */,
 				0D4ED4BB22AD61240067276E /* Scene.cpp */,
+				0D797B6A22B103E7006F766A /* Mesh.cpp */,
+				0D797B6B22B103E7006F766A /* Mesh.hpp */,
+				0D797B6D22B10718006F766A /* Model.cpp */,
+				0D797B6E22B10718006F766A /* Model.hpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -256,11 +277,12 @@
 				0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */,
 				0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */,
 				0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */,
-				0D769C4F22AA9215006F9C42 /* bufferData.cpp in Sources */,
+				0D797B6F22B10718006F766A /* Model.cpp in Sources */,
 				0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */,
 				0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */,
 				0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */,
 				0D03123722A870C900D6077C /* main.cpp in Sources */,
+				0D797B6C22B103E7006F766A /* Mesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
