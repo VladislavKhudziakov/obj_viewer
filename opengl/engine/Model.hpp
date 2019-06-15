@@ -25,13 +25,14 @@ namespace Engine {
   class Model
   {
   private:
+    Program shaderProgram;
     std::vector<Mesh> meshes;
     std::string directoryName;
     std::string fileName;
     std::vector<std::string> loaded_textures;
     
   public:
-    Model(const std::string&, const std::string&);
+    Model(const std::string&, const std::string&, const Program&);
     int loadFromFile(const std::string&);
     void processNodes(const aiNode* node, const aiScene* scene);
     void draw();

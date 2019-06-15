@@ -11,10 +11,12 @@
 
 namespace Engine
 {  
-  Model::Model(const std::string& dirName, const std::string& fileName)
+  Model::Model(
+   const std::string& dirName, const std::string& fileName, const Program& program)
   {
     this->directoryName = dirName;
     this->fileName = fileName;
+    this->shaderProgram = program;
     
     if (loadFromFile(dirName + fileName) < 0) {
       std::cout << "MODEL::LOAD_FROM_FILE::ERROR\n";
@@ -29,8 +31,7 @@ namespace Engine
     const aiScene* scene = importer.ReadFile(
      fileName.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs);
     
-    if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-    {
+    if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
       std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
       return -1;
     }
@@ -103,7 +104,18 @@ namespace Engine
   
   void Model::draw()
   {
+    shaderProgram.use();
+    
     for (auto mesh : meshes) {
+      
+      if (mesh.getDiffTexture().getSlot() < 32) {
+        shaderProgram.setInt("material.diffuse", mesh.getDiffTexture().getSlot());
+      }
+      
+      if (mesh.getSpecTexture().getSlot() < 32) {
+        shaderProgram.setInt("material.specular", mesh.getSpecTexture().getSlot());
+      }
+      
       mesh.draw();
     }
   }

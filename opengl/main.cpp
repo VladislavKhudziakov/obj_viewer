@@ -75,8 +75,8 @@ int main()
   Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
   p2.link();
   
-  Engine::Model suit_model("./nanosuit/", "nanosuit.obj");
-  Engine::Model cube_model("./", "cube.obj");
+  Engine::Model suit_model("./nanosuit/", "nanosuit.obj", p);
+  Engine::Model cube_model("./", "cube.obj", p2);
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -138,16 +138,7 @@ int main()
     p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
     p.setMat4("u_model", model);
     
-    for (auto mesh : suit_model.getMeshes()) {
-      
-      p.setInt("material.diffuse", mesh.getDiffTexture().getSlot());
-      
-      if (mesh.getSpecTexture().getSlot() < 32) {
-        p.setInt("material.specular", mesh.getSpecTexture().getSlot());
-      }
-      
-      mesh.draw();
-    }
+    suit_model.draw();
     
     p2.use();
     
