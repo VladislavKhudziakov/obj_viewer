@@ -26,6 +26,13 @@
 		0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3A22AA56FC009CDC5F /* fShader.frag */; };
 		0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3B22AA56FC009CDC5F /* vShader.vert */; };
 		0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D90CEDA22AE426500E5789B /* fShaderLight.frag */; };
+		0DCC963922B6B78300F08687 /* marble.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DCC963722B6B77D00F08687 /* marble.jpg */; };
+		0DCC963A22B6B78300F08687 /* metal.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DCC963822B6B77D00F08687 /* metal.png */; };
+		0DCC963C22B6B88400F08687 /* deph_test.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DCC963B22B6B83300F08687 /* deph_test.frag */; };
+		0DCC963E22B6CB5000F08687 /* grass.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DCC963D22B6CB0400F08687 /* grass.png */; };
+		0DCC964022B6CC6E00F08687 /* shader_blending.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DCC963F22B6CBDA00F08687 /* shader_blending.frag */; };
+		0DCC964222B6CFF500F08687 /* blending_transparent_window.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DCC964122B6CFED00F08687 /* blending_transparent_window.png */; };
+		0DCC964522B6D9A400F08687 /* constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCC964322B6D9A400F08687 /* constants.cpp */; };
 		0DED18A522B4196C00A0133C /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DED18A422B4193D00A0133C /* cube.obj */; };
 		0DED18A722B4207700A0133C /* Crate1.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DED18A622B4206D00A0133C /* Crate1.obj */; };
 		0DED18A922B4247C00A0133C /* cube2.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DED18A822B4246400A0133C /* cube2.obj */; };
@@ -51,6 +58,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				0DCC964222B6CFF500F08687 /* blending_transparent_window.png in CopyFiles */,
+				0DCC964022B6CC6E00F08687 /* shader_blending.frag in CopyFiles */,
+				0DCC963E22B6CB5000F08687 /* grass.png in CopyFiles */,
+				0DCC963C22B6B88400F08687 /* deph_test.frag in CopyFiles */,
+				0DCC963922B6B78300F08687 /* marble.jpg in CopyFiles */,
+				0DCC963A22B6B78300F08687 /* metal.png in CopyFiles */,
 				0DED18A922B4247C00A0133C /* cube2.obj in CopyFiles */,
 				0DED18A722B4207700A0133C /* Crate1.obj in CopyFiles */,
 				0DED18A522B4196C00A0133C /* cube.obj in CopyFiles */,
@@ -97,9 +110,17 @@
 		0D797B6D22B10718006F766A /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		0D797B6E22B10718006F766A /* Model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
 		0D797B7022B108FB006F766A /* nanosuit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nanosuit; sourceTree = "<group>"; };
-		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = "<group>"; };
-		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = "<group>"; };
+		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShader.frag; sourceTree = "<group>"; };
+		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vShader.vert; sourceTree = "<group>"; };
 		0D90CEDA22AE426500E5789B /* fShaderLight.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShaderLight.frag; sourceTree = "<group>"; };
+		0DCC963722B6B77D00F08687 /* marble.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marble.jpg; sourceTree = "<group>"; };
+		0DCC963822B6B77D00F08687 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		0DCC963B22B6B83300F08687 /* deph_test.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = deph_test.frag; sourceTree = "<group>"; };
+		0DCC963D22B6CB0400F08687 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
+		0DCC963F22B6CBDA00F08687 /* shader_blending.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_blending.frag; sourceTree = "<group>"; };
+		0DCC964122B6CFED00F08687 /* blending_transparent_window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blending_transparent_window.png; sourceTree = "<group>"; };
+		0DCC964322B6D9A400F08687 /* constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = constants.cpp; sourceTree = "<group>"; };
+		0DCC964422B6D9A400F08687 /* constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
 		0DED18A422B4193D00A0133C /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		0DED18A622B4206D00A0133C /* Crate1.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Crate1.obj; sourceTree = "<group>"; };
 		0DED18A822B4246400A0133C /* cube2.obj */ = {isa = PBXFileReference; lastKnownFileType = text; name = cube2.obj; path = ../../../../../Downloads/Crate/cube2.obj; sourceTree = "<group>"; };
@@ -128,8 +149,6 @@
 		0D03122A22A870C900D6077C = {
 			isa = PBXGroup;
 			children = (
-				0D868F3A22AA56FC009CDC5F /* fShader.frag */,
-				0D868F3B22AA56FC009CDC5F /* vShader.vert */,
 				0D03123522A870C900D6077C /* opengl */,
 				0D03123422A870C900D6077C /* Products */,
 				0D03123D22A870FA00D6077C /* Frameworks */,
@@ -147,6 +166,10 @@
 		0D03123522A870C900D6077C /* opengl */ = {
 			isa = PBXGroup;
 			children = (
+				0DCC963722B6B77D00F08687 /* marble.jpg */,
+				0DCC964122B6CFED00F08687 /* blending_transparent_window.png */,
+				0DCC963822B6B77D00F08687 /* metal.png */,
+				0DCC963D22B6CB0400F08687 /* grass.png */,
 				0DED18A822B4246400A0133C /* cube2.obj */,
 				0DED18A422B4193D00A0133C /* cube.obj */,
 				0DED18A622B4206D00A0133C /* Crate1.obj */,
@@ -191,6 +214,8 @@
 				0D797B6B22B103E7006F766A /* Mesh.hpp */,
 				0D797B6D22B10718006F766A /* Model.cpp */,
 				0D797B6E22B10718006F766A /* Model.hpp */,
+				0DCC964322B6D9A400F08687 /* constants.cpp */,
+				0DCC964422B6D9A400F08687 /* constants.hpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -212,6 +237,10 @@
 			children = (
 				0D0D64C222A9B5210020A028 /* vShader.vert */,
 				0D90CEDA22AE426500E5789B /* fShaderLight.frag */,
+				0D868F3B22AA56FC009CDC5F /* vShader.vert */,
+				0DCC963F22B6CBDA00F08687 /* shader_blending.frag */,
+				0DCC963B22B6B83300F08687 /* deph_test.frag */,
+				0D868F3A22AA56FC009CDC5F /* fShader.frag */,
 				0D0D64C122A9B5130020A028 /* fShader.frag */,
 			);
 			path = shaders;
@@ -277,6 +306,7 @@
 				0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */,
 				0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */,
 				0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */,
+				0DCC964522B6D9A400F08687 /* constants.cpp in Sources */,
 				0D797B6F22B10718006F766A /* Model.cpp in Sources */,
 				0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */,
 				0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */,

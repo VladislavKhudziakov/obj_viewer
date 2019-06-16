@@ -32,8 +32,11 @@ namespace Engine
     const glm::mat4& getView() const noexcept;
     
     void setPosition(const glm::vec3&);
+    const glm::vec3& getPosition();
     void setDirection(const glm::vec3&);
+    const glm::vec3& getDirection();
     void setUp(const glm::vec3&);
+    const glm::vec3& getUp();
     
     void computeView(const glm::vec3&, const glm::vec3&, const glm::vec3&);
     void computeView();

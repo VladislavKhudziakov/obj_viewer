@@ -15,18 +15,75 @@
 #include <string>
 #include <functional>
 #include <iterator>
+#include <map>
 
 #include "engine/Program.hpp"
 #include "engine/Texture.hpp"
 #include "engine/camera.hpp"
 #include "engine/Scene.hpp"
 #include "engine/Model.hpp"
+#include "engine/VertexBufferObject.hpp"
+#include "engine/constants.hpp"
 
 glm::vec3 pointLightPositions[] = {
   glm::vec3( 0.7f,  0.2f,  2.0f),
   glm::vec3( 2.3f, -3.3f, -4.0f),
   glm::vec3(-4.0f,  2.0f, -12.0f),
   glm::vec3( 0.0f,  0.0f, -3.0f)
+};
+
+std::vector<glm::vec3> c_translations = {
+  glm::vec3(-1.0f, 0.0f, -1.0f),
+  glm::vec3(2.0f, 0.0f, 0.0f)
+};
+
+std::vector<float> planeVertices = {
+   5.0f, -0.5f,  5.0f,
+  -5.0f, -0.5f,  5.0f,
+  -5.0f, -0.5f, -5.0f,
+  
+  5.0f, -0.5f,  5.0f,
+  -5.0f, -0.5f, -5.0f,
+  5.0f, -0.5f, -5.0f,
+};
+
+std::vector<float> planeUv = {
+  2.0f, 0.0f,
+  0.0f, 0.0f,
+  0.0f, 2.0f,
+  
+  0.0f, 2.0f,
+  0.0f, 2.0f,
+  2.0f, 2.0f
+};
+
+
+std::vector<float> transparentVertices = {
+  0.0f,  0.5f,  0.0f,
+  0.0f, -0.5f,  0.0f,
+  1.0f, -0.5f,  0.0f,
+  
+  0.0f,  0.5f,  0.0f,
+  1.0f, -0.5f,  0.0f,
+  1.0f,  0.5f,  0.0f,
+};
+
+std::vector<float> transparentUV = {
+ 0.0f,  0.0f,
+ 0.0f,  1.0f,
+ 1.0f,  1.0f,
+  
+ 0.0f,  0.0f,
+ 1.0f,  1.0f,
+ 1.0f,  0.0f
+};
+
+std::vector<glm::vec3> vegetation = {
+  glm::vec3(-1.5f,  0.0f, -0.48f),
+  glm::vec3( 1.5f,  0.0f,  0.51f),
+  glm::vec3( 0.0f,  0.0f,  0.7f),
+  glm::vec3(-0.3f,  0.0f, -2.3f),
+  glm::vec3( 0.5f,  0.0f, -0.6f)
 };
 
 glm::vec3 cubePositions[] = {
@@ -62,8 +119,6 @@ float yaw = -90.0f;
 float pitch = 0.0f;
 
 
-void processNode(const aiScene* scene);
-
 int main()
 {
   Engine::Scene scene(800, 600, "LearnOpenGL");
@@ -75,8 +130,18 @@ int main()
   Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
   p2.link();
   
+  Engine::Program p3("./vShader.vert", "./deph_test.frag");
+  p3.link();
+  
+  Engine::Program p4("./vShader.vert", "./shader_blending.frag");
+  p4.link();
+  
   Engine::Model suit_model("./nanosuit/", "nanosuit.obj", p);
   Engine::Model cube_model("./", "cube.obj", p2);
+  Engine::Model cube_model_3("./", "cube.obj", p3);
+  
+  Engine::VBO planeVBO(planeVertices, std::vector<float>(1.0), planeUv);
+  Engine::VBO transparentVBO(transparentVertices, std::vector<float>(1.0), transparentUV);
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -84,6 +149,11 @@ int main()
   Engine::Camera camera(camPos, camPos + camFront, sceneUp);
   
   glm::mat4 projection(1.0f);
+  
+  Engine::Texture marble("./marble.jpg");
+  Engine::Texture metal("./metal.png");
+  Engine::Texture grass("./grass.png");
+  Engine::Texture window("./blending_transparent_window.png");
   
   GLfloat width = scene.getWindowWidth();
   GLfloat height = scene.getWindowHeight();
@@ -106,16 +176,16 @@ int main()
     p.setVec3("material.diffuse",  glm::vec3(1.0f, 0.5f, 0.31f));
     p.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
     p.setFloat("material.shininess", 32.0f);
-    
+
     p.setVec3("dirLight.direction", glm::vec3(0.2f, 1.0f, 0.3f));
     p.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
     p.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
     p.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-    
-    
+
+
     for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
       std::string pointLightTemplate = "pointLights[" + std::to_string(i) + "]";
-      
+
       p.setVec3(pointLightTemplate + ".position", pointLightPositions[i]);
       p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
       p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
@@ -125,9 +195,8 @@ int main()
       p.setFloat(pointLightTemplate + ".quadratic", 0.032);
     }
 
-    
     p.setVec3("u_viewPos", camPos);
-    
+
     model = glm::mat4(1.0f);
     model = glm::translate(model, cubePositions[0]);
     model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(0.0, 1.0, 0.0));
@@ -137,10 +206,8 @@ int main()
     p.setMat4("u_MVP", mvp);
     p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
     p.setMat4("u_model", model);
-    
+
     suit_model.draw();
-    
-    p2.use();
     
     for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
       model = glm::mat4(1.0f);
@@ -150,6 +217,50 @@ int main()
       p2.setMat4("u_MVP", mvp);
       cube_model.draw();
     }
+    
+    p3.use();
+    p3.setInt("tex", metal.getSlot());
+    model = glm::mat4(1.0f);
+    mvp = projection * camera.getView() * model;
+    p3.setMat4("u_MVP", mvp);
+    planeVBO.draw();
+    
+    p3.use();
+    p3.setInt("tex", marble.getSlot());
+    
+    scene.enableCullFacing(Engine::CULL_FACING_BACK);
+    
+
+    
+    for (glm::vec3 curr_tr : c_translations) {
+      model = glm::mat4(1.0f);
+      model = glm::translate(model, curr_tr);
+      mvp = projection * camera.getView() * model;
+      p3.setMat4("u_MVP", mvp);
+      cube_model_3.draw();
+    }
+    
+    scene.disableCullFacing();
+    scene.enableBlengind(Engine::BLENDING_ALPHA);
+    
+    p4.use();
+    p4.setInt("tex", window.getSlot());
+    
+    std::map<float, glm::vec3> sorted;
+    for (glm::vec3 curr_grass_pos : vegetation) {
+      float distance = glm::distance(camera.getPosition(), curr_grass_pos);
+      sorted[distance] = curr_grass_pos;
+    }
+    
+    for (auto it = sorted.rbegin(); it != sorted.rend(); ++it) {
+      model = glm::mat4(1.0f);
+      model = glm::translate(model, it->second);
+      mvp = projection * camera.getView() * model;
+      p4.setMat4("u_MVP", mvp);
+      transparentVBO.draw();
+    }
+    
+    scene.disableBlending();
   });
   
   

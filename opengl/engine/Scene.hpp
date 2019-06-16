@@ -16,6 +16,8 @@
 #include <string>
 #include <functional>
 
+#include "constants.hpp"
+
 namespace Engine
 {
   class Scene
@@ -43,6 +45,10 @@ namespace Engine
     void setSceneLoopUpdateCallback(std::function<void(float)>);
     void setKeyCallback(void(*callback)(GLFWwindow*, int, int, int, int));
     void setCursorPosCallback(void(*callback)(GLFWwindow*, double, double));
+    void enableBlengind(unsigned long);
+    void disableBlending();
+    void enableCullFacing(unsigned long);
+    void disableCullFacing();
   };
 }
 

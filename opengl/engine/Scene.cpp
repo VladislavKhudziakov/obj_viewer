@@ -80,10 +80,10 @@ namespace Engine {
     while (!glfwWindowShouldClose(window))
     {
       glfwPollEvents();
-      glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+      glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
       glEnable(GL_DEPTH_TEST);
-      glClear(GL_COLOR_BUFFER_BIT);
-      glClear(GL_DEPTH_BUFFER_BIT);
+      
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
   
       float now = glfwGetTime();
       float delta = now - lastTime;
@@ -111,6 +111,70 @@ namespace Engine {
   void Scene::setCursorPosCallback(void(*callback)(GLFWwindow*, double, double))
   {
     cursorPosCallback = callback;
+  }
+  
+  
+  void Scene::enableBlengind(unsigned long mode)
+  {
+    switch (mode) {
+      case BLENDING_ALPHA:
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        break;
+        
+      case BLENDING_MULTIPLY:
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_DST_COLOR, GL_ZERO);
+        break;
+        
+      case BLENDING_ADD:
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
+        break;
+        
+      case BLENDING_SCREEN:
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
+        break;
+        
+      default:
+        std::cout << "BLENDING::ERROR::INVALID_MODE\n";
+        break;
+    }
+  }
+  
+  
+  void Scene::disableBlending()
+  {
+    glDisable(GL_BLEND);
+  }
+  
+  
+  void Scene::enableCullFacing(unsigned long mode)
+  {
+    switch (mode) {
+      case CULL_FACING_FRONT:
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);
+        glFrontFace(GL_CCW);
+        break;
+        
+      case CULL_FACING_BACK:
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
+        break;
+        
+      default:
+        std::cout << "CULL_FACING::ERROR::INVALID_MODE\n";
+        break;
+    }
+  }
+  
+  
+  void Scene::disableCullFacing()
+  {
+    glDisable(GL_CULL_FACE);
   }
 }
 

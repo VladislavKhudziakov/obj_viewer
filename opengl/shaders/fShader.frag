@@ -59,6 +59,8 @@ in vec3 var_normal;
 in vec3 var_position;
 
 
+
+
 vec3 calculateDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 calculatePointLight(PointLight light, vec3 normal, vec3 vertPos, vec3 viewDir);
 

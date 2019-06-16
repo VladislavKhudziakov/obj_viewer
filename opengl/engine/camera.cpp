@@ -33,15 +33,33 @@ namespace Engine
   }
   
   
+  const glm::vec3& Camera::getPosition()
+  {
+    return position;
+  }
+  
+  
   void Camera::setDirection(const glm::vec3& newDirection)
   {
     direction = newDirection;
   }
   
   
+  const glm::vec3& Camera::getDirection()
+  {
+    return direction;
+  }
+  
+  
   void Camera::setUp(const glm::vec3& newUp)
   {
     up = newUp;
+  }
+  
+  
+  const glm::vec3& Camera::getUp()
+  {
+    return up;
   }
   
   
