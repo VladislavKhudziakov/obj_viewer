@@ -141,7 +141,7 @@ int main()
   Engine::Model cube_model_3("./", "cube.obj", p3);
   
   Engine::VBO planeVBO(planeVertices, std::vector<float>(1.0), planeUv);
-  Engine::VBO transparentVBO(transparentVertices, std::vector<float>(1.0), transparentUV);
+  Engine::VBO transparentVBO = scene.generate2DRect();
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -223,22 +223,23 @@ int main()
     model = glm::mat4(1.0f);
     mvp = projection * camera.getView() * model;
     p3.setMat4("u_MVP", mvp);
+    
     planeVBO.draw();
     
-//    p3.use();
-//    p3.setInt("tex", marble.getSlot());
-//    
-//    scene.enableCullFacing(Engine::CULL_FACING_BACK);
-//    
-//    for (glm::vec3 curr_tr : c_translations) {
-//      model = glm::mat4(1.0f);
-//      model = glm::translate(model, curr_tr);
-//      mvp = projection * camera.getView() * model;
-//      p3.setMat4("u_MVP", mvp);
-//      cube_model_3.draw();
-//    }
-//    
-//    scene.disableCullFacing();
+    p3.use();
+    p3.setInt("tex", marble.getSlot());
+    
+    scene.enableCullFacing(Engine::CULL_FACING_BACK);
+    
+    for (glm::vec3 curr_tr : c_translations) {
+      model = glm::mat4(1.0f);
+      model = glm::translate(model, curr_tr);
+      mvp = projection * camera.getView() * model;
+      p3.setMat4("u_MVP", mvp);
+      cube_model_3.draw();
+    }
+    
+    scene.disableCullFacing();
     
     scene.enableBlengind(Engine::BLENDING_ALPHA);
     
@@ -256,6 +257,7 @@ int main()
       model = glm::translate(model, it->second);
       mvp = projection * camera.getView() * model;
       p4.setMat4("u_MVP", mvp);
+      
       transparentVBO.draw();
     }
     

@@ -14,6 +14,7 @@ namespace Engine {
            const std::vector<float>& normals,
            const std::vector<float>& uv)
   {
+    ebo = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     
