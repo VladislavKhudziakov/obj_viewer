@@ -181,11 +181,11 @@ namespace Engine {
   VBO Scene::generate2DRect()
   {
     std::vector<float> rectVertices = {
-      0.0f,  1.0f,  0.0f,
-      0.0f, -1.0f,  0.0f,
+      -1.0f,  1.0f,  0.0f,
+      -1.0f, -1.0f,  0.0f,
       1.0f, -1.0f,  0.0f,
       
-      0.0f,  1.0f,  0.0f,
+      -1.0f,  1.0f,  0.0f,
       1.0f, -1.0f,  0.0f,
       1.0f,  1.0f,  0.0f,
     };
