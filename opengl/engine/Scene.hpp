@@ -17,6 +17,7 @@
 #include <functional>
 
 #include "constants.hpp"
+#include "VertexBufferObject.hpp"
 
 namespace Engine
 {
@@ -49,6 +50,7 @@ namespace Engine
     void disableBlending();
     void enableCullFacing(unsigned long);
     void disableCullFacing();
+    VBO generate2DRect();
   };
 }
 

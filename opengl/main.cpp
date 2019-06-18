@@ -225,22 +225,21 @@ int main()
     p3.setMat4("u_MVP", mvp);
     planeVBO.draw();
     
-    p3.use();
-    p3.setInt("tex", marble.getSlot());
+//    p3.use();
+//    p3.setInt("tex", marble.getSlot());
+//    
+//    scene.enableCullFacing(Engine::CULL_FACING_BACK);
+//    
+//    for (glm::vec3 curr_tr : c_translations) {
+//      model = glm::mat4(1.0f);
+//      model = glm::translate(model, curr_tr);
+//      mvp = projection * camera.getView() * model;
+//      p3.setMat4("u_MVP", mvp);
+//      cube_model_3.draw();
+//    }
+//    
+//    scene.disableCullFacing();
     
-    scene.enableCullFacing(Engine::CULL_FACING_BACK);
-    
-
-    
-    for (glm::vec3 curr_tr : c_translations) {
-      model = glm::mat4(1.0f);
-      model = glm::translate(model, curr_tr);
-      mvp = projection * camera.getView() * model;
-      p3.setMat4("u_MVP", mvp);
-      cube_model_3.draw();
-    }
-    
-    scene.disableCullFacing();
     scene.enableBlengind(Engine::BLENDING_ALPHA);
     
     p4.use();

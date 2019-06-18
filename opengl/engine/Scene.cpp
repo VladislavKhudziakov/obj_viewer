@@ -176,5 +176,32 @@ namespace Engine {
   {
     glDisable(GL_CULL_FACE);
   }
+  
+  
+  VBO Scene::generate2DRect()
+  {
+    std::vector<float> rectVertices = {
+      0.0f,  1.0f,  0.0f,
+      0.0f, -1.0f,  0.0f,
+      1.0f, -1.0f,  0.0f,
+      
+      0.0f,  1.0f,  0.0f,
+      1.0f, -1.0f,  0.0f,
+      1.0f,  1.0f,  0.0f,
+    };
+    
+    std::vector<float> rectUV = {
+      0.0f,  0.0f,
+      0.0f,  1.0f,
+      1.0f,  1.0f,
+      
+      0.0f,  0.0f,
+      1.0f,  1.0f,
+      1.0f,  0.0f
+    };
+    
+    return VBO(rectVertices, std::vector<float>(1.0), rectUV);
+  }
+  
 }
 
