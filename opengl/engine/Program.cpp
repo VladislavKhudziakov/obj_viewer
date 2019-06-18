@@ -62,8 +62,6 @@ namespace Engine {
   {
     if (linkedStatus) {
       glUseProgram(program);
-    } else {
-      std::cout << "ERROR::CANNOT_USE_DONT_LINKED_PROGRAM\n";;
     }
   }
   

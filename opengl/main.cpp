@@ -57,32 +57,11 @@ std::vector<float> planeUv = {
   2.0f, 2.0f
 };
 
-
-std::vector<float> transparentVertices = {
-  0.0f,  0.5f,  0.0f,
-  0.0f, -0.5f,  0.0f,
-  1.0f, -0.5f,  0.0f,
-  
-  0.0f,  0.5f,  0.0f,
-  1.0f, -0.5f,  0.0f,
-  1.0f,  0.5f,  0.0f,
-};
-
-std::vector<float> transparentUV = {
- 0.0f,  0.0f,
- 0.0f,  1.0f,
- 1.0f,  1.0f,
-  
- 0.0f,  0.0f,
- 1.0f,  1.0f,
- 1.0f,  0.0f
-};
-
 std::vector<glm::vec3> vegetation = {
-  glm::vec3(-1.5f,  0.0f, -0.48f),
-  glm::vec3( 1.5f,  0.0f,  0.51f),
-  glm::vec3( 0.0f,  0.0f,  0.7f),
-  glm::vec3(-0.3f,  0.0f, -2.3f),
+  glm::vec3(-1.0f,  0.0f, -0.48f),
+  glm::vec3( 2.0f,  0.0f,  0.51f),
+  glm::vec3( 0.5f,  0.0f,  0.7f),
+  glm::vec3(0.7f,  0.0f, -2.3f),
   glm::vec3( 0.5f,  0.0f, -0.6f)
 };
 
@@ -136,12 +115,16 @@ int main()
   Engine::Program p4("./vShader.vert", "./shader_blending.frag");
   p4.link();
   
+  Engine::Program postprocessing_shaders("./postprocessing_vShader.vert", "./postprocessing_fShader.frag");
+  postprocessing_shaders.link();
+  
   Engine::Model suit_model("./nanosuit/", "nanosuit.obj", p);
   Engine::Model cube_model("./", "cube.obj", p2);
   Engine::Model cube_model_3("./", "cube.obj", p3);
   
   Engine::VBO planeVBO(planeVertices, std::vector<float>(1.0), planeUv);
   Engine::VBO transparentVBO = scene.generate2DRect();
+  Engine::VBO postprocessing_plane = scene.generate2DRect();
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -165,7 +148,47 @@ int main()
   scene.setKeyCallback(keyCallback);
   scene.setCursorPosCallback(mouseCallback);
   
+  
+  unsigned int framebuffer;
+  glGenFramebuffers(1, &framebuffer);
+  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+  
+  unsigned int texColorBuffer;
+  glGenTextures(1, &texColorBuffer);
+  
+  glActiveTexture(GL_TEXTURE0 + texColorBuffer);
+  glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800 * 2, 600 * 2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glBindTexture(GL_TEXTURE_2D, 0);
+  
+  std::cout << texColorBuffer << "\n";
+  
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+  
+  unsigned int rbo;
+  glGenRenderbuffers(1, &rbo);
+  glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800 * 2, 600 * 2);
+  glBindRenderbuffer(GL_RENDERBUFFER, 0);
+  
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+  
+  if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+  }
+  
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    
     p.use();
     
     move(delta);
@@ -255,13 +278,24 @@ int main()
     for (auto it = sorted.rbegin(); it != sorted.rend(); ++it) {
       model = glm::mat4(1.0f);
       model = glm::translate(model, it->second);
+      model = glm::scale(model, glm::vec3(0.5, 0.5, 1.0));
       mvp = projection * camera.getView() * model;
       p4.setMat4("u_MVP", mvp);
-      
       transparentVBO.draw();
     }
     
     scene.disableBlending();
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    glDisable(GL_DEPTH_TEST);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    postprocessing_shaders.use();
+    glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+    postprocessing_shaders.setInt("posprocessing_texture", texColorBuffer);
+    postprocessing_plane.draw();
   });
   
   

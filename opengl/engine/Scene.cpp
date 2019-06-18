@@ -82,7 +82,7 @@ namespace Engine {
       glfwPollEvents();
       glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
       glEnable(GL_DEPTH_TEST);
-      
+
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
   
       float now = glfwGetTime();
@@ -183,21 +183,21 @@ namespace Engine {
     std::vector<float> rectVertices = {
       -1.0f,  1.0f,  0.0f,
       -1.0f, -1.0f,  0.0f,
-      1.0f, -1.0f,  0.0f,
+      1.0f, -1.0f,   0.0f,
       
       -1.0f,  1.0f,  0.0f,
-      1.0f, -1.0f,  0.0f,
-      1.0f,  1.0f,  0.0f,
+      1.0f, -1.0f,   0.0f,
+      1.0f,  1.0f,   0.0f,
     };
     
     std::vector<float> rectUV = {
-      0.0f,  0.0f,
       0.0f,  1.0f,
-      1.0f,  1.0f,
-      
       0.0f,  0.0f,
-      1.0f,  1.0f,
-      1.0f,  0.0f
+      1.0f,  0.0f,
+      
+      0.0f,  1.0f,
+      1.0f,  0.0f,
+      1.0f,  1.0f
     };
     
     return VBO(rectVertices, std::vector<float>(1.0), rectUV);
