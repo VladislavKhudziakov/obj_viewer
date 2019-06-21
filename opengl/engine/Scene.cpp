@@ -45,7 +45,8 @@ namespace Engine {
     
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
-    
+    windowWidth = width;
+    windowHeight = height;
     glViewport(0, 0, width, height);
     
     return 0;
@@ -203,5 +204,85 @@ namespace Engine {
     return VBO(rectVertices, std::vector<float>(1.0), rectUV);
   }
   
+  
+//  void initFramebuffer(std::string);
+//  void renderInFramebuffer(std::string);
+//  const Framebuffer& getFramebuffer();
+  
+  void Scene::initFramebuffer(const std::string& name)
+  {
+    unsigned int framebuffer;
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    
+    unsigned int texColorBuffer;
+    glGenTextures(1, &texColorBuffer);
+    
+    glActiveTexture(GL_TEXTURE0 + texColorBuffer);
+    glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowWidth, windowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    std::cout << texColorBuffer << "\n";
+    
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+    
+    unsigned int rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowWidth, windowHeight);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+    
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+      std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+      return;
+    }
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    activeFramebuffers[name] = Framebuffer(framebuffer, texColorBuffer, rbo);
+  }
+  
+  
+  void Scene::renderInFramebuffer(const std::string& name,
+    unsigned long bit_mask, float r, float g, float b, float a)
+  {
+    try {
+      Framebuffer currBuffer = activeFramebuffers.at(name);
+      glBindFramebuffer(GL_FRAMEBUFFER, currBuffer.get());
+      
+      if (bit_mask & (1 << 0)) {
+        glEnable(GL_DEPTH_TEST);
+        glClear(GL_DEPTH_BUFFER_BIT);
+      }
+      
+      if (bit_mask & (2 << 0)) {
+        glClearColor(r, g, b, a);
+        glClear(GL_COLOR_BUFFER_BIT);
+      }
+      
+    } catch (std::out_of_range err) {
+      std::cout << err.what() << std::endl;
+    }
+  }
+  
+  
+  void Scene::stopRenderInFrameBuffer(const std::string& name)
+  {
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      glDisable(GL_DEPTH_TEST);
+      glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+      glClear(GL_COLOR_BUFFER_BIT);
+  }
+  
+  
+  const Framebuffer& Scene::getFramebuffer(const std::string& name)
+  {
+    return activeFramebuffers.at(name);
+  }
 }
 

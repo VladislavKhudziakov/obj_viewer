@@ -8,8 +8,8 @@
 
 #include "Framebuffer.hpp"
 
-namespace Engine {
-  
+namespace Engine
+{
   Framebuffer::Framebuffer(unsigned int framebuffer, unsigned int colorbuffer, unsigned int renderbuffer)
   {
     this->framebuffer = framebuffer;
@@ -18,19 +18,19 @@ namespace Engine {
   }
   
   
-  unsigned int Framebuffer::getColorbuffer()
+  unsigned int Framebuffer::getColorbuffer() const
   {
     return colorbuffer;
   }
   
   
-  unsigned int Framebuffer::getRenderbuffer()
+  unsigned int Framebuffer::getRenderbuffer() const
   {
     return renderbuffer;
   }
   
   
-  unsigned int Framebuffer::get()
+  unsigned int Framebuffer::get() const
   {
     return framebuffer;
   }

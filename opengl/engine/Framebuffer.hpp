@@ -18,10 +18,11 @@ namespace Engine {
     unsigned int framebuffer;
     
   public:
+    Framebuffer() { };
     Framebuffer(unsigned int, unsigned int, unsigned int);
-    unsigned int getColorbuffer();
-    unsigned int getRenderbuffer();
-    unsigned int get();
+    unsigned int getColorbuffer() const;
+    unsigned int getRenderbuffer() const;
+    unsigned int get() const;
   };
 }
 #endif /* Framebuffer_hpp */

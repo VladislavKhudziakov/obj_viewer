@@ -21,6 +21,11 @@ namespace Engine {
     BLENDING_MULTIPLY,
     BLENDING_ADD
   };
+  
+  enum {
+    FRAMEBUFFER_DEPTH_TEST_ACTIVATE = 1,
+    FRAMEBUFFER_CLEAR_COLOR = 2,
+  };
 }
 
 #endif /* constants_hpp */
