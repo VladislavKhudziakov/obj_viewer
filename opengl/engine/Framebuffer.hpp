@@ -23,7 +23,6 @@ namespace Engine
     int width, height;
     unsigned int colorbuffer, renderbuffer, framebuffer;
     unsigned long render_bit_mask;
-    std::string name;
     bool isRenderIn;
     
     struct ClearColor {
@@ -34,12 +33,10 @@ namespace Engine
     
   public:
     Framebuffer() { };
-    Framebuffer(const std::string& name, int widht, int height);
-    void init(unsigned int framebuffer = 0, unsigned int colorbuffer = 0, unsigned int renderbuffer = 0);
+    Framebuffer(int widht, int height);
     unsigned int getColorbuffer() const;
     unsigned int getRenderbuffer() const;
     unsigned int get() const;
-    const std::string& getName() const;
     void renderIn(unsigned long bit_mask, float r = 0, float g = 0, float b = 0, float a = 0);
     void stopRenderIn();
     bool IsRenderIn() const;

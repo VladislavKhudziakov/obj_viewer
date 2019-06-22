@@ -17,7 +17,6 @@
 #include <map>
 #include <functional>
 
-#include "Framebuffer.hpp"
 #include "constants.hpp"
 #include "VertexBufferObject.hpp"
 
@@ -33,8 +32,6 @@ namespace Engine
     float lastTime;
     
     std::function<void(float)> onUpdate;
-    
-    std::map<std::string, Framebuffer> activeFramebuffers;
     
     void(*keyCallback)(GLFWwindow*, int, int, int, int);
     void(*cursorPosCallback)(GLFWwindow*, double, double);
@@ -58,13 +55,6 @@ namespace Engine
     
     void enableCullFacing(unsigned long);
     void disableCullFacing();
-    
-    void initFramebuffer(const std::string&);
-    void renderInFramebuffer(const std::string&,
-     unsigned long bit_mask = 0,
-     float r = 0, float g = 0, float b = 0, float a = 1.);
-    void stopRenderInFrameBuffer(const std::string&);
-    const Framebuffer& getFramebuffer(const std::string&);
     
     VBO generate2DRect();
   };

@@ -10,49 +10,32 @@
 
 namespace Engine
 {
-  Framebuffer::Framebuffer(const std::string& name, int width, int height)
+  Framebuffer::Framebuffer(int width, int height) : width(width), height(height)
   {
-    this->name = name;
-    this->width = width;
-    this->height = height;
-  }
-  
-  
-  void Framebuffer::init(unsigned int framebuffer, unsigned int colorbuffer, unsigned int renderbuffer)
-  {
-    if (framebuffer) {
-      this->framebuffer = framebuffer;
-    } else {
-      glGenFramebuffers(1, &this->framebuffer);
-      glBindFramebuffer(GL_FRAMEBUFFER, this->framebuffer);
-    }
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     
-    if (colorbuffer) {
-      this->colorbuffer = colorbuffer;
-    } else {
-      glGenTextures(1, &this->colorbuffer);
-      
-      glActiveTexture(GL_TEXTURE0 + this->colorbuffer);
-      glBindTexture(GL_TEXTURE_2D, this->colorbuffer);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glBindTexture(GL_TEXTURE_2D, 0);
-    }
+    glGenTextures(1, &colorbuffer);
     
-    if (renderbuffer) {
-      this->renderbuffer = renderbuffer;
-    } else {
-      glGenRenderbuffers(1, &this->renderbuffer);
-      glBindRenderbuffer(GL_RENDERBUFFER, this->renderbuffer);
-      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-      glBindRenderbuffer(GL_RENDERBUFFER, 0);
-      
-      glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderbuffer);
-    }
+    glActiveTexture(GL_TEXTURE0 + colorbuffer);
+    glBindTexture(GL_TEXTURE_2D, colorbuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorbuffer, 0);
+    
+    glGenRenderbuffers(1, &renderbuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderbuffer);
     
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
       std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+      return;
     }
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -74,12 +57,6 @@ namespace Engine
   unsigned int Framebuffer::get() const
   {
     return framebuffer;
-  }
-  
-  
-  const std::string& Framebuffer::getName() const
-  {
-    return name;
   }
   
   

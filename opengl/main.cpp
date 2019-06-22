@@ -24,6 +24,7 @@
 #include "engine/Model.hpp"
 #include "engine/VertexBufferObject.hpp"
 #include "engine/constants.hpp"
+#include "engine/Framebuffer.hpp"
 
 glm::vec3 pointLightPositions[] = {
   glm::vec3( 0.7f,  0.2f,  2.0f),
@@ -157,11 +158,11 @@ int main()
   scene.setKeyCallback(keyCallback);
   scene.setCursorPosCallback(mouseCallback);
   
-  scene.initFramebuffer("test");
+  Engine::Framebuffer fbo(1600, 1200);
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     
-    scene.renderInFramebuffer("test", Engine::FRAMEBUFFER_DEPTH_TEST_ACTIVATE | Engine::FRAMEBUFFER_CLEAR_COLOR);
+    fbo.renderIn(Engine::FRAMEBUFFER_DEPTH_TEST_ACTIVATE | Engine::FRAMEBUFFER_CLEAR_COLOR);
     
     p.use();
     
@@ -260,11 +261,11 @@ int main()
     
     scene.disableBlending();
     
-    scene.stopRenderInFrameBuffer("test");
+    fbo.stopRenderIn();
     
     postprocessing_shaders.use();
-    glBindTexture(GL_TEXTURE_2D, scene.getFramebuffer("test").getColorbuffer());
-    postprocessing_shaders.setInt("posprocessing_texture", scene.getFramebuffer("test").getColorbuffer());
+    glBindTexture(GL_TEXTURE_2D, fbo.getColorbuffer());
+    postprocessing_shaders.setInt("posprocessing_texture", fbo.getColorbuffer());
     postprocessing_plane.draw();
   });
   
