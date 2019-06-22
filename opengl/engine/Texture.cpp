@@ -17,17 +17,7 @@ namespace Engine
     
     glGenTextures(1, &texture);
     
-    if (texture < 32) {
-      textureSlot = texture;
-    } else {
-      int mulCoeff = 2;
-      
-      while (mulCoeff * 32 - texture < 0) {
-        mulCoeff++;
-      }
-      
-      textureSlot = 32 - (32 * mulCoeff - texture) + 1;
-    }
+    textureSlot = texture;
     
     glActiveTexture(GL_TEXTURE0 + textureSlot);
     

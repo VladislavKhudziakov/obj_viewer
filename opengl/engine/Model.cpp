@@ -48,17 +48,17 @@ namespace Engine
   {
     for (int i = 0; i < node->mNumMeshes; i++) {
       const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-      auto tex_diff = loadMaterialTextures(mesh, scene, aiTextureType_DIFFUSE);
-      auto tex_spec = loadMaterialTextures(mesh, scene, aiTextureType_SPECULAR);
+      std::string tex_diff = loadMaterialTexture(mesh, scene, aiTextureType_DIFFUSE);
+      std::string tex_spec = loadMaterialTexture(mesh, scene, aiTextureType_SPECULAR);
       
       Mesh node_mesh(mesh, scene);
 
       if (tex_diff.size() > 0) {
-          node_mesh.setDiffTexture(Texture(tex_diff[0]));
+          node_mesh.setDiffTexture(Texture(tex_diff));
       }
 
       if (tex_spec.size() > 0) {
-          node_mesh.setSpecTexture(Texture(tex_spec[0]));
+          node_mesh.setSpecTexture(Texture(tex_spec));
       }
       
       meshes.push_back(node_mesh);
@@ -70,27 +70,27 @@ namespace Engine
   }
   
   
-  std::vector<std::string> Model::loadMaterialTextures(
+  std::string Model::loadMaterialTexture(
     const aiMesh* mesh, const aiScene* scene, aiTextureType type)
   {
-    std::vector<std::string> outputTextures;
+    std::string outputTexture;
     
     if(mesh->mMaterialIndex >= 0) {
       const aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
       
       int texCount = material->GetTextureCount(type);
       
-      for (int i = 0; i < texCount; i++) {
+      if (texCount > 0) {
         aiString path;
-        material->GetTexture(type, i, &path);
+        material->GetTexture(type, 0, &path);
         
         std::string full_path(path.C_Str());
         full_path = directoryName + full_path;
         
-        outputTextures.push_back(full_path);
+        outputTexture = full_path;
         
         auto founded_element = std::find(
-          loaded_textures.begin(), loaded_textures.end(), full_path);
+           loaded_textures.begin(), loaded_textures.end(), full_path);
         
         if (founded_element == loaded_textures.end()) {
           loaded_textures.push_back(full_path);
@@ -98,7 +98,7 @@ namespace Engine
       }
     }
     
-    return outputTextures;
+    return outputTexture;
   }
   
   

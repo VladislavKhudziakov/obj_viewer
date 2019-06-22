@@ -36,7 +36,7 @@ namespace Engine {
     int loadFromFile(const std::string&);
     void processNodes(const aiNode* node, const aiScene* scene);
     void draw();
-    std::vector<std::string> loadMaterialTextures(const aiMesh* mesh, const aiScene* scene, aiTextureType type);
+    std::string loadMaterialTexture(const aiMesh* mesh, const aiScene* scene, aiTextureType type);
     const std::vector<Mesh>& getMeshes();
   };
 }
