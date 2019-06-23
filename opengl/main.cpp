@@ -101,7 +101,6 @@ float pitch = 0.0f;
 
 int main()
 {
-  
   bool b[4];
   int v = 7;  // number to dissect
   
@@ -113,28 +112,12 @@ int main()
   Engine::Scene scene(800, 600, "LearnOpenGL");
   scene.init();
   
-  Engine::Program p("./vShader.vert", "./fShader.frag");
-  p.link();
-  
-  Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
-  p2.link();
   
   Engine::Program p3("./vShader.vert", "./deph_test.frag");
   p3.link();
-  
-  Engine::Program p4("./vShader.vert", "./shader_blending.frag");
-  p4.link();
-  
-  Engine::Program postprocessing_shaders("./postprocessing_vShader.vert", "./postprocessing_fShader.frag");
-  postprocessing_shaders.link();
-  
-  Engine::Model suit_model("./nanosuit/", "nanosuit.obj", p);
-  Engine::Model cube_model("./", "cube.obj", p2);
+
   Engine::Model cube_model_3("./", "cube.obj", p3);
-  
   Engine::VBO planeVBO(planeVertices, std::vector<float>(1.0), planeUv);
-  Engine::VBO transparentVBO = scene.generate2DRect();
-  Engine::VBO postprocessing_plane = scene.generate2DRect();
   
   glm::mat4 model(1.0f);
   model = glm::mat4(1.0f);
@@ -143,10 +126,11 @@ int main()
   
   glm::mat4 projection(1.0f);
   
-  Engine::Texture marble("./marble.jpg");
-  Engine::Texture metal("./metal.png");
-  Engine::Texture grass("./grass.png");
-  Engine::Texture window("./blending_transparent_window.png");
+  //-----------
+  
+  Engine::Texture marble_tex("./marble.jpg");
+  Engine::Texture metal_tex("./metal.png", 1);
+  
   
   GLfloat width = scene.getWindowWidth();
   GLfloat height = scene.getWindowHeight();
@@ -162,111 +146,30 @@ int main()
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     
-    fbo.renderIn(Engine::FRAMEBUFFER_DEPTH_TEST_ACTIVATE | Engine::FRAMEBUFFER_CLEAR_COLOR);
-    
-    p.use();
-    
     move(delta);
-    
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
     
-    p.setVec3("material.ambient",  glm::vec3(1.0f, 0.5f, 0.31f));
-    p.setVec3("material.diffuse",  glm::vec3(1.0f, 0.5f, 0.31f));
-    p.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-    p.setFloat("material.shininess", 32.0f);
-
-    p.setVec3("dirLight.direction", glm::vec3(0.2f, 1.0f, 0.3f));
-    p.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-    p.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
-    p.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-
-
-    for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
-      std::string pointLightTemplate = "pointLights[" + std::to_string(i) + "]";
-
-      p.setVec3(pointLightTemplate + ".position", pointLightPositions[i]);
-      p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-      p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
-      p.setVec3(pointLightTemplate + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
-      p.setFloat(pointLightTemplate + ".constant", 1.0f);
-      p.setFloat(pointLightTemplate + ".linear", 0.09);
-      p.setFloat(pointLightTemplate + ".quadratic", 0.032);
-    }
-
-    p.setVec3("u_viewPos", camPos);
-
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, cubePositions[0]);
-    model = glm::rotate(model, GLfloat(glfwGetTime()), glm::vec3(0.0, 1.0, 0.0));
-    model = glm::scale(model, glm::vec3(0.2f));
-    mvp = projection * camera.getView() * model;
-
-    p.setMat4("u_MVP", mvp);
-    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
-    p.setMat4("u_model", model);
-
-    suit_model.draw();
-    
-    for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
-      model = glm::mat4(1.0f);
-      model = glm::translate(model, pointLightPositions[i]);
-      model = glm::scale(model, glm::vec3(0.2f));
-      mvp = projection * camera.getView() * model;
-      p2.setMat4("u_MVP", mvp);
-      cube_model.draw();
-    }
-    
     p3.use();
-    p3.setInt("tex", metal.getSlot());
+    
     model = glm::mat4(1.0f);
     mvp = projection * camera.getView() * model;
     p3.setMat4("u_MVP", mvp);
     
+    metal_tex.use();
+    p3.setInt("tex", metal_tex.getID());
     planeVBO.draw();
-    
-    p3.use();
-    p3.setInt("tex", marble.getSlot());
-    
-    scene.enableCullFacing(Engine::CULL_FACING_BACK);
+    marble_tex.use();
+    p3.setInt("tex", marble_tex.getID());
     
     for (glm::vec3 curr_tr : c_translations) {
-      model = glm::mat4(1.0f);
+      
       model = glm::translate(model, curr_tr);
       mvp = projection * camera.getView() * model;
       p3.setMat4("u_MVP", mvp);
       cube_model_3.draw();
-    }
-    
-    scene.disableCullFacing();
-    
-    scene.enableBlengind(Engine::BLENDING_ALPHA);
-    
-    p4.use();
-    p4.setInt("tex", window.getSlot());
-    
-    std::map<float, glm::vec3> sorted;
-    for (glm::vec3 curr_grass_pos : vegetation) {
-      float distance = glm::distance(camera.getPosition(), curr_grass_pos);
-      sorted[distance] = curr_grass_pos;
-    }
-    
-    for (auto it = sorted.rbegin(); it != sorted.rend(); ++it) {
+      
       model = glm::mat4(1.0f);
-      model = glm::translate(model, it->second);
-      model = glm::scale(model, glm::vec3(0.5, 0.5, 1.0));
-      mvp = projection * camera.getView() * model;
-      p4.setMat4("u_MVP", mvp);
-      transparentVBO.draw();
     }
-    
-    scene.disableBlending();
-    
-    fbo.stopRenderIn();
-    
-    postprocessing_shaders.use();
-    glBindTexture(GL_TEXTURE_2D, fbo.getColorbuffer());
-    postprocessing_shaders.setInt("posprocessing_texture", fbo.getColorbuffer());
-    postprocessing_plane.draw();
   });
   
   

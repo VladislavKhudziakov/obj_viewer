@@ -10,30 +10,35 @@
 
 namespace Engine
 {  
-  Texture::Texture(const std::string& imgName)
+  Texture::Texture(const std::string& imgName, int tex_slot)
+    : tex_id(tex_slot)
   {
     unsigned char* img = SOIL_load_image(
       imgName.c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
     
     glGenTextures(1, &texture);
-    
-    textureSlot = texture;
-    
-    glActiveTexture(GL_TEXTURE0 + textureSlot);
-    
     glBindTexture(GL_TEXTURE_2D, texture);
-    
-    glTexImage2D(
-     GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
-    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
     glGenerateMipmap(GL_TEXTURE_2D);
     
     SOIL_free_image_data(img);
+    glBindTexture(GL_TEXTURE_2D, 0);
   };
   
-  
-  unsigned int Texture::getSlot() const noexcept
+  void Texture::use() const noexcept
   {
-    return textureSlot;
+    glActiveTexture(GL_TEXTURE0 + tex_id);
+    glBindTexture(GL_TEXTURE_2D, texture);
+  }
+  
+  
+  unsigned int Texture::get() const noexcept
+  {
+    return texture;
+  }
+  
+  unsigned int Texture::getID() const noexcept
+  {
+    return tex_id;
   }
 }

@@ -54,11 +54,15 @@ namespace Engine
       Mesh node_mesh(mesh, scene);
 
       if (tex_diff.size() > 0) {
-          node_mesh.setDiffTexture(Texture(tex_diff));
+          loaded_textures.push_back(tex_diff);
+          int tex_idx = static_cast<int>(loaded_textures.size());
+          node_mesh.setDiffTexture(Texture(tex_diff, tex_idx));
       }
 
       if (tex_spec.size() > 0) {
-          node_mesh.setSpecTexture(Texture(tex_spec));
+          loaded_textures.push_back(tex_spec);
+          int tex_idx = static_cast<int>(loaded_textures.size());
+          node_mesh.setSpecTexture(Texture(tex_spec, tex_idx));
       }
       
       meshes.push_back(node_mesh);
@@ -88,13 +92,6 @@ namespace Engine
         full_path = directoryName + full_path;
         
         outputTexture = full_path;
-        
-        auto founded_element = std::find(
-           loaded_textures.begin(), loaded_textures.end(), full_path);
-        
-        if (founded_element == loaded_textures.end()) {
-          loaded_textures.push_back(full_path);
-        }
       }
     }
     
@@ -108,12 +105,20 @@ namespace Engine
     
     for (auto mesh : meshes) {
       
-      if (mesh.getDiffTexture().getSlot() < 32) {
-        shaderProgram.setInt("material.diffuse", mesh.getDiffTexture().getSlot());
+      auto mesh_diff_tex = mesh.getDiffTexture();
+      
+      int tex_diff_slot = mesh_diff_tex.get();
+      if (tex_diff_slot < 32) {
+        mesh_diff_tex.use();
+        shaderProgram.setInt("material.diffuse", 0);
       }
       
-      if (mesh.getSpecTexture().getSlot() < 32) {
-        shaderProgram.setInt("material.specular", mesh.getSpecTexture().getSlot());
+      auto mesh_spec_tex = mesh.getSpecTexture();
+      
+      int tex_spec_slot = mesh_spec_tex.get();
+      if (tex_spec_slot < 32) {
+        mesh_spec_tex.use();
+        shaderProgram.setInt("material.specular", 1);
       }
       
       mesh.draw();

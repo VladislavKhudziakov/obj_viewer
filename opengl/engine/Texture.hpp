@@ -22,15 +22,17 @@ namespace Engine
   {
   private:
     unsigned int texture;
-    unsigned int textureSlot;
+    unsigned int tex_id;
     int width;
     int height;
     
   public:
     Texture() { };
-    Texture(const std::string&);
+    Texture(const std::string&, int tex_slot = 0);
     ~Texture() { };
-    unsigned int getSlot() const noexcept;
+    void use() const noexcept;
+    unsigned int get() const noexcept;
+    unsigned int getID() const noexcept;
   };
 }
 
