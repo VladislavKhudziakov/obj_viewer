@@ -24,6 +24,7 @@ namespace Engine
     unsigned int colorbuffer, renderbuffer, framebuffer;
     unsigned long render_bit_mask;
     bool isRenderIn;
+    int tex_id;
     
     struct ClearColor {
       float r, g, b, a;
@@ -33,13 +34,15 @@ namespace Engine
     
   public:
     Framebuffer() { };
-    Framebuffer(int widht, int height);
+    Framebuffer(int widht, int height, int tex_id = 0);
     unsigned int getColorbuffer() const;
     unsigned int getRenderbuffer() const;
     unsigned int get() const;
     void renderIn(unsigned long bit_mask, float r = 0, float g = 0, float b = 0, float a = 0);
     void stopRenderIn();
+    void useAsTexture() const;
     bool IsRenderIn() const;
+    int getTextureID() const;
   };
 }
 #endif /* Framebuffer_hpp */

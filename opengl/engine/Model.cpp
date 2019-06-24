@@ -52,19 +52,8 @@ namespace Engine
       std::string tex_spec = loadMaterialTexture(mesh, scene, aiTextureType_SPECULAR);
       
       Mesh node_mesh(mesh, scene);
-
-      if (tex_diff.size() > 0) {
-          loaded_textures.push_back(tex_diff);
-          int tex_idx = static_cast<int>(loaded_textures.size());
-          node_mesh.setDiffTexture(Texture(tex_diff, tex_idx));
-      }
-
-      if (tex_spec.size() > 0) {
-          loaded_textures.push_back(tex_spec);
-          int tex_idx = static_cast<int>(loaded_textures.size());
-          node_mesh.setSpecTexture(Texture(tex_spec, tex_idx));
-      }
-      
+      node_mesh.setDiffTexture(Texture(tex_diff, 0));
+      node_mesh.setSpecTexture(Texture(tex_spec, 1));
       meshes.push_back(node_mesh);
     }
     
@@ -103,23 +92,16 @@ namespace Engine
   {
     shaderProgram.use();
     
-    for (auto mesh : meshes) {
+    for (Mesh mesh : meshes) {
       
-      auto mesh_diff_tex = mesh.getDiffTexture();
+      Texture mesh_diff_tex = mesh.getDiffTexture();
       
-      int tex_diff_slot = mesh_diff_tex.get();
-      if (tex_diff_slot < 32) {
-        mesh_diff_tex.use();
-        shaderProgram.setInt("material.diffuse", 0);
-      }
+      mesh_diff_tex.use();
+      shaderProgram.setInt("material.diffuse", 0);
       
-      auto mesh_spec_tex = mesh.getSpecTexture();
-      
-      int tex_spec_slot = mesh_spec_tex.get();
-      if (tex_spec_slot < 32) {
-        mesh_spec_tex.use();
-        shaderProgram.setInt("material.specular", 1);
-      }
+      Texture mesh_spec_tex = mesh.getSpecTexture();
+      mesh_spec_tex.use();
+      shaderProgram.setInt("material.specular", 1);
       
       mesh.draw();
     }

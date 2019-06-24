@@ -10,14 +10,13 @@
 
 namespace Engine
 {
-  Framebuffer::Framebuffer(int width, int height) : width(width), height(height)
+  Framebuffer::Framebuffer(int width, int height, int tex_id)
+  : width(width), height(height), tex_id(tex_id)
   {
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     
     glGenTextures(1, &colorbuffer);
-    
-    glActiveTexture(GL_TEXTURE0 + colorbuffer);
     glBindTexture(GL_TEXTURE_2D, colorbuffer);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -57,6 +56,19 @@ namespace Engine
   unsigned int Framebuffer::get() const
   {
     return framebuffer;
+  }
+  
+  
+  int Framebuffer::getTextureID() const
+  {
+    return tex_id;
+  }
+  
+  
+  void Framebuffer::useAsTexture() const
+  {
+    glActiveTexture(GL_TEXTURE0 + tex_id);
+    glBindTexture(GL_TEXTURE_2D, colorbuffer);
   }
   
   

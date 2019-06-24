@@ -11,6 +11,7 @@
 namespace Engine
 {  
   Mesh::Mesh(const aiMesh* mesh, const aiScene* scene)
+  : texture_diff(), texture_spec()
   {
     std::vector<float> positions;
     std::vector<unsigned int> indices;
@@ -24,13 +25,13 @@ namespace Engine
         positions.push_back(mesh->mVertices[i].z);
       }
       
-      if(mesh->HasNormals()) {
+      if (mesh->HasNormals()) {
         normals.push_back(mesh->mNormals[i].x);
         normals.push_back(mesh->mNormals[i].y);
         normals.push_back(mesh->mNormals[i].z);
       }
       
-      if(mesh->HasTextureCoords(0)) {
+      if (mesh->HasTextureCoords(0)) {
         uv.push_back(mesh->mTextureCoords[0][i].x);
         uv.push_back(mesh->mTextureCoords[0][i].y);
       }
@@ -44,6 +45,25 @@ namespace Engine
     }
     
     verticesData = VBO(positions, indices, normals, uv);
+  }
+  
+  
+  Mesh::Mesh(const std::vector<float>& vertices,
+             const std::vector<float>& normals,
+             const std::vector<float>& uv)
+  : texture_diff(), texture_spec()
+  {
+    verticesData = VBO(vertices, normals, uv);
+  }
+  
+  
+  Mesh::Mesh(const std::vector<float>& vertices,
+             const std::vector<unsigned int>& indices,
+             const std::vector<float>& normals,
+             const std::vector<float>& uv)
+  : texture_diff(), texture_spec()
+  {
+    verticesData = VBO(vertices, indices, normals, uv);
   }
   
   

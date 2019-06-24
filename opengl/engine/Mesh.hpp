@@ -34,6 +34,9 @@ namespace Engine
     
   public:
     Mesh(const aiMesh* mesh, const aiScene* scene);
+    Mesh(const std::vector<float>&, const std::vector<float>&, const std::vector<float>&);
+    Mesh(const std::vector<float>&, const std::vector<unsigned int>&, const std::vector<float>&, const std::vector<float>&);
+
     void draw();
     
     const Texture& getDiffTexture() const;
