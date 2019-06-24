@@ -51,10 +51,17 @@ namespace Engine
       std::string tex_diff = loadMaterialTexture(mesh, scene, aiTextureType_DIFFUSE);
       std::string tex_spec = loadMaterialTexture(mesh, scene, aiTextureType_SPECULAR);
       
-      Mesh node_mesh(mesh, scene);
-      node_mesh.setDiffTexture(Texture(tex_diff, 0));
-      node_mesh.setSpecTexture(Texture(tex_spec, 1));
-      meshes.push_back(node_mesh);
+      Mesh currNodeMesh(mesh, scene);
+      
+      if (tex_diff.size() > 0) {
+        currNodeMesh.setTexture("diffuse", Texture(tex_diff, 0));
+      }
+      
+      if (tex_spec.size() > 0) {
+        currNodeMesh.setTexture("specular", Texture(tex_spec, 1));
+      }
+      
+      meshes[mesh->mName.C_Str()] = currNodeMesh;
     }
     
     for (int i = 0; i < node->mNumChildren; i++) {
@@ -92,23 +99,22 @@ namespace Engine
   {
     shaderProgram.use();
     
-    for (Mesh mesh : meshes) {
+    for (auto mesh : meshes) {
+      const std::map<std::string, Texture>& meshTextures = mesh.second.getTextures();
       
-      Texture mesh_diff_tex = mesh.getDiffTexture();
+      const std::string materialTemplate = "material.";
       
-      mesh_diff_tex.use();
-      shaderProgram.setInt("material.diffuse", 0);
+      for (auto keyValuePair : meshTextures) {
+        keyValuePair.second.use();
+        shaderProgram.setInt(materialTemplate + keyValuePair.first, keyValuePair.second.getID());
+      }
       
-      Texture mesh_spec_tex = mesh.getSpecTexture();
-      mesh_spec_tex.use();
-      shaderProgram.setInt("material.specular", 1);
-      
-      mesh.draw();
+      mesh.second.draw();
     }
   }
   
   
-  const std::vector<Mesh>& Model::getMeshes()
+  std::map<std::string, Mesh>& Model::getMeshes()
   {
     return meshes;
   }

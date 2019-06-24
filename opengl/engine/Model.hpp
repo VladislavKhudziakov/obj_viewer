@@ -14,6 +14,7 @@
 #include <assimp/postprocess.h>
 
 #include <vector>
+#include <map>
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -26,10 +27,10 @@ namespace Engine {
   {
   private:
     Program shaderProgram;
-    std::vector<Mesh> meshes;
+//    std::vector<Mesh> meshes;
     std::string directoryName;
     std::string fileName;
-    std::vector<std::string> loaded_textures;
+    std::map<std::string, Mesh> meshes;
     
   public:
     Model(const std::string&, const std::string&, const Program&);
@@ -37,7 +38,7 @@ namespace Engine {
     void processNodes(const aiNode* node, const aiScene* scene);
     void draw();
     std::string loadMaterialTexture(const aiMesh* mesh, const aiScene* scene, aiTextureType type);
-    const std::vector<Mesh>& getMeshes();
+    std::map<std::string, Mesh>& getMeshes();
   };
 }
 

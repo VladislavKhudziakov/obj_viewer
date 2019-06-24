@@ -13,6 +13,7 @@
 		0D03124322A8713900D6077C /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D03124222A8713800D6077C /* libglfw.3.3.dylib */; };
 		0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D64BB22A9A49B0020A028 /* Shader.cpp */; };
 		0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D64BE22A9AC3B0020A028 /* Program.cpp */; };
+		0D1AEEF322C0C33A007C96FF /* Cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1AEEF122C0C33A007C96FF /* Cube.cpp */; };
 		0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4ED4B822AD4CB10067276E /* camera.cpp */; };
 		0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4ED4BB22AD61240067276E /* Scene.cpp */; };
 		0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D769C4A22AA7DEF006F9C42 /* VertexBufferObject.cpp */; };
@@ -98,6 +99,8 @@
 		0D0D64BF22A9AC3B0020A028 /* Program.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Program.hpp; sourceTree = "<group>"; };
 		0D0D64C122A9B5130020A028 /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = fShader.frag; path = opengl/shaders/fShader.frag; sourceTree = SOURCE_ROOT; };
 		0D0D64C222A9B5210020A028 /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vShader.vert; path = opengl/shaders/vShader.vert; sourceTree = SOURCE_ROOT; };
+		0D1AEEF122C0C33A007C96FF /* Cube.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = "<group>"; };
+		0D1AEEF222C0C33A007C96FF /* Cube.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cube.hpp; sourceTree = "<group>"; };
 		0D4ED4B822AD4CB10067276E /* camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		0D4ED4B922AD4CB10067276E /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
 		0D4ED4BB22AD61240067276E /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
@@ -227,6 +230,8 @@
 				0DCC964422B6D9A400F08687 /* constants.hpp */,
 				0DF4E6EC22BCEFFE00F42D88 /* Framebuffer.cpp */,
 				0DF4E6ED22BCEFFE00F42D88 /* Framebuffer.hpp */,
+				0D1AEEF122C0C33A007C96FF /* Cube.cpp */,
+				0D1AEEF222C0C33A007C96FF /* Cube.hpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D1AEEF322C0C33A007C96FF /* Cube.cpp in Sources */,
 				0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */,
 				0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */,
 				0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */,

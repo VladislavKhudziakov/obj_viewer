@@ -10,8 +10,7 @@
 
 namespace Engine
 {  
-  Mesh::Mesh(const aiMesh* mesh, const aiScene* scene)
-  : texture_diff(), texture_spec()
+  Mesh::Mesh(const aiMesh* mesh, const aiScene* scene) : textures()
   {
     std::vector<float> positions;
     std::vector<unsigned int> indices;
@@ -50,8 +49,7 @@ namespace Engine
   
   Mesh::Mesh(const std::vector<float>& vertices,
              const std::vector<float>& normals,
-             const std::vector<float>& uv)
-  : texture_diff(), texture_spec()
+             const std::vector<float>& uv) : textures()
   {
     verticesData = VBO(vertices, normals, uv);
   }
@@ -60,8 +58,7 @@ namespace Engine
   Mesh::Mesh(const std::vector<float>& vertices,
              const std::vector<unsigned int>& indices,
              const std::vector<float>& normals,
-             const std::vector<float>& uv)
-  : texture_diff(), texture_spec()
+             const std::vector<float>& uv) : textures()
   {
     verticesData = VBO(vertices, indices, normals, uv);
   }
@@ -73,26 +70,14 @@ namespace Engine
   }
   
   
-  const Texture& Mesh::getDiffTexture() const
+  void Mesh::setTexture(const std::string& name, const Texture& texture)
   {
-    return texture_diff;
+    textures[name] = texture;
   }
   
   
-  void Mesh::setDiffTexture(const Texture& new_diff_tex)
+  const std::map<std::string, Texture>& Mesh::getTextures()
   {
-    texture_diff = new_diff_tex;
-  }
-  
-  
-  const Texture& Mesh::getSpecTexture() const
-  {
-    return texture_spec;
-  }
-  
-  
-  void Mesh::setSpecTexture(const Texture& new_spec_tex)
-  {
-    texture_spec = new_spec_tex;
+    return textures;
   }
 }

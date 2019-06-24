@@ -136,6 +136,7 @@ int main()
   glm::mat4 projection(1.0f);
   
   Engine::Texture marble("./marble.jpg");
+  cube_model_3.getMeshes().at("cube").setTexture("diffuse", marble);
   Engine::Texture metal("./metal.png");
   Engine::Texture grass("./grass.png");
   Engine::Texture window("./blending_transparent_window.png");
@@ -210,7 +211,6 @@ int main()
     
     p3.use();
     metal.use();
-    marble.use();
     p3.setInt("tex", metal.getID());
     model = glm::mat4(1.0f);
     mvp = projection * camera.getView() * model;
@@ -222,8 +222,6 @@ int main()
     scene.enableCullFacing(Engine::CULL_FACING_BACK);
     
     p3.use();
-    marble.use();
-    p3.setInt("tex", marble.getID());
     
     for (glm::vec3 curr_tr : c_translations) {
       model = glm::mat4(1.0f);
