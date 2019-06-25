@@ -25,6 +25,52 @@
 #include "engine/VertexBufferObject.hpp"
 #include "engine/constants.hpp"
 #include "engine/Framebuffer.hpp"
+#include "engine/Skybox.hpp"
+
+std::vector<float> skyboxVertices = {
+  // positions
+  -1.0f,  1.0f, -1.0f,
+  -1.0f, -1.0f, -1.0f,
+  1.0f, -1.0f, -1.0f,
+  1.0f, -1.0f, -1.0f,
+  1.0f,  1.0f, -1.0f,
+  -1.0f,  1.0f, -1.0f,
+  
+  -1.0f, -1.0f,  1.0f,
+  -1.0f, -1.0f, -1.0f,
+  -1.0f,  1.0f, -1.0f,
+  -1.0f,  1.0f, -1.0f,
+  -1.0f,  1.0f,  1.0f,
+  -1.0f, -1.0f,  1.0f,
+  
+  1.0f, -1.0f, -1.0f,
+  1.0f, -1.0f,  1.0f,
+  1.0f,  1.0f,  1.0f,
+  1.0f,  1.0f,  1.0f,
+  1.0f,  1.0f, -1.0f,
+  1.0f, -1.0f, -1.0f,
+  
+  -1.0f, -1.0f,  1.0f,
+  -1.0f,  1.0f,  1.0f,
+  1.0f,  1.0f,  1.0f,
+  1.0f,  1.0f,  1.0f,
+  1.0f, -1.0f,  1.0f,
+  -1.0f, -1.0f,  1.0f,
+  
+  -1.0f,  1.0f, -1.0f,
+  1.0f,  1.0f, -1.0f,
+  1.0f,  1.0f,  1.0f,
+  1.0f,  1.0f,  1.0f,
+  -1.0f,  1.0f,  1.0f,
+  -1.0f,  1.0f, -1.0f,
+  
+  -1.0f, -1.0f, -1.0f,
+  -1.0f, -1.0f,  1.0f,
+  1.0f, -1.0f, -1.0f,
+  1.0f, -1.0f, -1.0f,
+  -1.0f, -1.0f,  1.0f,
+  1.0f, -1.0f,  1.0f
+};
 
 glm::vec3 pointLightPositions[] = {
   glm::vec3( 0.7f,  0.2f,  2.0f),
@@ -38,26 +84,6 @@ std::vector<glm::vec3> c_translations = {
   glm::vec3(2.0f, 0.0f, 0.0f)
 };
 
-std::vector<float> planeVertices = {
-  5.0f, -0.5f,  5.0f,
-  -5.0f, -0.5f,  5.0f,
-  -5.0f, -0.5f, -5.0f,
-  
-  5.0f, -0.5f,  5.0f,
-  -5.0f, -0.5f, -5.0f,
-  5.0f, -0.5f, -5.0f,
-};
-
-std::vector<float> planeUv = {
-  2.0f, 0.0f,
-  0.0f, 0.0f,
-  0.0f, 2.0f,
-  
-  0.0f, 2.0f,
-  0.0f, 2.0f,
-  2.0f, 2.0f
-};
-
 std::vector<glm::vec3> vegetation = {
   glm::vec3(-1.0f,  0.0f, -0.48f),
   glm::vec3( 2.0f,  0.0f,  0.51f),
@@ -68,6 +94,15 @@ std::vector<glm::vec3> vegetation = {
 
 glm::vec3 cubePositions[] = {
   glm::vec3(0.0f, -2.0f, -5.3f),
+};
+
+std::vector<std::string> skyboxTextures = {
+  "right.jpg",
+  "left.jpg",
+  "top.jpg",
+  "bottom.jpg",
+  "front.jpg",
+  "back.jpg"
 };
 
 std::vector<float> vertices;
@@ -123,7 +158,7 @@ int main()
   Engine::Model cube_model("./", "cube.obj", p2);
   Engine::Model cube_model_3("./", "cube.obj", p3);
   
-  Engine::VBO planeVBO(planeVertices, std::vector<float>(1.0), planeUv);
+  Engine::VBO planeVBO = scene.generate2DRect();
   Engine::VBO transparentVBO = scene.generate2DRect();
   
   Engine::VBO postprocessing_plane = scene.generate2DRect();
@@ -138,7 +173,6 @@ int main()
   Engine::Texture marble("./marble.jpg");
   cube_model_3.getMeshes().at("cube").setTexture("diffuse", marble);
   Engine::Texture metal("./metal.png");
-  Engine::Texture grass("./grass.png");
   Engine::Texture window("./blending_transparent_window.png");
   
   GLfloat width = scene.getWindowWidth();
@@ -153,15 +187,67 @@ int main()
   
   Engine::Framebuffer fbo(1600, 1200);
   
+  
+  Engine::Program skyboxShader("./skybox_shader.vert", "./skybox_shader.frag");
+//  skyboxShader.link();
+  
+//  unsigned int skybox_tex;
+//  glGenTextures(1, &skybox_tex);
+//  glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_tex);
+//  unsigned int i = 0;
+//
+//  for (auto currTex : skyboxTextures) {
+//    int width, height;
+//
+//    unsigned char* imgData = SOIL_load_image(("./skybox/" + currTex).c_str(),
+//                                             &width, &height, 0, SOIL_LOAD_RGB);
+//
+//    if (imgData) {
+//      glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+//                   0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgData);
+//    } else {
+//       std::cout << "Cubemap texture failed to load at path: " << "./skybox" + currTex << std::endl;
+//    }
+//
+//    i++;
+//
+//    SOIL_free_image_data(imgData);
+//  }
+//
+//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+  
+//  Engine::VBO skybox(skyboxVertices, std::vector<float>(1.), std::vector<float>(1.));
+  
+  Engine::Skybox skybox("./skybox/", skyboxTextures, skyboxShader);
+  
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     
     fbo.renderIn(Engine::FRAMEBUFFER_DEPTH_TEST_ACTIVATE | Engine::FRAMEBUFFER_CLEAR_COLOR);
     
-    p.use();
-    
     move(delta);
     
     camera.computeView(camPos, camPos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
+    
+    skyboxShader.use();
+    glm::mat4 skyboxView = glm::mat4(glm::mat3(camera.getView()));
+    model = glm::mat4(1.0f);
+    mvp = projection * skyboxView * model;
+    skyboxShader.setMat4("u_MVP", mvp);
+    
+    skybox.render();
+    
+//    glDepthMask(GL_FALSE);
+//    glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_tex);
+//    skyboxShader.setInt("skybox", 0);
+//    skybox.draw();
+//    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+//    glDepthMask(GL_TRUE);
+    
+    p.use();
     
     p.setVec3("material.ambient",  glm::vec3(1.0f, 0.5f, 0.31f));
     p.setVec3("material.diffuse",  glm::vec3(1.0f, 0.5f, 0.31f));
@@ -213,11 +299,13 @@ int main()
     metal.use();
     p3.setInt("tex", metal.getID());
     model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0, -0.5, 0.0));
+    model = glm::scale(model, glm::vec3(5.0f));
+    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     mvp = projection * camera.getView() * model;
     p3.setMat4("u_MVP", mvp);
     
     planeVBO.draw();
-    
     
     scene.enableCullFacing(Engine::CULL_FACING_BACK);
     

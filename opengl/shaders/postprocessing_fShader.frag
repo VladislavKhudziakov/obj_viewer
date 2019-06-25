@@ -12,5 +12,5 @@ void main()
 {
   vec2 uv = var_uv;
   vec3 color = texture(posprocessing_texture, uv).rgb;
-  frag_color = vec4(1. - color, var_uv);
+  frag_color = vec4(color, var_uv);
 }
