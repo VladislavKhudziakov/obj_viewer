@@ -170,10 +170,10 @@ int main()
   
   glm::mat4 projection(1.0f);
   
-  Engine::Texture marble("./marble.jpg");
+  Engine::Texture2D marble("./marble.jpg");
   cube_model_3.getMeshes().at("cube").setTexture("diffuse", marble);
-  Engine::Texture metal("./metal.png");
-  Engine::Texture window("./blending_transparent_window.png");
+  Engine::Texture2D metal("./metal.png");
+  Engine::Texture2D window("./blending_transparent_window.png");
   
   GLfloat width = scene.getWindowWidth();
   GLfloat height = scene.getWindowHeight();

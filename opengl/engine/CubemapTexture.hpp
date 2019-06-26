@@ -23,10 +23,10 @@ namespace Engine {
   class CubemapTexture : public BaseTexture
   {
   public:
-    CubemapTexture() { };
+    CubemapTexture() : BaseTexture() { };
     CubemapTexture(const std::vector<std::string>&, int texSlot = 0);
-    virtual void use() override;
-    virtual void use(int) override;
+    virtual void use() const override;
+    virtual void use(int) const override;
   };
 }
 #endif /* CubemapTexture_hpp */

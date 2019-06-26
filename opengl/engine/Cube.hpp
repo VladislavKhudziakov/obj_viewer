@@ -13,10 +13,10 @@
 #include "Mesh.hpp"
 
 namespace Engine {
-  class Cube : public Mesh
-  {
-  public:
-    Cube();
-  };
+//  class Cube : public Mesh
+//  {
+//  public:
+//    Cube();
+//  };
 }
 #endif /* Cube_hpp */

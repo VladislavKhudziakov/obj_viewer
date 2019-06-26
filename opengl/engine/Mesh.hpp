@@ -30,7 +30,7 @@ namespace Engine
     
   private:
     VBO verticesData;
-    std::map<std::string, Texture> textures;
+    std::map<std::string, Texture2D> textures;
     
   public:
     Mesh() { };
@@ -40,8 +40,8 @@ namespace Engine
 
     void draw();
     
-    void setTexture(const std::string&,const Texture&);
-    const std::map<std::string, Texture>& getTextures();
+    void setTexture(const std::string&,const Texture2D&);
+    const std::map<std::string, Texture2D>& getTextures();
   };
 }
 

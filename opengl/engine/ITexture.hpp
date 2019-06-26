@@ -13,11 +13,12 @@ namespace Engine {
   class ITexture
   {
   public:
+    ITexture() { };
     virtual ~ITexture() { };
-    virtual void use() = 0;
-    virtual void use(int) = 0;
-    virtual int getID() = 0;
-    virtual unsigned int get() = 0;
+    virtual void use() const = 0;
+    virtual void use(int) const = 0;
+    virtual int getID() const = 0;
+    virtual unsigned int get() const = 0;
   };
 }
 #endif /* ITexture_hpp */

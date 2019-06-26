@@ -70,13 +70,13 @@ namespace Engine
   }
   
   
-  void Mesh::setTexture(const std::string& name, const Texture& texture)
+  void Mesh::setTexture(const std::string& name, const Texture2D& texture)
   {
     textures[name] = texture;
   }
   
   
-  const std::map<std::string, Texture>& Mesh::getTextures()
+  const std::map<std::string, Texture2D>& Mesh::getTextures()
   {
     return textures;
   }

@@ -54,11 +54,11 @@ namespace Engine
       Mesh currNodeMesh(mesh, scene);
       
       if (tex_diff.size() > 0) {
-        currNodeMesh.setTexture("diffuse", Texture(tex_diff, 0));
+        currNodeMesh.setTexture("diffuse", Texture2D(tex_diff, 0));
       }
       
       if (tex_spec.size() > 0) {
-        currNodeMesh.setTexture("specular", Texture(tex_spec, 1));
+        currNodeMesh.setTexture("specular", Texture2D(tex_spec, 1));
       }
       
       meshes[mesh->mName.C_Str()] = currNodeMesh;
@@ -100,7 +100,7 @@ namespace Engine
     shaderProgram.use();
     
     for (auto mesh : meshes) {
-      const std::map<std::string, Texture>& meshTextures = mesh.second.getTextures();
+      const std::map<std::string, Texture2D>& meshTextures = mesh.second.getTextures();
       
       const std::string materialTemplate = "material.";
       

@@ -41,14 +41,14 @@ namespace Engine {
   }
   
   
-  void CubemapTexture::use()
+  void CubemapTexture::use() const
   {
     glActiveTexture(GL_TEXTURE0 + texID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
   }
   
   
-  void CubemapTexture::use(int textureSlot)
+  void CubemapTexture::use(int textureSlot) const
   {
     glActiveTexture(GL_TEXTURE0 + textureSlot);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);

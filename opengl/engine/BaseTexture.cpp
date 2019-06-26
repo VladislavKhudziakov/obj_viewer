@@ -15,13 +15,13 @@ namespace Engine {
     glGenTextures(1, &texture);
   }
   
-  unsigned int BaseTexture::get()
+  unsigned int BaseTexture::get() const
   {
     return texture;
   }
   
   
-  int BaseTexture::getID()
+  int BaseTexture::getID() const
   {
     return texID;
   }
