@@ -190,7 +190,6 @@ int main()
   
   Engine::Program skyboxShader("./skybox_shader.vert", "./skybox_shader.frag");
   skyboxShader.link();
-  
   Engine::Skybox skybox_("./skybox/", skyboxTextures, skyboxShader);
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
@@ -207,7 +206,7 @@ int main()
     mvp = projection * skyboxView * model;
     skyboxShader.setMat4("u_MVP", mvp);
     
-    skybox_.render();
+    skybox_.draw();
     
     p.use();
     

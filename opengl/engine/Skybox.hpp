@@ -32,9 +32,7 @@ namespace Engine {
   public:
     Skybox() : texture(), shaderProgram() { };
     Skybox(const std::string&, const std::vector<std::string>&, const Program& );
-    void render();
-    unsigned int getTexture();
-    const VBO& getVertices();
+    void draw();
   };
 }
 #endif /* Skybox_hpp */

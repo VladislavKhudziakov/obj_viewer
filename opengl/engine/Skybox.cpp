@@ -47,25 +47,17 @@ namespace Engine {
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
   }
   
-  const VBO& Skybox::getVertices()
-  {
-    return vertices;
-  }
   
-  
-  void Skybox::render()
+  void Skybox::draw()
   {
+    glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_FALSE);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
     shaderProgram.setInt("skybox", 0);
     vertices.draw();
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     glDepthMask(GL_TRUE);
-  }
-  
-  unsigned int Skybox::getTexture()
-  {
-    return texture;
+    glDepthFunc(GL_LESS);
   }
   
   
