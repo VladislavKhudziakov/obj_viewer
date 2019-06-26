@@ -15,7 +15,6 @@ namespace Engine {
                  const Program& shaderProgram)
   {
     this->shaderProgram = shaderProgram;
-    this->shaderProgram.link();
     vertices = VBO(getVBOVertivces(), std::vector<float>(1.), std::vector<float>(1.));
     
     glGenTextures(1, &texture);
@@ -27,7 +26,7 @@ namespace Engine {
       int width, height;
       
       unsigned char* imgData = SOIL_load_image(
-       (dirName + currTex).c_str(), &width, &height, 0, SOIL_LOAD_RGB);
+       (dirName + currTex).c_str(), &width, &height, 0, SOIL_LOAD_AUTO);
       
       if (imgData) {
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
@@ -40,7 +39,19 @@ namespace Engine {
       
       SOIL_free_image_data(imgData);
     }
+    
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
   }
+  
+  const VBO& Skybox::getVertices()
+  {
+    return vertices;
+  }
+  
   
   void Skybox::render()
   {
@@ -51,6 +62,12 @@ namespace Engine {
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     glDepthMask(GL_TRUE);
   }
+  
+  unsigned int Skybox::getTexture()
+  {
+    return texture;
+  }
+  
   
   std::vector<float> Skybox::getVBOVertivces()
   {

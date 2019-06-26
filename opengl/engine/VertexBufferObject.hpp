@@ -43,7 +43,7 @@ namespace Engine {
     void set();
     void unSet();
     void del();
-    void draw();
+    void draw() const;
     int getVAO() const noexcept;
   };
 }

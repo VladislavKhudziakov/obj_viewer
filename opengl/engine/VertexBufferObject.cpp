@@ -101,7 +101,7 @@ namespace Engine {
   }
   
   
-  void VBO::draw()
+  void VBO::draw() const
   {
     glBindVertexArray(vao);
     if (ebo) {

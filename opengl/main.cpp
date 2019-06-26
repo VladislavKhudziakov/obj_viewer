@@ -189,40 +189,9 @@ int main()
   
   
   Engine::Program skyboxShader("./skybox_shader.vert", "./skybox_shader.frag");
-//  skyboxShader.link();
+  skyboxShader.link();
   
-//  unsigned int skybox_tex;
-//  glGenTextures(1, &skybox_tex);
-//  glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_tex);
-//  unsigned int i = 0;
-//
-//  for (auto currTex : skyboxTextures) {
-//    int width, height;
-//
-//    unsigned char* imgData = SOIL_load_image(("./skybox/" + currTex).c_str(),
-//                                             &width, &height, 0, SOIL_LOAD_RGB);
-//
-//    if (imgData) {
-//      glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-//                   0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgData);
-//    } else {
-//       std::cout << "Cubemap texture failed to load at path: " << "./skybox" + currTex << std::endl;
-//    }
-//
-//    i++;
-//
-//    SOIL_free_image_data(imgData);
-//  }
-//
-//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-  
-//  Engine::VBO skybox(skyboxVertices, std::vector<float>(1.), std::vector<float>(1.));
-  
-  Engine::Skybox skybox("./skybox/", skyboxTextures, skyboxShader);
+  Engine::Skybox skybox_("./skybox/", skyboxTextures, skyboxShader);
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     
@@ -238,14 +207,7 @@ int main()
     mvp = projection * skyboxView * model;
     skyboxShader.setMat4("u_MVP", mvp);
     
-    skybox.render();
-    
-//    glDepthMask(GL_FALSE);
-//    glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_tex);
-//    skyboxShader.setInt("skybox", 0);
-//    skybox.draw();
-//    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-//    glDepthMask(GL_TRUE);
+    skybox_.render();
     
     p.use();
     
