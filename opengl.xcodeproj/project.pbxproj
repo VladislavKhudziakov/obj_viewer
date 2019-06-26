@@ -43,7 +43,6 @@
 		0DEF475722C2AEBE00258E6C /* skybox_shader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DEF475622C2ADBF00258E6C /* skybox_shader.frag */; };
 		0DEF475822C2AEBE00258E6C /* skybox_shader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DEF475522C2ADBF00258E6C /* skybox_shader.vert */; };
 		0DEF475B22C2B98600258E6C /* Skybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475922C2B98600258E6C /* Skybox.cpp */; };
-		0DEF475E22C3ACFC00258E6C /* ITexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475C22C3ACFC00258E6C /* ITexture.cpp */; };
 		0DEF476122C3B0E000258E6C /* CubemapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */; };
 		0DEF476422C3B49600258E6C /* BaseTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF476222C3B49600258E6C /* BaseTexture.cpp */; };
 		0DF4E6EE22BCEFFE00F42D88 /* Framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DF4E6EC22BCEFFE00F42D88 /* Framebuffer.cpp */; };
@@ -149,7 +148,6 @@
 		0DEF475622C2ADBF00258E6C /* skybox_shader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = skybox_shader.frag; sourceTree = "<group>"; };
 		0DEF475922C2B98600258E6C /* Skybox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Skybox.cpp; sourceTree = "<group>"; };
 		0DEF475A22C2B98600258E6C /* Skybox.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Skybox.hpp; sourceTree = "<group>"; };
-		0DEF475C22C3ACFC00258E6C /* ITexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ITexture.cpp; sourceTree = "<group>"; };
 		0DEF475D22C3ACFC00258E6C /* ITexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ITexture.hpp; sourceTree = "<group>"; };
 		0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubemapTexture.cpp; sourceTree = "<group>"; };
 		0DEF476022C3B0E000258E6C /* CubemapTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubemapTexture.hpp; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 				0D1AEEF222C0C33A007C96FF /* Cube.hpp */,
 				0DEF475922C2B98600258E6C /* Skybox.cpp */,
 				0DEF475A22C2B98600258E6C /* Skybox.hpp */,
-				0DEF475C22C3ACFC00258E6C /* ITexture.cpp */,
 				0DEF475D22C3ACFC00258E6C /* ITexture.hpp */,
 				0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */,
 				0DEF476022C3B0E000258E6C /* CubemapTexture.hpp */,
@@ -361,7 +358,6 @@
 				0DCC964522B6D9A400F08687 /* constants.cpp in Sources */,
 				0D797B6F22B10718006F766A /* Model.cpp in Sources */,
 				0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */,
-				0DEF475E22C3ACFC00258E6C /* ITexture.cpp in Sources */,
 				0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */,
 				0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */,
 				0D03123722A870C900D6077C /* main.cpp in Sources */,

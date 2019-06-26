@@ -15,6 +15,7 @@ namespace Engine {
   public:
     virtual ~ITexture() { };
     virtual void use() = 0;
+    virtual void use(int) = 0;
     virtual int getID() = 0;
     virtual unsigned int get() = 0;
   };

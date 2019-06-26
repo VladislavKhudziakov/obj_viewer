@@ -97,12 +97,12 @@ glm::vec3 cubePositions[] = {
 };
 
 std::vector<std::string> skyboxTextures = {
-  "right.jpg",
-  "left.jpg",
-  "top.jpg",
-  "bottom.jpg",
-  "front.jpg",
-  "back.jpg"
+  "./skybox/right.jpg",
+  "./skybox/left.jpg",
+  "./skybox/top.jpg",
+  "./skybox/bottom.jpg",
+  "./skybox/front.jpg",
+  "./skybox/back.jpg"
 };
 
 std::vector<float> vertices;
@@ -190,7 +190,7 @@ int main()
   
   Engine::Program skyboxShader("./skybox_shader.vert", "./skybox_shader.frag");
   skyboxShader.link();
-  Engine::Skybox skybox_("./skybox/", skyboxTextures, skyboxShader);
+  Engine::Skybox skybox_(skyboxTextures, skyboxShader);
   
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     

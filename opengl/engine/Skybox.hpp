@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 
+#include "CubemapTexture.hpp"
 #include "Program.hpp"
 #include "VertexBufferObject.hpp"
 
@@ -23,7 +24,7 @@ namespace Engine {
   class Skybox
   {
   private:
-    unsigned int texture;
+    CubemapTexture texture;
     Program shaderProgram;
     VBO vertices;
     
@@ -31,7 +32,8 @@ namespace Engine {
     
   public:
     Skybox() : texture(), shaderProgram() { };
-    Skybox(const std::string&, const std::vector<std::string>&, const Program& );
+    const CubemapTexture& getTexture();
+    Skybox(const std::vector<std::string>&, const Program& );
     void draw();
   };
 }

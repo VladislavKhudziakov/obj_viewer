@@ -23,6 +23,8 @@ namespace Engine {
     
   public:
     BaseTexture(int textureSlot = 0);
+    virtual void use() override = 0;
+    virtual void use(int) override = 0;
     virtual int getID() override;
     virtual unsigned int get() override;
   };

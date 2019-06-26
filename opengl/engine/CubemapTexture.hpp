@@ -26,6 +26,7 @@ namespace Engine {
     CubemapTexture() { };
     CubemapTexture(const std::vector<std::string>&, int texSlot = 0);
     virtual void use() override;
+    virtual void use(int) override;
   };
 }
 #endif /* CubemapTexture_hpp */

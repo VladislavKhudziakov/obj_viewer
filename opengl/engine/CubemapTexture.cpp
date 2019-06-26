@@ -46,4 +46,11 @@ namespace Engine {
     glActiveTexture(GL_TEXTURE0 + texID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
   }
+  
+  
+  void CubemapTexture::use(int textureSlot)
+  {
+    glActiveTexture(GL_TEXTURE0 + textureSlot);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+  }
 }
