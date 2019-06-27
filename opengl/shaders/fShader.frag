@@ -3,10 +3,12 @@
 out vec4 frag_color;
 
 #define NR_POINT_LIGHTS 4
+#define ADD_SKYBOX
 
 struct Material {
   sampler2D diffuse;
   sampler2D specular;
+  sampler2D reflection;
   float shininess;
 };
 
@@ -50,6 +52,10 @@ uniform DirLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 #endif
 
+#ifdef ADD_SKYBOX
+uniform samplerCube skyboxTexure;
+#endif
+
 uniform vec3 u_viewPos;
 
 uniform sampler2D u_matrix;
@@ -58,11 +64,9 @@ in vec2 var_uv;
 in vec3 var_normal;
 in vec3 var_position;
 
-
-
-
 vec3 calculateDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 calculatePointLight(PointLight light, vec3 normal, vec3 vertPos, vec3 viewDir);
+vec3 calculateReflection(vec3 normal, vec3 viewDir);
 
 void main()
 {  
@@ -77,6 +81,11 @@ void main()
   for (int i = 0; i < NR_POINT_LIGHTS; i++) {
     res += calculatePointLight(pointLights[i], normal, var_position, viewDirection);
   }
+  
+#ifdef ADD_SKYBOX
+  res += calculateReflection(normal, viewDirection);
+#endif
+  
   
   frag_color = vec4(res, 1.);
 }
@@ -130,4 +139,17 @@ vec3 calculatePointLight(PointLight light, vec3 normal, vec3 vertPos, vec3 viewD
                              light.quadratic * (dist * dist));
   
   return ambient * attenuation + diffuse * attenuation + specular * attenuation;
+}
+
+vec3 calculateReflection(vec3 normal, vec3 viewDir)
+{
+  vec3 reflectionColor = texture(material.reflection, var_uv).rgb;
+  
+#ifdef ADD_SKYBOX
+  vec3 R = reflect(viewDir, normal);
+  vec3 envColor = texture(skyboxTexure, R).rgb;
+  return reflectionColor * envColor;
+#else
+  return reflectionColor;
+#endif
 }

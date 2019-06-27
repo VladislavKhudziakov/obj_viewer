@@ -45,6 +45,7 @@
 		0DEF475B22C2B98600258E6C /* Skybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475922C2B98600258E6C /* Skybox.cpp */; };
 		0DEF476122C3B0E000258E6C /* CubemapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */; };
 		0DEF476422C3B49600258E6C /* BaseTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF476222C3B49600258E6C /* BaseTexture.cpp */; };
+		0DEF476622C3F9A900258E6C /* reflection_shader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DEF476522C3F98D00258E6C /* reflection_shader.frag */; };
 		0DF4E6EE22BCEFFE00F42D88 /* Framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DF4E6EC22BCEFFE00F42D88 /* Framebuffer.cpp */; };
 		0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20622AEF01600BDFF16 /* container2.png */; };
 		0DF5B20922AEF64F00BDFF16 /* container2_specular.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20822AEF26B00BDFF16 /* container2_specular.png */; };
@@ -68,6 +69,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				0DEF476622C3F9A900258E6C /* reflection_shader.frag in CopyFiles */,
 				0DEF475722C2AEBE00258E6C /* skybox_shader.frag in CopyFiles */,
 				0DEF475822C2AEBE00258E6C /* skybox_shader.vert in CopyFiles */,
 				0DEF475422C2A9E000258E6C /* skybox in CopyFiles */,
@@ -153,6 +155,7 @@
 		0DEF476022C3B0E000258E6C /* CubemapTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubemapTexture.hpp; sourceTree = "<group>"; };
 		0DEF476222C3B49600258E6C /* BaseTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BaseTexture.cpp; sourceTree = "<group>"; };
 		0DEF476322C3B49600258E6C /* BaseTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseTexture.hpp; sourceTree = "<group>"; };
+		0DEF476522C3F98D00258E6C /* reflection_shader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = reflection_shader.frag; sourceTree = "<group>"; };
 		0DF4E6EC22BCEFFE00F42D88 /* Framebuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Framebuffer.cpp; sourceTree = "<group>"; };
 		0DF4E6ED22BCEFFE00F42D88 /* Framebuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Framebuffer.hpp; sourceTree = "<group>"; };
 		0DF5B20622AEF01600BDFF16 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 		0D868F3922AA56CB009CDC5F /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				0DEF476522C3F98D00258E6C /* reflection_shader.frag */,
 				0D0D64C222A9B5210020A028 /* vShader.vert */,
 				0D90CEDA22AE426500E5789B /* fShaderLight.frag */,
 				0D868F3B22AA56FC009CDC5F /* vShader.vert */,

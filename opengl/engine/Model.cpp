@@ -11,8 +11,9 @@
 
 namespace Engine
 {  
-  Model::Model(
-   const std::string& dirName, const std::string& fileName, const Program& program)
+  Model::Model(const std::string& dirName,
+               const std::string& fileName,
+               const Program& program)
   {
     this->directoryName = dirName;
     this->fileName = fileName;
@@ -50,6 +51,7 @@ namespace Engine
       const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
       std::string tex_diff = loadMaterialTexture(mesh, scene, aiTextureType_DIFFUSE);
       std::string tex_spec = loadMaterialTexture(mesh, scene, aiTextureType_SPECULAR);
+      std::string tex_ambient = loadMaterialTexture(mesh, scene, aiTextureType_AMBIENT);
       
       Mesh currNodeMesh(mesh, scene);
       
@@ -59,6 +61,10 @@ namespace Engine
       
       if (tex_spec.size() > 0) {
         currNodeMesh.setTexture("specular", Texture2D(tex_spec, 1));
+      }
+      
+      if (tex_ambient.size() > 0) {
+        currNodeMesh.setTexture("reflection", Texture2D(tex_ambient, 2));
       }
       
       meshes[mesh->mName.C_Str()] = currNodeMesh;
@@ -109,6 +115,9 @@ namespace Engine
         shaderProgram.setInt(materialTemplate + keyValuePair.first, keyValuePair.second.getID());
       }
       
+      envTex.use(4);
+      shaderProgram.setInt("skyboxTexure", 4);
+      
       mesh.second.draw();
     }
   }
@@ -117,5 +126,10 @@ namespace Engine
   std::map<std::string, Mesh>& Model::getMeshes()
   {
     return meshes;
+  }
+  
+  void Model::setEnvTex(const CubemapTexture& tex)
+  {
+    envTex = tex;
   }
 }

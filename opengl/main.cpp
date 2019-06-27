@@ -139,24 +139,22 @@ int main()
   Engine::Scene scene(800, 600, "LearnOpenGL");
   scene.init();
   
-  Engine::Program p("./vShader.vert", "./fShader.frag");
-  p.link();
-  
-  Engine::Program p2("./vShader.vert", "./fShaderLight.frag");
-  p2.link();
-  
-  Engine::Program p3("./vShader.vert", "./deph_test.frag");
-  p3.link();
-  
-  Engine::Program p4("./vShader.vert", "./shader_blending.frag");
-  p4.link();
-  
+  Engine::Program defaultShaders("./vShader.vert", "./fShader.frag");
+  defaultShaders.link();
+  Engine::Program lightSourcesShader("./vShader.vert", "./fShaderLight.frag");
+  lightSourcesShader.link();
+  Engine::Program depthTestShader("./vShader.vert", "./deph_test.frag");
+  depthTestShader.link();
+  Engine::Program blendingShader("./vShader.vert", "./shader_blending.frag");
+  blendingShader.link();
   Engine::Program postprocessing_shaders("./postprocessing_vShader.vert", "./postprocessing_fShader.frag");
   postprocessing_shaders.link();
+  Engine::Program reflectionShader("./vShader.vert", "./reflection_shader.frag");
+  reflectionShader.link();
   
-  Engine::Model suit_model("./nanosuit/", "nanosuit.obj", p);
-  Engine::Model cube_model("./", "cube.obj", p2);
-  Engine::Model cube_model_3("./", "cube.obj", p3);
+  Engine::Model suit_model("./nanosuit/", "nanosuit.obj", defaultShaders);
+  Engine::Model cube_model("./", "cube.obj", lightSourcesShader);
+  Engine::Model cube_model_3("./", "cube.obj", reflectionShader);
   
   Engine::VBO planeVBO = scene.generate2DRect();
   Engine::VBO transparentVBO = scene.generate2DRect();
@@ -192,6 +190,8 @@ int main()
   skyboxShader.link();
   Engine::Skybox skybox_(skyboxTextures, skyboxShader);
   
+  suit_model.setEnvTex(skybox_.getTexture());
+  
   scene.setSceneLoopUpdateCallback([&](float delta) -> void {
     
     fbo.renderIn(Engine::FRAMEBUFFER_DEPTH_TEST_ACTIVATE | Engine::FRAMEBUFFER_CLEAR_COLOR);
@@ -208,32 +208,32 @@ int main()
     
     skybox_.draw();
     
-    p.use();
+    defaultShaders.use();
     
-    p.setVec3("material.ambient",  glm::vec3(1.0f, 0.5f, 0.31f));
-    p.setVec3("material.diffuse",  glm::vec3(1.0f, 0.5f, 0.31f));
-    p.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-    p.setFloat("material.shininess", 32.0f);
+    defaultShaders.setVec3("material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
+    defaultShaders.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+    defaultShaders.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+    defaultShaders.setFloat("material.shininess", 32.0f);
     
-    p.setVec3("dirLight.direction", glm::vec3(0.2f, 1.0f, 0.3f));
-    p.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-    p.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
-    p.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+    defaultShaders.setVec3("dirLight.direction", glm::vec3(0.2f, 1.0f, 0.3f));
+    defaultShaders.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+    defaultShaders.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+    defaultShaders.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
     
     
     for (int i = 0; i < sizeof(pointLightPositions) / sizeof(glm::vec3); i++) {
       std::string pointLightTemplate = "pointLights[" + std::to_string(i) + "]";
       
-      p.setVec3(pointLightTemplate + ".position", pointLightPositions[i]);
-      p.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-      p.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
-      p.setVec3(pointLightTemplate + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
-      p.setFloat(pointLightTemplate + ".constant", 1.0f);
-      p.setFloat(pointLightTemplate + ".linear", 0.09);
-      p.setFloat(pointLightTemplate + ".quadratic", 0.032);
+      defaultShaders.setVec3(pointLightTemplate + ".position", pointLightPositions[i]);
+      defaultShaders.setVec3(pointLightTemplate + ".ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+      defaultShaders.setVec3(pointLightTemplate +".diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+      defaultShaders.setVec3(pointLightTemplate + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
+      defaultShaders.setFloat(pointLightTemplate + ".constant", 1.0f);
+      defaultShaders.setFloat(pointLightTemplate + ".linear", 0.09);
+      defaultShaders.setFloat(pointLightTemplate + ".quadratic", 0.032);
     }
     
-    p.setVec3("u_viewPos", camPos);
+    defaultShaders.setVec3("u_viewPos", camPos);
     
     model = glm::mat4(1.0f);
     model = glm::translate(model, cubePositions[0]);
@@ -241,9 +241,9 @@ int main()
     model = glm::scale(model, glm::vec3(0.2f));
     mvp = projection * camera.getView() * model;
     
-    p.setMat4("u_MVP", mvp);
-    p.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
-    p.setMat4("u_model", model);
+    defaultShaders.setMat4("u_MVP", mvp);
+    defaultShaders.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
+    defaultShaders.setMat4("u_model", model);
     
     suit_model.draw();
     
@@ -252,31 +252,36 @@ int main()
       model = glm::translate(model, pointLightPositions[i]);
       model = glm::scale(model, glm::vec3(0.2f));
       mvp = projection * camera.getView() * model;
-      p2.setMat4("u_MVP", mvp);
+      lightSourcesShader.setMat4("u_MVP", mvp);
       cube_model.draw();
     }
     
-    p3.use();
+    depthTestShader.use();
     metal.use();
-    p3.setInt("tex", metal.getID());
+    depthTestShader.setInt("tex", metal.getID());
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0, -0.5, 0.0));
     model = glm::scale(model, glm::vec3(5.0f));
     model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     mvp = projection * camera.getView() * model;
-    p3.setMat4("u_MVP", mvp);
+    depthTestShader.setMat4("u_MVP", mvp);
     
     planeVBO.draw();
     
     scene.enableCullFacing(Engine::CULL_FACING_BACK);
-    
-    p3.use();
+    reflectionShader.use();
+//    depthTestShader.use();
     
     for (glm::vec3 curr_tr : c_translations) {
       model = glm::mat4(1.0f);
       model = glm::translate(model, curr_tr);
       mvp = projection * camera.getView() * model;
-      p3.setMat4("u_MVP", mvp);
+      
+      reflectionShader.setMat4("u_MVP", mvp);
+      reflectionShader.setMat4("u_transposed_modes", glm::transpose(glm::inverse(model)));
+      reflectionShader.setMat4("u_model", model);
+      reflectionShader.setVec3("u_viewPos", camPos);
+      skybox_.getTexture().use();
       cube_model_3.draw();
     }
     
@@ -284,9 +289,9 @@ int main()
     
     scene.enableBlengind(Engine::BLENDING_ALPHA);
 
-    p4.use();
+    blendingShader.use();
     window.use();
-    p4.setInt("tex", window.getID());
+    blendingShader.setInt("tex", window.getID());
 
     std::map<float, glm::vec3> sorted;
     for (glm::vec3 curr_grass_pos : vegetation) {
@@ -299,7 +304,7 @@ int main()
       model = glm::translate(model, it->second);
       model = glm::scale(model, glm::vec3(0.5, 0.5, 1.0));
       mvp = projection * camera.getView() * model;
-      p4.setMat4("u_MVP", mvp);
+      blendingShader.setMat4("u_MVP", mvp);
       transparentVBO.draw();
     }
 
