@@ -141,6 +141,7 @@ vec3 calculatePointLight(PointLight light, vec3 normal, vec3 vertPos, vec3 viewD
   return ambient * attenuation + diffuse * attenuation + specular * attenuation;
 }
 
+
 vec3 calculateReflection(vec3 normal, vec3 viewDir)
 {
   vec3 reflectionColor = texture(material.reflection, var_uv).rgb;

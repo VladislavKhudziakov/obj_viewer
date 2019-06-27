@@ -105,18 +105,21 @@ namespace Engine
   {
     shaderProgram.use();
     
-    for (auto mesh : meshes) {
+    for(auto mesh : meshes) {
       const std::map<std::string, Texture2D>& meshTextures = mesh.second.getTextures();
       
       const std::string materialTemplate = "material.";
       
-      for (auto keyValuePair : meshTextures) {
-        keyValuePair.second.use();
-        shaderProgram.setInt(materialTemplate + keyValuePair.first, keyValuePair.second.getID());
+      int currTexId = 0;
+      for (auto keyValuePair : meshTextures) 
+        keyValuePair.second.use(currTexId);
+        shaderProgram.setInt(materialTemplate + keyValuePair.first, currTexId);
+        currTexId++;
       }
       
-      envTex.use(4);
-      shaderProgram.setInt("skyboxTexure", 4);
+      currTexId++;
+      envTex.use(currTexId);
+      shaderProgram.setInt("skyboxTexure", currTexId);
       
       mesh.second.draw();
     }
