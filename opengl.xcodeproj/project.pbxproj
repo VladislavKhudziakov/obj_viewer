@@ -44,7 +44,6 @@
 		0DEF475822C2AEBE00258E6C /* skybox_shader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DEF475522C2ADBF00258E6C /* skybox_shader.vert */; };
 		0DEF475B22C2B98600258E6C /* Skybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475922C2B98600258E6C /* Skybox.cpp */; };
 		0DEF476122C3B0E000258E6C /* CubemapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */; };
-		0DEF476422C3B49600258E6C /* BaseTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF476222C3B49600258E6C /* BaseTexture.cpp */; };
 		0DEF476622C3F9A900258E6C /* reflection_shader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DEF476522C3F98D00258E6C /* reflection_shader.frag */; };
 		0DF4E6EE22BCEFFE00F42D88 /* Framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DF4E6EC22BCEFFE00F42D88 /* Framebuffer.cpp */; };
 		0DF5B20722AEF03800BDFF16 /* container2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0DF5B20622AEF01600BDFF16 /* container2.png */; };
@@ -129,6 +128,7 @@
 		0D797B6D22B10718006F766A /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		0D797B6E22B10718006F766A /* Model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
 		0D797B7022B108FB006F766A /* nanosuit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nanosuit; sourceTree = "<group>"; };
+		0D7E5E6F22C7F92B004C66C8 /* IDrawable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IDrawable.hpp; sourceTree = "<group>"; };
 		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShader.frag; sourceTree = "<group>"; };
 		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vShader.vert; sourceTree = "<group>"; };
 		0D90CEDA22AE426500E5789B /* fShaderLight.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShaderLight.frag; sourceTree = "<group>"; };
@@ -153,8 +153,6 @@
 		0DEF475D22C3ACFC00258E6C /* ITexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ITexture.hpp; sourceTree = "<group>"; };
 		0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubemapTexture.cpp; sourceTree = "<group>"; };
 		0DEF476022C3B0E000258E6C /* CubemapTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubemapTexture.hpp; sourceTree = "<group>"; };
-		0DEF476222C3B49600258E6C /* BaseTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BaseTexture.cpp; sourceTree = "<group>"; };
-		0DEF476322C3B49600258E6C /* BaseTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseTexture.hpp; sourceTree = "<group>"; };
 		0DEF476522C3F98D00258E6C /* reflection_shader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = reflection_shader.frag; sourceTree = "<group>"; };
 		0DF4E6EC22BCEFFE00F42D88 /* Framebuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Framebuffer.cpp; sourceTree = "<group>"; };
 		0DF4E6ED22BCEFFE00F42D88 /* Framebuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Framebuffer.hpp; sourceTree = "<group>"; };
@@ -260,8 +258,7 @@
 				0DEF475D22C3ACFC00258E6C /* ITexture.hpp */,
 				0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */,
 				0DEF476022C3B0E000258E6C /* CubemapTexture.hpp */,
-				0DEF476222C3B49600258E6C /* BaseTexture.cpp */,
-				0DEF476322C3B49600258E6C /* BaseTexture.hpp */,
+				0D7E5E6F22C7F92B004C66C8 /* IDrawable.hpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -365,7 +362,6 @@
 				0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */,
 				0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */,
 				0D03123722A870C900D6077C /* main.cpp in Sources */,
-				0DEF476422C3B49600258E6C /* BaseTexture.cpp in Sources */,
 				0D797B6C22B103E7006F766A /* Mesh.cpp in Sources */,
 				0DEF475B22C2B98600258E6C /* Skybox.cpp in Sources */,
 				0DF4E6EE22BCEFFE00F42D88 /* Framebuffer.cpp in Sources */,

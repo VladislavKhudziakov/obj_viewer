@@ -30,7 +30,7 @@ namespace Engine {
     glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_FALSE);
     texture.use();
-    shaderProgram.setInt("skybox", texture.getID());
+    shaderProgram.setInt("skybox", 0);
     vertices.draw();
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     glDepthMask(GL_TRUE);

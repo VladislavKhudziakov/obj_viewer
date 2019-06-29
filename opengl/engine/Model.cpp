@@ -14,6 +14,7 @@ namespace Engine
   Model::Model(const std::string& dirName,
                const std::string& fileName,
                const Program& program)
+    : IDrawable()
   {
     this->directoryName = dirName;
     this->fileName = fileName;
@@ -56,15 +57,15 @@ namespace Engine
       Mesh currNodeMesh(mesh, scene);
       
       if (tex_diff.size() > 0) {
-        currNodeMesh.setTexture("diffuse", Texture2D(tex_diff, 0));
+        currNodeMesh.setTexture("diffuse", Texture2D(tex_diff));
       }
       
       if (tex_spec.size() > 0) {
-        currNodeMesh.setTexture("specular", Texture2D(tex_spec, 1));
+        currNodeMesh.setTexture("specular", Texture2D(tex_spec));
       }
       
       if (tex_ambient.size() > 0) {
-        currNodeMesh.setTexture("reflection", Texture2D(tex_ambient, 2));
+        currNodeMesh.setTexture("reflection", Texture2D(tex_ambient));
       }
       
       meshes[mesh->mName.C_Str()] = currNodeMesh;
@@ -101,7 +102,7 @@ namespace Engine
   }
   
   
-  void Model::draw()
+  void Model::draw() const
   {
     shaderProgram.use();
     
@@ -111,7 +112,7 @@ namespace Engine
       const std::string materialTemplate = "material.";
       
       int currTexId = 0;
-      for (auto keyValuePair : meshTextures) 
+      for (auto keyValuePair : meshTextures) {
         keyValuePair.second.use(currTexId);
         shaderProgram.setInt(materialTemplate + keyValuePair.first, currTexId);
         currTexId++;

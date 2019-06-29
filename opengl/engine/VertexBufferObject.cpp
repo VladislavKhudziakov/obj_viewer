@@ -12,7 +12,8 @@ namespace Engine {
   
   VBO::VBO(const std::vector<float>& vertices,
            const std::vector<float>& normals,
-           const std::vector<float>& uv) : ebo()
+           const std::vector<float>& uv)
+    : IDrawable(), ebo()
   {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -48,6 +49,7 @@ namespace Engine {
       const std::vector<unsigned int>& indices,
       const std::vector<float>& normals,
       const std::vector<float>& uv)
+    : IDrawable()
   {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);

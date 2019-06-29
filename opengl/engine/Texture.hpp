@@ -16,21 +16,21 @@
 #include <string>
 #include <iostream>
 
-#include "BaseTexture.hpp"
+#include "ITexture.hpp"
 
 namespace Engine
 {
-  class Texture2D : public BaseTexture
+  class Texture2D : public ITexture
   {
   private:
-    int width;
-    int height;
+    unsigned int texture;
+    int width, height;
     
   public:
-    Texture2D() : BaseTexture() { };
-    Texture2D(const std::string&, int tex_slot = 0);
-    void use() const override;
-    void use(int) const override;
+    Texture2D() : ITexture(), texture(), width(), height() { };
+    Texture2D(const std::string&);
+    void use(int textureSlot = 0) const override;
+    unsigned int get() const override;
   };
 }
 

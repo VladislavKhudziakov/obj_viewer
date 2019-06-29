@@ -10,8 +10,9 @@
 
 namespace Engine {
   CubemapTexture::CubemapTexture(const std::vector<std::string>& textures, int texSlot)
-    :BaseTexture(texSlot)
+  :ITexture()
   {
+    glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
     
     unsigned int i = 0;
@@ -41,16 +42,14 @@ namespace Engine {
   }
   
   
-  void CubemapTexture::use() const
-  {
-    glActiveTexture(GL_TEXTURE0 + texID);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
-  }
-  
-  
   void CubemapTexture::use(int textureSlot) const
   {
     glActiveTexture(GL_TEXTURE0 + textureSlot);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+  }
+  
+  unsigned int CubemapTexture::get() const
+  {
+    return texture;
   }
 }

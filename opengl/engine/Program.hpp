@@ -34,13 +34,13 @@ namespace Engine {
     Program(const Shader& vShader, const Shader& fShader);
     Program(const std::string& vShaderPath, const std::string& fShaderPath);
     void link();
-    void use();
+    void use() const;
     bool isLinked();
     int get();
-    void setInt(const std::string&, int);
-    void setFloat(const std::string&, float);
-    void setVec3(const std::string&, const glm::vec3&);
-    void setMat4(const std::string&, const glm::mat4&);
+    void setInt(const std::string&, int) const;
+    void setFloat(const std::string&, float) const;
+    void setVec3(const std::string&, const glm::vec3&) const;
+    void setMat4(const std::string&, const glm::mat4&) const;
   };
 }
 

@@ -19,12 +19,13 @@
 #include <iostream>
 #include <algorithm>
 
+#include "IDrawable.hpp"
 #include "Mesh.hpp"
 #include "Program.hpp"
 #include "CubemapTexture.hpp"
 
 namespace Engine {
-  class Model
+  class Model : public IDrawable
   {
   private:
     Program shaderProgram;
@@ -37,7 +38,7 @@ namespace Engine {
     Model(const std::string&, const std::string&, const Program&);
     int loadFromFile(const std::string&);
     void processNodes(const aiNode* node, const aiScene* scene);
-    void draw();
+    void draw() const override;
     std::string loadMaterialTexture(const aiMesh* mesh, const aiScene* scene, aiTextureType type);
     std::map<std::string, Mesh>& getMeshes();
     void setEnvTex(const CubemapTexture&);

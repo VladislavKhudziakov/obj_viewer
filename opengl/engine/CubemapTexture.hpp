@@ -17,16 +17,17 @@
 #include <string>
 #include <vector>
 
-#include "BaseTexture.hpp"
+#include "ITexture.hpp"
 
 namespace Engine {
-  class CubemapTexture : public BaseTexture
+  class CubemapTexture : public ITexture
   {
+    unsigned int texture;
   public:
-    CubemapTexture() : BaseTexture() { };
+    CubemapTexture() : ITexture(), texture() { };
     CubemapTexture(const std::vector<std::string>&, int texSlot = 0);
-    virtual void use() const override;
-    virtual void use(int) const override;
+    void use(int textureSlot = 0) const override;
+    unsigned int get() const override;
   };
 }
 #endif /* CubemapTexture_hpp */

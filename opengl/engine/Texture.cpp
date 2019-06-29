@@ -10,9 +10,9 @@
 
 namespace Engine
 {  
-  Texture2D::Texture2D(const std::string& imgName, int tex_slot)
-    : BaseTexture(tex_slot)
+  Texture2D::Texture2D(const std::string& imgName)
   {
+    glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     
     unsigned char* img = SOIL_load_image(
@@ -25,15 +25,14 @@ namespace Engine
     glBindTexture(GL_TEXTURE_2D, 0);
   };
   
-  void Texture2D::use() const
-  {
-    glActiveTexture(GL_TEXTURE0 + texID);
-    glBindTexture(GL_TEXTURE_2D, texture);
-  }
-  
   void Texture2D::use(int textureSlot) const
   {
     glActiveTexture(GL_TEXTURE0 + textureSlot);
     glBindTexture(GL_TEXTURE_2D, texture);
+  }
+  
+  unsigned int Texture2D::get() const
+  {
+    return texture;
   }
 }

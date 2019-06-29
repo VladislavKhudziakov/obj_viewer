@@ -15,8 +15,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "IDrawable.hpp"
+
 namespace Engine {
-  class VBO
+  class VBO : public IDrawable
   {
   private:
     unsigned int vao;
@@ -29,7 +31,7 @@ namespace Engine {
     int vertBufferSize;
     
   public:
-    VBO() { };
+    VBO() : IDrawable() { };
     
     VBO(const std::vector<float>& vertices,
         const std::vector<float>& normals,
@@ -43,7 +45,7 @@ namespace Engine {
     void set();
     void unSet();
     void del();
-    void draw() const;
+    void draw() const override;
     int getVAO() const noexcept;
   };
 }

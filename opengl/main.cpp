@@ -258,7 +258,7 @@ int main()
     
     depthTestShader.use();
     metal.use();
-    depthTestShader.setInt("tex", metal.getID());
+    depthTestShader.setInt("tex", 0);
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0, -0.5, 0.0));
     model = glm::scale(model, glm::vec3(5.0f));
@@ -270,7 +270,6 @@ int main()
     
     scene.enableCullFacing(Engine::CULL_FACING_BACK);
     reflectionShader.use();
-//    depthTestShader.use();
     
     for (glm::vec3 curr_tr : c_translations) {
       model = glm::mat4(1.0f);
@@ -291,7 +290,7 @@ int main()
 
     blendingShader.use();
     window.use();
-    blendingShader.setInt("tex", window.getID());
+    blendingShader.setInt("tex", 0);
 
     std::map<float, glm::vec3> sorted;
     for (glm::vec3 curr_grass_pos : vegetation) {

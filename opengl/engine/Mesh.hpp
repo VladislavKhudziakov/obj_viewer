@@ -19,13 +19,14 @@
 #include <map>
 #include <iostream>
 
+#include "IDrawable.hpp"
 #include "VertexBufferObject.hpp"
 #include "Texture.hpp"
 
 
 namespace Engine
 {
-  class Mesh
+  class Mesh : public IDrawable
   {
     
   private:
@@ -33,12 +34,12 @@ namespace Engine
     std::map<std::string, Texture2D> textures;
     
   public:
-    Mesh() { };
+    Mesh() : IDrawable() { };
     Mesh(const aiMesh* mesh, const aiScene* scene);
     Mesh(const std::vector<float>&, const std::vector<float>&, const std::vector<float>&);
     Mesh(const std::vector<float>&, const std::vector<unsigned int>&, const std::vector<float>&, const std::vector<float>&);
 
-    void draw();
+    void draw() const;
     
     void setTexture(const std::string&,const Texture2D&);
     const std::map<std::string, Texture2D>& getTextures();

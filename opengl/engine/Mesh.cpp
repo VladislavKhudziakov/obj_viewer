@@ -10,7 +10,8 @@
 
 namespace Engine
 {  
-  Mesh::Mesh(const aiMesh* mesh, const aiScene* scene) : textures()
+  Mesh::Mesh(const aiMesh* mesh, const aiScene* scene)
+    : IDrawable(), textures()
   {
     std::vector<float> positions;
     std::vector<unsigned int> indices;
@@ -49,7 +50,8 @@ namespace Engine
   
   Mesh::Mesh(const std::vector<float>& vertices,
              const std::vector<float>& normals,
-             const std::vector<float>& uv) : textures()
+             const std::vector<float>& uv)
+    : IDrawable(), textures()
   {
     verticesData = VBO(vertices, normals, uv);
   }
@@ -58,13 +60,14 @@ namespace Engine
   Mesh::Mesh(const std::vector<float>& vertices,
              const std::vector<unsigned int>& indices,
              const std::vector<float>& normals,
-             const std::vector<float>& uv) : textures()
+             const std::vector<float>& uv)
+    : IDrawable(), textures()
   {
     verticesData = VBO(vertices, indices, normals, uv);
   }
   
   
-  void Mesh::draw()
+  void Mesh::draw() const
   {
     verticesData.draw();
   }

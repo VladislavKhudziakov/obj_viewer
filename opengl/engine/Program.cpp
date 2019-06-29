@@ -58,7 +58,7 @@ namespace Engine {
   }
   
   
-  void Program::use()
+  void Program::use() const
   {
     if (linkedStatus) {
       glUseProgram(program);
@@ -78,28 +78,28 @@ namespace Engine {
   }
   
   
-  void Program::setInt(const std::string& name, int val)
+  void Program::setInt(const std::string& name, int val) const
   {
     unsigned int uniform = glGetUniformLocation(program, name.c_str());
     glUniform1i(uniform, val);
   }
   
   
-  void Program::setFloat(const std::string& name, float val)
+  void Program::setFloat(const std::string& name, float val) const
   {
     unsigned int uniform = glGetUniformLocation(program, name.c_str());
     glUniform1f(uniform, val);
   }
   
   
-  void Program::setVec3(const std::string& name, const glm::vec3& val)
+  void Program::setVec3(const std::string& name, const glm::vec3& val) const
   {
     unsigned int uniform = glGetUniformLocation(program, name.c_str());
     glUniform3fv(uniform, 1, glm::value_ptr(val));
   }
   
   
-  void Program::setMat4(const std::string& name, const glm::mat4& val)
+  void Program::setMat4(const std::string& name, const glm::mat4& val) const
   {
     unsigned int uniform = glGetUniformLocation(program, name.c_str());
     glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(val));
