@@ -9,18 +9,7 @@
 #include "FramebufferObject.hpp"
 
 namespace Engine
-{
-//  class FBO
-//  {
-//    unsigned int fbo;
-//  public:
-//    FBO();
-//    void attachColorbuffer(const ITexture& );
-//    void attachRenderbuffer(const RBO& );
-//    void use() const;
-//    void unuse() const;
-//  };
-  
+{  
   FBO::FBO()
   {
     glGenFramebuffers(1, &fbo);
