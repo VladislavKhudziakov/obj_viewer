@@ -16,12 +16,13 @@
 #include <string>
 #include <vector>
 
+#include "IDrawable.hpp"
 #include "CubemapTexture.hpp"
 #include "Program.hpp"
 #include "VertexBufferObject.hpp"
 
 namespace Engine {
-  class Skybox
+  class Skybox : public IDrawable
   {
   private:
     CubemapTexture texture;
@@ -34,7 +35,7 @@ namespace Engine {
     Skybox() : texture(), shaderProgram() { };
     const CubemapTexture& getTexture();
     Skybox(const std::vector<std::string>&, const Program& );
-    void draw();
+    void draw() const override;
   };
 }
 #endif /* Skybox_hpp */

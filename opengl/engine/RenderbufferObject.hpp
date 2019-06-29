@@ -9,6 +9,19 @@
 #ifndef RenderbufferObject_hpp
 #define RenderbufferObject_hpp
 
-#include <stdio.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
+namespace Engine
+{
+  class RBO
+  {
+    unsigned int rbo;
+    int width, height;
+  public:
+    RBO() : rbo(), width(), height() { };
+    RBO(int, int);
+    unsigned int get() const;
+  };
+}
 #endif /* RenderbufferObject_hpp */

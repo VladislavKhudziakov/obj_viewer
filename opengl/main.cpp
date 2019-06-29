@@ -312,8 +312,8 @@ int main()
     fbo.stopRenderIn();
     
     postprocessing_shaders.use();
-    fbo.useAsTexture();
-    postprocessing_shaders.setInt("posprocessing_texture", fbo.getTextureID());
+    fbo.getColorbuffer().use();
+    postprocessing_shaders.setInt("posprocessing_texture", 0);
     postprocessing_plane.draw();
   });
   

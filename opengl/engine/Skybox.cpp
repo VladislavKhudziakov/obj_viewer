@@ -25,7 +25,7 @@ namespace Engine {
   }
   
   
-  void Skybox::draw()
+  void Skybox::draw() const
   {
     glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_FALSE);

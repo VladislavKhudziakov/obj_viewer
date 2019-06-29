@@ -9,6 +9,24 @@
 #ifndef FramebufferObject_hpp
 #define FramebufferObject_hpp
 
-#include <stdio.h>
+#include <iostream>
 
+#include "ITexture.hpp"
+#include "RenderbufferObject.hpp"
+
+namespace Engine
+{
+  class FBO
+  {
+    unsigned int fbo;
+  public:
+    FBO();
+    void attachColorbuffer(const ITexture& );
+    void attachRenderbuffer(const RBO& );
+    void use() const;
+    void unuse() const;
+    unsigned int get() const;
+    void checkStatus();
+  };
+}
 #endif /* FramebufferObject_hpp */

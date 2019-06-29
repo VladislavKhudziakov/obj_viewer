@@ -39,7 +39,7 @@ namespace Engine
     Mesh(const std::vector<float>&, const std::vector<float>&, const std::vector<float>&);
     Mesh(const std::vector<float>&, const std::vector<unsigned int>&, const std::vector<float>&, const std::vector<float>&);
 
-    void draw() const;
+    void draw() const override;
     
     void setTexture(const std::string&,const Texture2D&);
     const std::map<std::string, Texture2D>& getTextures();

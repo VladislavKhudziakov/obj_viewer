@@ -10,65 +10,22 @@
 
 namespace Engine
 {
-  Framebuffer::Framebuffer(int width, int height, int tex_id)
-  : width(width), height(height), tex_id(tex_id)
+  Framebuffer::Framebuffer(int width, int height)
+  : framebuffer(), width(width), height(height)
   {
-    glGenFramebuffers(1, &framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    textureColorBuffer = EmptyTexture(width, height);
     
-    glGenTextures(1, &colorbuffer);
-    glBindTexture(GL_TEXTURE_2D, colorbuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    framebuffer.attachColorbuffer(textureColorBuffer);
+    renderbuffer = RBO(width, height);
     
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorbuffer, 0);
-    
-    glGenRenderbuffers(1, &renderbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-    
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderbuffer);
-    
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-      std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
-      return;
-    }
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    framebuffer.attachRenderbuffer(renderbuffer);
+    framebuffer.checkStatus();
   }
   
   
-  unsigned int Framebuffer::getColorbuffer() const
+  const EmptyTexture& Framebuffer::getColorbuffer() const
   {
-    return colorbuffer;
-  }
-  
-  
-  unsigned int Framebuffer::getRenderbuffer() const
-  {
-    return renderbuffer;
-  }
-  
-  
-  unsigned int Framebuffer::get() const
-  {
-    return framebuffer;
-  }
-  
-  
-  int Framebuffer::getTextureID() const
-  {
-    return tex_id;
-  }
-  
-  
-  void Framebuffer::useAsTexture() const
-  {
-    glActiveTexture(GL_TEXTURE0 + tex_id);
-    glBindTexture(GL_TEXTURE_2D, colorbuffer);
+    return textureColorBuffer;
   }
   
   
@@ -76,7 +33,7 @@ namespace Engine
   {
     isRenderIn = true;
     render_bit_mask = bit_mask;
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    framebuffer.use();
     
     if (bit_mask & (1 << 0)) {
       glEnable(GL_DEPTH_TEST);
@@ -98,7 +55,7 @@ namespace Engine
   void Framebuffer::stopRenderIn()
   {
     isRenderIn = false;
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    framebuffer.unuse();
     
     if (render_bit_mask & (1 << 0)) {
       glDisable(GL_DEPTH_TEST);

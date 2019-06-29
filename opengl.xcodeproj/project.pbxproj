@@ -24,6 +24,9 @@
 		0D797B6C22B103E7006F766A /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D797B6A22B103E7006F766A /* Mesh.cpp */; };
 		0D797B6F22B10718006F766A /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D797B6D22B10718006F766A /* Model.cpp */; };
 		0D797B7122B1090B006F766A /* nanosuit in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D797B7022B108FB006F766A /* nanosuit */; };
+		0D7E5E7322C802E5004C66C8 /* EmptyTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E7122C802E5004C66C8 /* EmptyTexture.cpp */; };
+		0D7E5E7622C80748004C66C8 /* FramebufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E7422C80748004C66C8 /* FramebufferObject.cpp */; };
+		0D7E5E7922C807DD004C66C8 /* RenderbufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E7722C807DD004C66C8 /* RenderbufferObject.cpp */; };
 		0D868F3C22AA56FC009CDC5F /* fShader.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3A22AA56FC009CDC5F /* fShader.frag */; };
 		0D868F3D22AA56FC009CDC5F /* vShader.vert in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D868F3B22AA56FC009CDC5F /* vShader.vert */; };
 		0D90CEDB22AE429800E5789B /* fShaderLight.frag in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0D90CEDA22AE426500E5789B /* fShaderLight.frag */; };
@@ -129,6 +132,12 @@
 		0D797B6E22B10718006F766A /* Model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
 		0D797B7022B108FB006F766A /* nanosuit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nanosuit; sourceTree = "<group>"; };
 		0D7E5E6F22C7F92B004C66C8 /* IDrawable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IDrawable.hpp; sourceTree = "<group>"; };
+		0D7E5E7122C802E5004C66C8 /* EmptyTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EmptyTexture.cpp; sourceTree = "<group>"; };
+		0D7E5E7222C802E5004C66C8 /* EmptyTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EmptyTexture.hpp; sourceTree = "<group>"; };
+		0D7E5E7422C80748004C66C8 /* FramebufferObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FramebufferObject.cpp; sourceTree = "<group>"; };
+		0D7E5E7522C80748004C66C8 /* FramebufferObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FramebufferObject.hpp; sourceTree = "<group>"; };
+		0D7E5E7722C807DD004C66C8 /* RenderbufferObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderbufferObject.cpp; sourceTree = "<group>"; };
+		0D7E5E7822C807DD004C66C8 /* RenderbufferObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderbufferObject.hpp; sourceTree = "<group>"; };
 		0D868F3A22AA56FC009CDC5F /* fShader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShader.frag; sourceTree = "<group>"; };
 		0D868F3B22AA56FC009CDC5F /* vShader.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vShader.vert; sourceTree = "<group>"; };
 		0D90CEDA22AE426500E5789B /* fShaderLight.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fShaderLight.frag; sourceTree = "<group>"; };
@@ -259,6 +268,12 @@
 				0DEF475F22C3B0E000258E6C /* CubemapTexture.cpp */,
 				0DEF476022C3B0E000258E6C /* CubemapTexture.hpp */,
 				0D7E5E6F22C7F92B004C66C8 /* IDrawable.hpp */,
+				0D7E5E7122C802E5004C66C8 /* EmptyTexture.cpp */,
+				0D7E5E7222C802E5004C66C8 /* EmptyTexture.hpp */,
+				0D7E5E7422C80748004C66C8 /* FramebufferObject.cpp */,
+				0D7E5E7522C80748004C66C8 /* FramebufferObject.hpp */,
+				0D7E5E7722C807DD004C66C8 /* RenderbufferObject.cpp */,
+				0D7E5E7822C807DD004C66C8 /* RenderbufferObject.hpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -351,13 +366,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D7E5E7322C802E5004C66C8 /* EmptyTexture.cpp in Sources */,
 				0D1AEEF322C0C33A007C96FF /* Cube.cpp in Sources */,
+				0D7E5E7622C80748004C66C8 /* FramebufferObject.cpp in Sources */,
 				0DEF476122C3B0E000258E6C /* CubemapTexture.cpp in Sources */,
 				0D4ED4BD22AD61240067276E /* Scene.cpp in Sources */,
 				0D4ED4BA22AD4CB10067276E /* camera.cpp in Sources */,
 				0D0D64C022A9AC3B0020A028 /* Program.cpp in Sources */,
 				0DCC964522B6D9A400F08687 /* constants.cpp in Sources */,
 				0D797B6F22B10718006F766A /* Model.cpp in Sources */,
+				0D7E5E7922C807DD004C66C8 /* RenderbufferObject.cpp in Sources */,
 				0D0D64BD22A9A49B0020A028 /* Shader.cpp in Sources */,
 				0D769C5F22AD11FB006F9C42 /* Texture.cpp in Sources */,
 				0D769C4C22AA7DEF006F9C42 /* VertexBufferObject.cpp in Sources */,

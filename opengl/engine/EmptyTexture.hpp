@@ -9,6 +9,22 @@
 #ifndef EmptyTexture_hpp
 #define EmptyTexture_hpp
 
-#include <stdio.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include "ITexture.hpp"
+
+namespace Engine {
+  class EmptyTexture : public ITexture
+  {
+    unsigned int texture;
+    int width, height;
+  public:
+    EmptyTexture() : texture(), width(), height() { };
+    EmptyTexture(int, int);
+    void use(int textureSlot = 0) const override;
+    unsigned int get() const override;
+  };
+}
 
 #endif /* EmptyTexture_hpp */

@@ -15,16 +15,22 @@
 #include <iostream>
 #include <string>
 
+#include "EmptyTexture.hpp"
+#include "RenderbufferObject.hpp"
+#include "FramebufferObject.hpp"
+
 namespace Engine
 {
   class Framebuffer
   {
   private:
     int width, height;
-    unsigned int colorbuffer, renderbuffer, framebuffer;
     unsigned long render_bit_mask;
     bool isRenderIn;
-    int tex_id;
+    
+    EmptyTexture textureColorBuffer;
+    RBO renderbuffer;
+    FBO framebuffer;
     
     struct ClearColor {
       float r, g, b, a;
@@ -33,16 +39,12 @@ namespace Engine
     ClearColor clearColor;
     
   public:
-    Framebuffer() { };
-    Framebuffer(int widht, int height, int tex_id = 0);
-    unsigned int getColorbuffer() const;
-    unsigned int getRenderbuffer() const;
-    unsigned int get() const;
+    Framebuffer() : textureColorBuffer() { };
+    Framebuffer(int widht, int height);
+    const EmptyTexture& getColorbuffer() const;
     void renderIn(unsigned long bit_mask, float r = 0, float g = 0, float b = 0, float a = 0);
     void stopRenderIn();
-    void useAsTexture() const;
     bool IsRenderIn() const;
-    int getTextureID() const;
   };
 }
 #endif /* Framebuffer_hpp */
